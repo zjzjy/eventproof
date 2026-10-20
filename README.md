@@ -10,8 +10,6 @@
 
 事证不是资讯流，也不是聊天机器人。它把公告、新闻、研报和传闻汇聚成同一事件的版本链，区分事实、观点、推测和传闻，在事件被确认、否认、更正或过期时改变结论，并只对实质变化通知用户。
 
-当前仓库是 **48 小时垂直切片**：本地 SQLite 可运行，已用真实公开材料跑通一条完整事件线；公网版以 GitHub Pages 提供无需登录的可操作演示。
-
 ## 1. 目标用户
 
 - 买方研究员 / 基金经理助理：早上 15 分钟扫一遍关注标的的实质变化。
@@ -112,23 +110,6 @@ python scripts\merge_source_meta.py
 
 当前仓库已包含 `fixtures/tongyu/precomputed.json`，**不需要 key 也能跑 demo**。
 
-### 5.4 重新生成演示视频
-
-视频由真实页面操作录制，不是 PPT 或截图拼接。Playwright 驱动 Chrome，页面内注入可见光标圆点；Edge TTS 使用 `zh-CN-XiaoxiaoNeural` 女声；FFmpeg 按场景时长合成 H.264/AAC MP4。
-
-```powershell
-python -m pip install -r requirements-video.txt
-python -m playwright install ffmpeg
-python scripts\make_demo_video.py
-```
-
-只调整字幕、合成或音量时，可复用最近一次录屏：
-
-```powershell
-python scripts\make_demo_video.py --reuse-raw
-```
-
-旁白文本在 `video/narration.json`，场景、时长、音色与 TTS 引擎记录在 `video/manifest.json`，外挂字幕为 `video/output/eventproof-demo.srt`。Edge TTS 不可用时脚本会回退到本机 `Microsoft Huihui` 中文女声。
 
 ## 6. 数据与 AI
 
@@ -137,7 +118,7 @@ python scripts\make_demo_video.py --reuse-raw
 - 4 份 CNINFO 官方 PDF：`fixtures/tongyu/sources.json` 记录了标题、披露日期、原文 URL、片段。
 - 证据 quote 来自 iFinD 公告检索片段；PDF 原文保留在 `fixtures/raw/tongyu/`。
 - **已知边界**：CNINFO PDF 的中文字体 ToUnicode 异常，`pypdf` / `pdfplumber` / `PyMuPDF` 提取均为乱码；当前使用 iFinD 片段 + CNINFO URL，OCR 列为 P1。
-- 用户已确认 iFinD 内容可做公开 demo 的短引用；页面只展示必要摘录与原文链接，不全文转载。
+- 页面只展示必要摘录与原文链接，不全文转载。
 
 ### 6.2 AI 角色
 
@@ -281,7 +262,7 @@ render.yaml            Render Free Blueprint
 | 可运行 Web | [GitHub Pages](https://zjzjy.github.io/eventproof/core-simple.html)；本地 FastAPI 可运行 |
 | 源代码仓库 | https://github.com/zjzjy/eventproof |
 | README | 本文件 |
-| 60–180s 视频 | `video/output/eventproof-demo.mp4`，156.7 秒 |
+| 演示视频 | `video/output/eventproof-demo.mp4`，156.7 秒 |
 | AI 使用与验证记录 | `docs/ai-usage.md` |
 | 测试说明 | `docs/testing.md` |
 | 高层设计 | `docs/00-高层设计.md` |
