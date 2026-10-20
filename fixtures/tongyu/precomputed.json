@@ -1,0 +1,1218 @@
+{
+  "meta": {
+    "generated_at": "2026-10-20T01:53:41.044245Z",
+    "ai_mode": "precomputed",
+    "model": "qwen3.8-flash",
+    "prompt_version": "claim_extract_v1",
+    "total_cost_cny": 0.007173,
+    "data_note": "Evidence quotes come from iFinD notice snippets; PDF URLs point to CNINFO originals. Time-of-day is inferred for demo as-of replay and marked is_inferred.",
+    "curation": "Raw LLM claims are kept in llm_calls; the demo event keeps key slots and drops repeated rumor copies from the second abnormal notice.",
+    "source_meta_synced_at": "2026-10-20T02:02:56.644288Z"
+  },
+  "storyline": {
+    "id": "story_tongyu_jia_xian",
+    "title": "通宇通讯收购佳贤通信25%股权",
+    "primary_entity": "通宇通讯"
+  },
+  "event": {
+    "id": "evt_tongyu_20260805",
+    "storyline_id": "story_tongyu_jia_xian",
+    "title": "通宇通讯收购佳贤通信25%股权",
+    "event_type": "M&A",
+    "primary_entity": "通宇通讯",
+    "security_code": "002792",
+    "exchange": "SZSE",
+    "occurred_at": "2026-08-04",
+    "occurred_precision": "day",
+    "disclosed_at": "2026-08-05T00:00:00+08:00",
+    "disclosed_precision": "day",
+    "first_ingested_at": "2026-08-05T10:00:00Z",
+    "updated_at": "2026-08-08T10:00:00Z",
+    "verification_status": "confirmed",
+    "lifecycle_status": "active",
+    "impact_status": "observed",
+    "status_detail": {
+      "core": "confirmed",
+      "narrative": "denied",
+      "market": "observed"
+    },
+    "evidence_strength": 93.0,
+    "summary": "公司公告拟以3亿元受让佳贤通信25%股权，分四期交割且不并表；公司随后否认佳贤与英伟达合作开发6G AI-RAN、瞄准2000亿元市场的传闻；传闻中25%入股比例与公告一致。 公告披露2026年8月5日至7日三个交易日收盘涨幅偏离值累计超过20%。",
+    "current_revision_id": "rev_4",
+    "data_as_of": "2026-10-20T01:53:41.044245Z"
+  },
+  "documents": [
+    {
+      "id": "ty_20260805_investment",
+      "title": "通宇通讯：关于对外投资购买股权的公告",
+      "doc_type": "announcement",
+      "source": "CNINFO",
+      "source_tier": "exchange",
+      "published_at": "2026-08-05T00:00:00+08:00",
+      "occurred_at": "2026-08-04",
+      "time_precision": "day",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-05/1225458565.PDF",
+      "snippets": [
+        {
+          "text": "公司拟以自有资金人民币30,000.00万元，通过股份受让方式购买深圳市佳贤通信科技股份有限公司（以下简称“佳贤通信”或“标的公司”）合计约25.00%的股权（对应18,152,657股，以下简称“本次交易”），其中第一阶段受让10,891,594股（约占标的公司总股本的15%），分四期交割。",
+          "note": "交易金额、标的、比例、分期安排"
+        },
+        {
+          "text": "本次交易完成后，佳贤通信不纳入公司合并报表范围。",
+          "note": "是否并表"
+        }
+      ],
+      "event_id": "evt_tongyu_20260805",
+      "ingested_at": "2026-08-05T10:00:00Z",
+      "data_origin": "fixture",
+      "claim_count": 7,
+      "sort_order": 1
+    },
+    {
+      "id": "ty_20260805_abnormal",
+      "title": "通宇通讯：股票交易异常波动公告",
+      "doc_type": "announcement",
+      "source": "CNINFO",
+      "source_tier": "exchange",
+      "published_at": "2026-08-05T00:00:00+08:00",
+      "occurred_at": "2026-08-04",
+      "time_precision": "day",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-05/1225458567.PDF",
+      "snippets": [
+        {
+          "text": "公司股票交易价格连续三个交易日内（2026年7月31日、2026年8月3日、2026年8月4日）收盘价格涨幅偏离值累计超过20%",
+          "note": "股价异动事实"
+        }
+      ],
+      "event_id": "evt_tongyu_20260805",
+      "ingested_at": "2026-08-05T10:00:00Z",
+      "data_origin": "fixture",
+      "claim_count": 1,
+      "sort_order": 2
+    },
+    {
+      "id": "ty_20260807_clarification",
+      "title": "通宇通讯：关于市场传闻的澄清公告",
+      "doc_type": "clarification",
+      "source": "CNINFO",
+      "source_tier": "company_official",
+      "published_at": "2026-08-07T00:00:00+08:00",
+      "occurred_at": "2026-08-06",
+      "time_precision": "day",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-07/1225462452.PDF",
+      "snippets": [
+        {
+          "text": "公司关注到部分网络媒体上流传“佳贤通信与英伟达合作开发6G AI-RAN基站，通宇通讯拟入股25%股权，瞄准2,000亿元市场”的文章",
+          "note": "被澄清的传闻原文"
+        },
+        {
+          "text": "1、佳贤通信与英伟达不存在研发合作关系。",
+          "note": "否认研发合作关系"
+        },
+        {
+          "text": "佳贤通信与英伟达未签署任何意向采购协议或供货协议",
+          "note": "否认采购/供货协议"
+        },
+        {
+          "text": "公司对佳贤通信不构成控制，不纳入公司合并报表范围。",
+          "note": "控制权与并表口径"
+        }
+      ],
+      "event_id": "evt_tongyu_20260805",
+      "ingested_at": "2026-08-07T10:00:00Z",
+      "data_origin": "fixture",
+      "claim_count": 6,
+      "sort_order": 3
+    },
+    {
+      "id": "ty_20260808_abnormal",
+      "title": "通宇通讯：股票交易异常波动公告",
+      "doc_type": "announcement",
+      "source": "CNINFO",
+      "source_tier": "exchange",
+      "published_at": "2026-08-08T00:00:00+08:00",
+      "occurred_at": "2026-08-07",
+      "time_precision": "day",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-08/1225463216.PDF",
+      "snippets": [
+        {
+          "text": "公司股票交易价格连续三个交易日内（2026年8月5日-2026年8月7日）收盘价格涨幅偏离值累计超过20%",
+          "note": "澄清前后股价继续异动"
+        },
+        {
+          "text": "近日公司关注到网络媒体上流传“佳贤通信与英伟达合作开发6G AI-RAN基站，通宇通讯拟入股25%股权，瞄准2,000亿元市场”的文章",
+          "note": "异动公告再次引用传闻"
+        }
+      ],
+      "event_id": "evt_tongyu_20260805",
+      "ingested_at": "2026-08-08T10:00:00Z",
+      "data_origin": "fixture",
+      "claim_count": 1,
+      "sort_order": 4
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_ty_20260805_investment_1",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "公司拟以自有资金人民币30,000.00万元购买股权",
+      "claim_type": "fact",
+      "subject": "通宇通讯",
+      "predicate": "拟以自有资金支付",
+      "object": "人民币30,000.00万元",
+      "value": 30000.0,
+      "unit": "万元",
+      "quote": "公司拟以自有资金人民币30,000.00万元",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_4",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "拟购买股权比例合计约25.00%",
+      "claim_type": "fact",
+      "subject": "本次交易",
+      "predicate": "购买股权比例为",
+      "object": "约25.00%",
+      "value": 25.0,
+      "unit": "%",
+      "quote": "合计约25.00%的股权",
+      "hedge": "approx",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_5",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "对应股数为18,152,657股",
+      "claim_type": "fact",
+      "subject": "本次交易",
+      "predicate": "对应股数为",
+      "object": "18,152,657股",
+      "value": 18152657,
+      "unit": "股",
+      "quote": "对应18,152,657股",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_6",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "第一阶段受让股数为10,891,594股",
+      "claim_type": "fact",
+      "subject": "第一阶段",
+      "predicate": "受让股数为",
+      "object": "10,891,594股",
+      "value": 10891594,
+      "unit": "股",
+      "quote": "其中第一阶段受让10,891,594股",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_7",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "第一阶段受让股份约占标的公司总股本的15%",
+      "claim_type": "fact",
+      "subject": "第一阶段",
+      "predicate": "占总股本比例约为",
+      "object": "15%",
+      "value": 15,
+      "unit": "%",
+      "quote": "（约占标的公司总股本的15%）",
+      "hedge": "approx",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_8",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "分四期交割",
+      "claim_type": "fact",
+      "subject": "本次交易",
+      "predicate": "交割安排为",
+      "object": "分四期交割",
+      "value": 4,
+      "unit": "期",
+      "quote": "分四期交割",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_investment_9",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_investment",
+      "text": "交易完成后佳贤通信不纳入合并报表范围",
+      "claim_type": "fact",
+      "subject": "佳贤通信",
+      "predicate": "会计处理为",
+      "object": "不纳入公司合并报表范围",
+      "value": null,
+      "unit": "",
+      "quote": "本次交易完成后，佳贤通信不纳入公司合并报表范围",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260805_abnormal_1",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_abnormal",
+      "text": "公司股票交易价格连续三个交易日收盘价格涨幅偏离值累计超过20%",
+      "claim_type": "fact",
+      "subject": "通宇通讯股票",
+      "predicate": "涨幅偏离值累计超过",
+      "object": "20%",
+      "value": 20,
+      "unit": "%",
+      "quote": "公司股票交易价格连续三个交易日内（2026年7月31日、2026年8月3日、2026年8月4日）收盘价格涨幅偏离值累计超过20%",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "market_reaction",
+      "status": "active",
+      "strength": 89.5,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.4,
+        "extraction": 1.0
+      },
+      "strength_explanation": "交易所披露的股价异动事实；只能说明市场反应，不证明因果。",
+      "introduced_at": "2026-08-05T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_1",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "网络媒体流传佳贤通信与英伟达合作开发6G AI-RAN基站",
+      "claim_type": "rumor",
+      "subject": "佳贤通信",
+      "predicate": "合作开发",
+      "object": "6G AI-RAN基站",
+      "value": null,
+      "unit": "",
+      "quote": "部分网络媒体上流传“佳贤通信与英伟达合作开发6G AI-RAN基站",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "rumor",
+      "status": "denied",
+      "strength": 35.0,
+      "strength_band": "weak",
+      "strength_json": {
+        "authority": 0.2,
+        "directness": 0.5,
+        "independence": 0.3,
+        "specificity": 1.0,
+        "corroboration": 0.2,
+        "extraction": 1.0
+      },
+      "strength_explanation": "传闻来自网络媒体转述，未获得原始报道；按规则上限 35 分，转载不增加独立性。",
+      "introduced_at": "2026-08-07T09:55:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_3",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "网络媒体流传该业务瞄准2,000亿元市场",
+      "claim_type": "rumor",
+      "subject": "佳贤通信/通宇通讯相关项目",
+      "predicate": "瞄准",
+      "object": "市场",
+      "value": 2000,
+      "unit": "亿元",
+      "quote": "瞄准2,000亿元市场”的文章",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "rumor",
+      "status": "denied",
+      "strength": 35.0,
+      "strength_band": "weak",
+      "strength_json": {
+        "authority": 0.2,
+        "directness": 0.5,
+        "independence": 0.3,
+        "specificity": 1.0,
+        "corroboration": 0.2,
+        "extraction": 1.0
+      },
+      "strength_explanation": "传闻来自网络媒体转述，未获得原始报道；按规则上限 35 分，转载不增加独立性。",
+      "introduced_at": "2026-08-07T09:55:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_4",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "佳贤通信与英伟达不存在研发合作关系",
+      "claim_type": "denial",
+      "subject": "佳贤通信",
+      "predicate": "不存在",
+      "object": "与英伟达的研发合作关系",
+      "value": null,
+      "unit": "",
+      "quote": "佳贤通信与英伟达不存在研发合作关系。",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "denial",
+      "status": "active",
+      "strength": 88.5,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 0.9,
+        "corroboration": 0.4,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司官方澄清，直接否定具体合作/协议；否认不随时间衰减。",
+      "introduced_at": "2026-08-07T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_5",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "佳贤通信与英伟达未签署任何意向采购协议或供货协议",
+      "claim_type": "denial",
+      "subject": "佳贤通信",
+      "predicate": "未签署",
+      "object": "与英伟达的意向采购协议或供货协议",
+      "value": null,
+      "unit": "",
+      "quote": "佳贤通信与英伟达未签署任何意向采购协议或供货协议",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "denial",
+      "status": "active",
+      "strength": 88.5,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 0.9,
+        "corroboration": 0.4,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司官方澄清，直接否定具体合作/协议；否认不随时间衰减。",
+      "introduced_at": "2026-08-07T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_6",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "公司对佳贤通信不构成控制",
+      "claim_type": "fact",
+      "subject": "公司",
+      "predicate": "不构成",
+      "object": "对佳贤通信的控制",
+      "value": null,
+      "unit": "",
+      "quote": "公司对佳贤通信不构成控制",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-07T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260807_clarification_7",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "text": "佳贤通信不纳入公司合并报表范围",
+      "claim_type": "fact",
+      "subject": "佳贤通信",
+      "predicate": "不纳入",
+      "object": "公司合并报表范围",
+      "value": null,
+      "unit": "",
+      "quote": "不纳入公司合并报表范围。",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "acquisition_fact",
+      "status": "active",
+      "strength": 94.0,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.7,
+        "extraction": 1.0
+      },
+      "strength_explanation": "公司公告直接披露交易条款，并被后续澄清公告再次引用。",
+      "introduced_at": "2026-08-07T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "company_official"
+    },
+    {
+      "id": "clm_ty_20260808_abnormal_1",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260808_abnormal",
+      "text": "公司股票交易价格连续三个交易日内收盘价格涨幅偏离值累计超过20%",
+      "claim_type": "fact",
+      "subject": "通宇通讯股票",
+      "predicate": "涨幅偏离值累计",
+      "object": "超过20%",
+      "value": 20,
+      "unit": "%",
+      "quote": "公司股票交易价格连续三个交易日内（2026年8月5日-2026年8月7日）收盘价格涨幅偏离值累计超过20%",
+      "hedge": "none",
+      "confidence": 1.0,
+      "claim_role": "market_reaction",
+      "status": "active",
+      "strength": 89.5,
+      "strength_band": "strong",
+      "strength_json": {
+        "authority": 0.95,
+        "directness": 1.0,
+        "independence": 1.0,
+        "specificity": 1.0,
+        "corroboration": 0.4,
+        "extraction": 1.0
+      },
+      "strength_explanation": "交易所披露的股价异动事实；只能说明市场反应，不证明因果。",
+      "introduced_at": "2026-08-08T10:00:00Z",
+      "is_inferred": true,
+      "source_tier": "exchange"
+    }
+  ],
+  "revisions": [
+    {
+      "id": "rev_1",
+      "event_id": "evt_tongyu_20260805",
+      "version": 1,
+      "knowledge_at": "2026-08-05T10:00:00Z",
+      "summary": "公司公告拟以3亿元受让佳贤通信25%股权，分四期交割且不并表。",
+      "verification_status": "confirmed",
+      "lifecycle_status": "active",
+      "impact_status": "unverified",
+      "evidence_strength": 93.0,
+      "status_detail": {
+        "core": "confirmed",
+        "narrative": "none",
+        "market": "unverified"
+      },
+      "claim_ids": [
+        "clm_ty_20260805_investment_1",
+        "clm_ty_20260805_investment_4",
+        "clm_ty_20260805_investment_5",
+        "clm_ty_20260805_investment_6",
+        "clm_ty_20260805_investment_7",
+        "clm_ty_20260805_investment_8",
+        "clm_ty_20260805_investment_9",
+        "clm_ty_20260805_abnormal_1"
+      ],
+      "changed_fields": [
+        "initial"
+      ],
+      "reason": "2026-08-05 对外投资公告与股价异动公告入库。",
+      "trigger_document_id": "ty_20260805_investment",
+      "is_inferred": true,
+      "created_at": "2026-08-05T10:00:00Z"
+    },
+    {
+      "id": "rev_2",
+      "event_id": "evt_tongyu_20260805",
+      "version": 2,
+      "knowledge_at": "2026-08-07T09:55:00Z",
+      "summary": "澄清公告提到“佳贤与英伟达合作开发6G AI-RAN、瞄准2000亿元市场”的传闻，等待核对。",
+      "verification_status": "confirmed",
+      "lifecycle_status": "active",
+      "impact_status": "unverified",
+      "evidence_strength": 93.0,
+      "status_detail": {
+        "core": "confirmed",
+        "narrative": "unverified",
+        "market": "unverified"
+      },
+      "claim_ids": [
+        "clm_ty_20260805_investment_1",
+        "clm_ty_20260805_investment_4",
+        "clm_ty_20260805_investment_5",
+        "clm_ty_20260805_investment_6",
+        "clm_ty_20260805_investment_7",
+        "clm_ty_20260805_investment_8",
+        "clm_ty_20260805_investment_9",
+        "clm_ty_20260805_abnormal_1",
+        "clm_ty_20260807_clarification_1",
+        "clm_ty_20260807_clarification_3"
+      ],
+      "changed_fields": [
+        "claims_added",
+        "summary",
+        "status_detail"
+      ],
+      "reason": "澄清公告到达；先识别出被转述的英伟达合作传闻，尚未读到否认段。",
+      "trigger_document_id": "ty_20260807_clarification",
+      "is_inferred": true,
+      "created_at": "2026-08-07T09:55:00Z"
+    },
+    {
+      "id": "rev_3",
+      "event_id": "evt_tongyu_20260805",
+      "version": 3,
+      "knowledge_at": "2026-08-07T10:00:00Z",
+      "summary": "公司公告拟以3亿元受让佳贤通信25%股权，分四期交割且不并表；公司随后否认佳贤与英伟达合作开发6G AI-RAN、瞄准2000亿元市场的传闻；传闻中25%入股比例与公告一致。",
+      "verification_status": "confirmed",
+      "lifecycle_status": "active",
+      "impact_status": "unverified",
+      "evidence_strength": 93.0,
+      "status_detail": {
+        "core": "confirmed",
+        "narrative": "denied",
+        "market": "unverified"
+      },
+      "claim_ids": [
+        "clm_ty_20260805_investment_1",
+        "clm_ty_20260805_investment_4",
+        "clm_ty_20260805_investment_5",
+        "clm_ty_20260805_investment_6",
+        "clm_ty_20260805_investment_7",
+        "clm_ty_20260805_investment_8",
+        "clm_ty_20260805_investment_9",
+        "clm_ty_20260805_abnormal_1",
+        "clm_ty_20260807_clarification_1",
+        "clm_ty_20260807_clarification_3",
+        "clm_ty_20260807_clarification_4",
+        "clm_ty_20260807_clarification_5",
+        "clm_ty_20260807_clarification_6",
+        "clm_ty_20260807_clarification_7"
+      ],
+      "changed_fields": [
+        "claims_added",
+        "claims_denied",
+        "summary",
+        "status_detail",
+        "resolved_conflicts"
+      ],
+      "reason": "同一份澄清公告的否认段入库；传闻 claim 标记为 denied。",
+      "trigger_document_id": "ty_20260807_clarification",
+      "is_inferred": true,
+      "created_at": "2026-08-07T10:00:00Z"
+    },
+    {
+      "id": "rev_4",
+      "event_id": "evt_tongyu_20260805",
+      "version": 4,
+      "knowledge_at": "2026-08-08T10:00:00Z",
+      "summary": "公司公告拟以3亿元受让佳贤通信25%股权，分四期交割且不并表；公司随后否认佳贤与英伟达合作开发6G AI-RAN、瞄准2000亿元市场的传闻；传闻中25%入股比例与公告一致。 公告披露2026年8月5日至7日三个交易日收盘涨幅偏离值累计超过20%。",
+      "verification_status": "confirmed",
+      "lifecycle_status": "active",
+      "impact_status": "observed",
+      "evidence_strength": 93.0,
+      "status_detail": {
+        "core": "confirmed",
+        "narrative": "denied",
+        "market": "observed"
+      },
+      "claim_ids": [
+        "clm_ty_20260805_investment_1",
+        "clm_ty_20260805_investment_4",
+        "clm_ty_20260805_investment_5",
+        "clm_ty_20260805_investment_6",
+        "clm_ty_20260805_investment_7",
+        "clm_ty_20260805_investment_8",
+        "clm_ty_20260805_investment_9",
+        "clm_ty_20260805_abnormal_1",
+        "clm_ty_20260807_clarification_1",
+        "clm_ty_20260807_clarification_3",
+        "clm_ty_20260807_clarification_4",
+        "clm_ty_20260807_clarification_5",
+        "clm_ty_20260807_clarification_6",
+        "clm_ty_20260807_clarification_7",
+        "clm_ty_20260808_abnormal_1"
+      ],
+      "changed_fields": [
+        "claims_added",
+        "summary",
+        "impact_status"
+      ],
+      "reason": "2026-08-08 股价异常波动公告入库，市场反应状态变为 observed。",
+      "trigger_document_id": "ty_20260808_abnormal",
+      "is_inferred": true,
+      "created_at": "2026-08-08T10:00:00Z"
+    }
+  ],
+  "merge_decisions": [
+    {
+      "id": "merge_1",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260805_abnormal",
+      "relation": "update",
+      "score": 0.9,
+      "decision": "auto_merge",
+      "shared_slots": {
+        "actor": "通宇通讯",
+        "event_type": "股价异常波动"
+      },
+      "differences": [
+        "不涉及交易条款",
+        "补充市场反应"
+      ],
+      "reason": "同一标的、同一公告窗口，作为收购事件的市场反应挂接。",
+      "model": "rule_slot_match",
+      "created_at": "2026-08-05T10:00:00Z"
+    },
+    {
+      "id": "merge_2",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260807_clarification",
+      "relation": "update",
+      "score": 0.96,
+      "decision": "auto_merge",
+      "shared_slots": {
+        "actor": "通宇通讯",
+        "target": "佳贤通信",
+        "stake": "25%",
+        "amount": "3亿元"
+      },
+      "differences": [
+        "新增英伟达合作传闻与官方否认"
+      ],
+      "reason": "澄清公告显式引用2026-08-05对外投资公告，主体/标的/比例一致。",
+      "model": "rule_slot_match",
+      "created_at": "2026-08-07T10:00:00Z"
+    },
+    {
+      "id": "merge_3",
+      "event_id": "evt_tongyu_20260805",
+      "document_id": "ty_20260808_abnormal",
+      "relation": "update",
+      "score": 0.91,
+      "decision": "auto_merge",
+      "shared_slots": {
+        "actor": "通宇通讯",
+        "rumor": "英伟达6G AI-RAN",
+        "window": "8月5-7日"
+      },
+      "differences": [
+        "重复引用同一传闻，未新增独立来源",
+        "新增市场异动窗口"
+      ],
+      "reason": "后续异常波动公告再次引用同一传闻，挂接为市场反应，不重复计算来源。",
+      "model": "rule_slot_match",
+      "created_at": "2026-08-08T10:00:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "ntf_1",
+      "event_id": "evt_tongyu_20260805",
+      "revision_id": "rev_1",
+      "level": "P1",
+      "title": "通宇通讯公告拟以3亿元收购佳贤通信25%股权",
+      "body": "公告披露交易金额3亿元、受让约25%股权，分四期交割，不纳入合并报表。",
+      "why": "你关注了002792；规则=重大交易公告即时通知。",
+      "created_at": "2026-08-05T10:05:00Z",
+      "read_at": null,
+      "diff_json": {
+        "type": "initial",
+        "status": "confirmed"
+      }
+    },
+    {
+      "id": "ntf_2",
+      "event_id": "evt_tongyu_20260805",
+      "revision_id": "rev_3",
+      "level": "P0",
+      "title": "英伟达合作与2000亿市场传闻被公司否认",
+      "body": "公司澄清：佳贤通信与英伟达不存在研发合作关系，未签署意向采购或供货协议；相关产品仍处前期研发阶段。",
+      "why": "你关注了002792；规则=官方否认/澄清即时通知。",
+      "created_at": "2026-08-07T10:05:00Z",
+      "read_at": null,
+      "diff_json": {
+        "type": "denial",
+        "narrative_status": {
+          "from": "unverified",
+          "to": "denied"
+        },
+        "added_claim_types": [
+          "denial",
+          "fact"
+        ]
+      }
+    },
+    {
+      "id": "ntf_3",
+      "event_id": "evt_tongyu_20260805",
+      "revision_id": "rev_4",
+      "level": "P1",
+      "title": "澄清后股价仍三日涨幅偏离值超20%",
+      "body": "2026年8月5日至7日三个交易日收盘价格涨幅偏离值累计超过20%。",
+      "why": "你关注了002792；规则=关注标的的市场异动。",
+      "created_at": "2026-08-08T10:05:00Z",
+      "read_at": null,
+      "diff_json": {
+        "type": "market_reaction",
+        "impact_status": {
+          "from": "unverified",
+          "to": "observed"
+        }
+      }
+    }
+  ],
+  "llm_calls": [
+    {
+      "task": "claim_extract",
+      "model": "qwen3.8-flash",
+      "prompt_version": "claim_extract_v1",
+      "input_hash": "98fb60e838c42ac2",
+      "prompt_tokens": 435,
+      "completion_tokens": 1079,
+      "valid": true,
+      "created_at": "2026-10-20T01:53:24.651684Z",
+      "cost_cny": 0.002593,
+      "output_json": [
+        {
+          "text": "公司拟以自有资金人民币30,000.00万元购买股权",
+          "claim_type": "fact",
+          "subject": "通宇通讯",
+          "predicate": "拟以自有资金支付",
+          "object": "人民币30,000.00万元",
+          "value": 30000.0,
+          "unit": "万元",
+          "quote": "公司拟以自有资金人民币30,000.00万元",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "交易方式为股份受让",
+          "claim_type": "fact",
+          "subject": "本次交易",
+          "predicate": "通过方式",
+          "object": "股份受让",
+          "value": null,
+          "unit": "",
+          "quote": "通过股份受让方式",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "标的公司为深圳市佳贤通信科技股份有限公司",
+          "claim_type": "fact",
+          "subject": "本次交易",
+          "predicate": "购买对象为",
+          "object": "深圳市佳贤通信科技股份有限公司",
+          "value": null,
+          "unit": "",
+          "quote": "购买深圳市佳贤通信科技股份有限公司（以下简称“佳贤通信”或“标的公司”）",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "拟购买股权比例合计约25.00%",
+          "claim_type": "fact",
+          "subject": "本次交易",
+          "predicate": "购买股权比例为",
+          "object": "约25.00%",
+          "value": 25.0,
+          "unit": "%",
+          "quote": "合计约25.00%的股权",
+          "hedge": "approx",
+          "confidence": 1.0
+        },
+        {
+          "text": "对应股数为18,152,657股",
+          "claim_type": "fact",
+          "subject": "本次交易",
+          "predicate": "对应股数为",
+          "object": "18,152,657股",
+          "value": 18152657,
+          "unit": "股",
+          "quote": "对应18,152,657股",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "第一阶段受让股数为10,891,594股",
+          "claim_type": "fact",
+          "subject": "第一阶段",
+          "predicate": "受让股数为",
+          "object": "10,891,594股",
+          "value": 10891594,
+          "unit": "股",
+          "quote": "其中第一阶段受让10,891,594股",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "第一阶段受让股份约占标的公司总股本的15%",
+          "claim_type": "fact",
+          "subject": "第一阶段",
+          "predicate": "占总股本比例约为",
+          "object": "15%",
+          "value": 15,
+          "unit": "%",
+          "quote": "（约占标的公司总股本的15%）",
+          "hedge": "approx",
+          "confidence": 1.0
+        },
+        {
+          "text": "分四期交割",
+          "claim_type": "fact",
+          "subject": "本次交易",
+          "predicate": "交割安排为",
+          "object": "分四期交割",
+          "value": 4,
+          "unit": "期",
+          "quote": "分四期交割",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "交易完成后佳贤通信不纳入合并报表范围",
+          "claim_type": "fact",
+          "subject": "佳贤通信",
+          "predicate": "会计处理为",
+          "object": "不纳入公司合并报表范围",
+          "value": null,
+          "unit": "",
+          "quote": "本次交易完成后，佳贤通信不纳入公司合并报表范围",
+          "hedge": "none",
+          "confidence": 1.0
+        }
+      ],
+      "document_id": "ty_20260805_investment"
+    },
+    {
+      "task": "claim_extract",
+      "model": "qwen3.8-flash",
+      "prompt_version": "claim_extract_v1",
+      "input_hash": "db11ba51a4a20027",
+      "prompt_tokens": 368,
+      "completion_tokens": 342,
+      "valid": true,
+      "created_at": "2026-10-20T01:53:28.107445Z",
+      "cost_cny": 0.001052,
+      "output_json": [
+        {
+          "text": "公司股票交易价格连续三个交易日收盘价格涨幅偏离值累计超过20%",
+          "claim_type": "fact",
+          "subject": "通宇通讯股票",
+          "predicate": "涨幅偏离值累计超过",
+          "object": "20%",
+          "value": 20,
+          "unit": "%",
+          "quote": "公司股票交易价格连续三个交易日内（2026年7月31日、2026年8月3日、2026年8月4日）收盘价格涨幅偏离值累计超过20%",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "异常波动期间为2026年7月31日至2026年8月4日的三个交易日",
+          "claim_type": "fact",
+          "subject": "异常波动期间",
+          "predicate": "包含",
+          "object": "2026年7月31日、2026年8月3日、2026年8月4日",
+          "value": null,
+          "unit": "",
+          "quote": "（2026年7月31日、2026年8月3日、2026年8月4日）",
+          "hedge": "none",
+          "confidence": 1.0
+        }
+      ],
+      "document_id": "ty_20260805_abnormal"
+    },
+    {
+      "task": "claim_extract",
+      "model": "qwen3.8-flash",
+      "prompt_version": "claim_extract_v1",
+      "input_hash": "2dbf8d1fde2df2db",
+      "prompt_tokens": 423,
+      "completion_tokens": 832,
+      "valid": true,
+      "created_at": "2026-10-20T01:53:35.547580Z",
+      "cost_cny": 0.002087,
+      "output_json": [
+        {
+          "text": "网络媒体流传佳贤通信与英伟达合作开发6G AI-RAN基站",
+          "claim_type": "rumor",
+          "subject": "佳贤通信",
+          "predicate": "合作开发",
+          "object": "6G AI-RAN基站",
+          "value": null,
+          "unit": "",
+          "quote": "部分网络媒体上流传“佳贤通信与英伟达合作开发6G AI-RAN基站",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "网络媒体流传通宇通讯拟入股佳贤通信25%股权",
+          "claim_type": "rumor",
+          "subject": "通宇通讯",
+          "predicate": "拟入股",
+          "object": "佳贤通信",
+          "value": 25,
+          "unit": "%",
+          "quote": "通宇通讯拟入股25%股权",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "网络媒体流传该业务瞄准2,000亿元市场",
+          "claim_type": "rumor",
+          "subject": "佳贤通信/通宇通讯相关项目",
+          "predicate": "瞄准",
+          "object": "市场",
+          "value": 2000,
+          "unit": "亿元",
+          "quote": "瞄准2,000亿元市场”的文章",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "佳贤通信与英伟达不存在研发合作关系",
+          "claim_type": "denial",
+          "subject": "佳贤通信",
+          "predicate": "不存在",
+          "object": "与英伟达的研发合作关系",
+          "value": null,
+          "unit": "",
+          "quote": "佳贤通信与英伟达不存在研发合作关系。",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "佳贤通信与英伟达未签署任何意向采购协议或供货协议",
+          "claim_type": "denial",
+          "subject": "佳贤通信",
+          "predicate": "未签署",
+          "object": "与英伟达的意向采购协议或供货协议",
+          "value": null,
+          "unit": "",
+          "quote": "佳贤通信与英伟达未签署任何意向采购协议或供货协议",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "公司对佳贤通信不构成控制",
+          "claim_type": "fact",
+          "subject": "公司",
+          "predicate": "不构成",
+          "object": "对佳贤通信的控制",
+          "value": null,
+          "unit": "",
+          "quote": "公司对佳贤通信不构成控制",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "佳贤通信不纳入公司合并报表范围",
+          "claim_type": "fact",
+          "subject": "佳贤通信",
+          "predicate": "不纳入",
+          "object": "公司合并报表范围",
+          "value": null,
+          "unit": "",
+          "quote": "不纳入公司合并报表范围。",
+          "hedge": "none",
+          "confidence": 1.0
+        }
+      ],
+      "document_id": "ty_20260807_clarification"
+    },
+    {
+      "task": "claim_extract",
+      "model": "qwen3.8-flash",
+      "prompt_version": "claim_extract_v1",
+      "input_hash": "2805e0415d19e7c7",
+      "prompt_tokens": 407,
+      "completion_tokens": 517,
+      "valid": true,
+      "created_at": "2026-10-20T01:53:41.044245Z",
+      "cost_cny": 0.001441,
+      "output_json": [
+        {
+          "text": "公司股票交易价格连续三个交易日内收盘价格涨幅偏离值累计超过20%",
+          "claim_type": "fact",
+          "subject": "通宇通讯股票",
+          "predicate": "涨幅偏离值累计",
+          "object": "超过20%",
+          "value": 20,
+          "unit": "%",
+          "quote": "公司股票交易价格连续三个交易日内（2026年8月5日-2026年8月7日）收盘价格涨幅偏离值累计超过20%",
+          "hedge": "none",
+          "confidence": 1.0
+        },
+        {
+          "text": "佳贤通信与英伟达合作开发6G AI-RAN基站",
+          "claim_type": "rumor",
+          "subject": "佳贤通信",
+          "predicate": "合作开发",
+          "object": "6G AI-RAN基站",
+          "value": null,
+          "unit": "",
+          "quote": "佳贤通信与英伟达合作开发6G AI-RAN基站",
+          "hedge": "流传",
+          "confidence": 0.9
+        },
+        {
+          "text": "通宇通讯拟入股佳贤通信25%股权",
+          "claim_type": "rumor",
+          "subject": "通宇通讯",
+          "predicate": "拟入股",
+          "object": "佳贤通信25%股权",
+          "value": 25,
+          "unit": "%",
+          "quote": "通宇通讯拟入股25%股权",
+          "hedge": "流传",
+          "confidence": 0.9
+        },
+        {
+          "text": "瞄准2,000亿元市场",
+          "claim_type": "rumor",
+          "subject": "该合作项目/投资",
+          "predicate": "瞄准",
+          "object": "2,000亿元市场",
+          "value": 2000,
+          "unit": "亿元",
+          "quote": "瞄准2,000亿元市场",
+          "hedge": "流传",
+          "confidence": 0.9
+        }
+      ],
+      "document_id": "ty_20260808_abnormal"
+    }
+  ]
+}

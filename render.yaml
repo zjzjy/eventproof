@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: eventproof
+    runtime: docker
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: AI_MODE
+        value: precomputed
+      - key: DATA_MODE
+        value: fixture
+      - key: DEMO_MODE
+        value: "true"
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: TZ
+        value: Asia/Shanghai
