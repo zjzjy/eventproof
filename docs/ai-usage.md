@@ -110,3 +110,24 @@ python scripts\merge_source_meta.py
 ```
 
 `.env` 已被 `.gitignore` 忽略，key 不入库。当前仓库的 `precomputed.json` 是已生成的产物，评审不需要 key 也能运行 demo。
+
+## 9. 演示视频中的 AI 与其他自动化
+
+演示视频不是人工口播，也不使用生成式模型编造页面内容：
+
+- 画面来自真实 `core-simple.html` 的 Playwright 自动操作，包含首次关注、四次“同步最新”、通知、第二事件和来源核对；
+- 光标圆点由页面初始化脚本注入，所有点击都通过 Playwright 鼠标事件产生；
+- 女声由 Edge TTS `zh-CN-XiaoxiaoNeural` 生成，语速 `+4%`；若网络失败，脚本回退到本机 `Microsoft Huihui` 女声；
+- 生成式百炼模型只用于此前的公告 claim 抽取，不参与视频画面、结论或数字生成；
+- 字幕逐段对应当前旁白文本，场景与时长记录在 `video/manifest.json`，可按 `input_hash`、prompt 版本、claim quote 和 CNINFO URL 回查；
+- Edge TTS 不产生百炼 token 费用；视频生成脚本不读取 `.env`，也不调用付费 LLM。
+
+复现：
+
+```powershell
+python -m pip install -r requirements-video.txt
+python -m playwright install ffmpeg
+python scripts\make_demo_video.py
+```
+
+验证结果：9 段旁白、`zh-CN-XiaoxiaoNeural`、成片 156.7 秒、1440×900、30 fps、H.264/AAC；字幕 `video/output/eventproof-demo.srt`。

@@ -31,4 +31,9 @@ fixtures/**/__pycache__/
 *.db
 mcp_config.json
 .tmp/
+video/raw/
+video/narration/*.mp3
+video/narration/*.wav
+video/audio/
+video/output/checks/
 

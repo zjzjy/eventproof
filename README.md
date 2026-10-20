@@ -4,9 +4,13 @@
 
 > **只看最核心的一条链路**：本地打开 `http://127.0.0.1:8000/core.html`，说明见 [README-core.md](README-core.md)。
 
+> **公网演示**：[https://zjzjy.github.io/eventproof/core-simple.html](https://zjzjy.github.io/eventproof/core-simple.html)
+>
+> **演示视频**：[video/output/eventproof-demo.mp4](video/output/eventproof-demo.mp4)（156.7 秒，女声旁白，带光标圆点）
+
 事证不是资讯流，也不是聊天机器人。它把公告、新闻、研报和传闻汇聚成同一事件的版本链，区分事实、观点、推测和传闻，在事件被确认、否认、更正或过期时改变结论，并只对实质变化通知用户。
 
-当前仓库是 **48 小时垂直切片**：本地 SQLite 可运行，已用真实公开材料跑通一条完整事件线；公网 URL 待 Render 免费层部署。
+当前仓库是 **48 小时垂直切片**：本地 SQLite 可运行，已用真实公开材料跑通一条完整事件线；公网版以 GitHub Pages 提供无需登录的可操作演示。
 
 ## 1. 目标用户
 
@@ -108,6 +112,24 @@ python scripts\merge_source_meta.py
 
 当前仓库已包含 `fixtures/tongyu/precomputed.json`，**不需要 key 也能跑 demo**。
 
+### 5.4 重新生成演示视频
+
+视频由真实页面操作录制，不是 PPT 或截图拼接。Playwright 驱动 Chrome，页面内注入可见光标圆点；Edge TTS 使用 `zh-CN-XiaoxiaoNeural` 女声；FFmpeg 按场景时长合成 H.264/AAC MP4。
+
+```powershell
+python -m pip install -r requirements-video.txt
+python -m playwright install ffmpeg
+python scripts\make_demo_video.py
+```
+
+只调整字幕、合成或音量时，可复用最近一次录屏：
+
+```powershell
+python scripts\make_demo_video.py --reuse-raw
+```
+
+旁白文本在 `video/narration.json`，场景、时长、音色与 TTS 引擎记录在 `video/manifest.json`，外挂字幕为 `video/output/eventproof-demo.srt`。Edge TTS 不可用时脚本会回退到本机 `Microsoft Huihui` 中文女声。
+
 ## 6. 数据与 AI
 
 ### 6.1 数据
@@ -204,12 +226,11 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ## 10. 部署（零成本）
 
 - 正式提交入口：`https://zjzjy.github.io/eventproof/core-simple.html`（GitHub Pages；首次关注后点“同步最新”逐步演化）。
-- 可选临时动态入口：Cloudflare Quick Tunnel（要求本地服务在线，重启后 URL 会变化，不作为唯一提交 URL）。
-- Render 免费层当前要求信用卡验证；Hugging Face Docker Space 也需要付费计划，不作为当前方案。
+- GitHub Pages 版是无后端依赖的静态状态机演示，不需要服务器、域名或信用卡。
+- Render 免费层当前要求信用卡验证；Hugging Face Docker Space 也需要付费计划，均不作为当前正式入口。
 - `Dockerfile`：Node 构建前端，Python 运行 FastAPI，单容器同时托管静态文件和 API。
-- `render.yaml`：Render Free Web Service，`plan: free`，`healthCheckPath: /health`，无需服务器、域名或信用卡。
+- `render.yaml`：保留给有信用卡且需要动态后端的评审环境；当前不依赖它完成主链路演示。
 - 启动时从 `fixtures/tongyu/precomputed.json` 建 SQLite；Render 免费实例文件系统是临时的，重启会恢复种子数据，适合只读 demo。
-- UptimeRobot 每 5 分钟 ping `/health`，避免 15 分钟休眠。
 - 如果要多用户持久化写操作，再接 Neon/Postgres；当前切片没有实现 Postgres adapter。
 
 部署步骤见 [docs/01-零成本部署方案.md](docs/01-零成本部署方案.md)。
@@ -226,6 +247,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 - SQLite 在 Render 免费实例上不持久；通知已读状态重启会恢复。
 - 公开 demo 只做短引用，不全文转载 iFinD/CNINFO 内容。
 - 不构成投资建议，不生成买卖/目标价。
+- GitHub Pages 版是客户端状态机演示，不连接实时抓取后端；真实 FastAPI 引擎在仓库本地运行。
 
 **未做**
 
@@ -235,7 +257,6 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 - 行情/财务影响验证（T0/CAR）、扶摇接入。
 - 有引用的问答、自定义告警、邮件/webhook。
 - 多用户/RBAC、Postgres adapter、OCR、移动端精修。
-- 60–180 秒演示视频（待录制）。
 
 ## 12. 目录
 
@@ -245,7 +266,8 @@ apps/api/tests/        pytest（24 passed：14 API + 10 engine）
 apps/web/src/          React 事件串、证据抽屉、diff、通知、简报
 fixtures/tongyu/       sources.json + precomputed.json
 fixtures/raw/tongyu/   4 份 CNINFO PDF（原始件）
-scripts/               precompute.py、merge_source_meta.py
+scripts/               precompute、数据整理、自动演示视频
+video/                 旁白配置、生成清单、字幕、成片
 docs/                  设计、零成本部署、核心主线、AI 记录、测试
 notes/                 UI 走查笔记
 Dockerfile             Render 单容器
@@ -256,10 +278,10 @@ render.yaml            Render Free Blueprint
 
 | 交付物 | 状态 |
 | --- | --- |
-| 可运行 Web | 本地已跑通；公网 URL 待 Render 部署 |
-| 源代码仓库 | 本地已 `git init` + commit；待 GitHub remote/push |
+| 可运行 Web | [GitHub Pages](https://zjzjy.github.io/eventproof/core-simple.html)；本地 FastAPI 可运行 |
+| 源代码仓库 | https://github.com/zjzjy/eventproof |
 | README | 本文件 |
-| 60–180s 视频 | 待录制 |
+| 60–180s 视频 | `video/output/eventproof-demo.mp4`，156.7 秒 |
 | AI 使用与验证记录 | `docs/ai-usage.md` |
 | 测试说明 | `docs/testing.md` |
 | 高层设计 | `docs/00-高层设计.md` |

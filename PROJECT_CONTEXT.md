@@ -1,6 +1,6 @@
 # 事证 EventProof · 项目上下文
 
-> 最后更新：2026-10-20 ｜ 本次会话：完成核心垂直切片（事件串 + 证据 + diff + 通知 + as-of）
+> 最后更新：2026-10-20 ｜ 本次会话：补齐自动演示视频（女声 + 光标 + 真实页面操作）
 
 ## 项目背景
 
@@ -26,14 +26,15 @@
 - 极简核心链路：`apps/web/dist/core-simple.html`，打开 `/core.html` 会跳转；单页展示 4 个演化节点、A/B/C/D 证据等级、时间口径和 1 条 P0 通知；时间口径在演化上方，P0 并入否认节点，口径折叠在页面底部。无日期切换和柱状图。完整版仍保留但不再是主路径。
 - iFinD 已可用，扶摇仍未接入。
 - iFinD 官方 SKILL 已安装到 `C:\Users\Hanah\.codex\skills\ifind-finance-data`（v1.4.0），密钥已配置；`listTools("stock")` 自检通过（HTTP 200，10 个工具），`news` 服务 3 个工具：`search_notice`、`search_news`、`search_trending_news`。
-- 本机可用：Node 22、Python 3.12、Docker 27、Git 2.47；工作区已 `git init`，当前 commit `29eefff`。
-- 本机缺口：Docker daemon 未启动、无本地 Postgres/psql、无 Ollama、无 git 仓库；`gh` 在当前沙箱读不到配置。
+- 本机可用：Node 22、Python 3.12、Docker 27、Git 2.47；GitHub remote 已配置为 `zjzjy/eventproof`。
+- 本机缺口：Docker daemon 未启动、无本地 Postgres/psql、无 Ollama；`gh` 在当前沙箱读不到配置。
 - LLM 已配置：阿里云百炼 OpenAI 兼容接口，`qwen3.8-flash`；最小 JSON 抽取测试通过（3 条 claim，444 tokens，`enable_thinking=false`）。key 在 `.env`，不入库。
 - PDF 解析注意：CNINFO 的 4 份公告 PDF 可下载，但 pypdf/pdfplumber/PyMuPDF 提取中文均为乱码（字体 ToUnicode 问题）；当前用 iFinD 检索片段 + CNINFO 原文 URL 作为证据，PDF 保留作原始件。OCR 列为 P1。
 - 开发数据库决策：SQLite（零依赖）；容器启动时从 `precomputed.json` 重建，适合单用户只读 demo。Postgres adapter/Neon 是 P1，当前代码未实现。
 - 实际技术栈：React 19 + Vite + TS + 手写 CSS；FastAPI 0.150 + Pydantic 2 + SQLite；没有 Tailwind/SQLAlchemy/Alembic（当前切片刻意减依赖）。
-- 部署：Render Free Web Service（单容器同时托管 React 静态文件和 FastAPI，750 小时/月，15 分钟休眠、约 1 分钟唤醒）+ UptimeRobot Free（5 分钟保活）；公网地址用 `*.onrender.com`，不买服务器/域名。SQLite 启动 seed，重启恢复。
+- 部署：正式入口使用 GitHub Pages 静态状态机；Render 动态后端保留 Docker 配置，但因免费层要求信用卡不作为当前提交依赖。
 - 正式提交入口：GitHub Pages `https://zjzjy.github.io/eventproof/core-simple.html`；已验证首次关注、同步 v1–v5 和通知流程。
+- 演示视频：`video/output/eventproof-demo.mp4`，156.7 秒、1440×900、30 fps、H.264/AAC；女声 Edge TTS `zh-CN-XiaoxiaoNeural`，页面内注入光标圆点；由 `scripts/make_demo_video.py` 自动录制和合成。
 - 可选动态入口：Cloudflare Quick Tunnel（电脑/uvicorn/cloudflared 必须在线，重启后 URL 会变；不作为唯一提交 URL）。
 - Hugging Face Docker Space 现在需要付费计划，不作为当前方案；`hf-space` 分支保留。
 - 数据策略：`fixture / live / hybrid` 三档；真实公开文档快照兜底；连接器做适配器，不把业务逻辑绑死在单一供应商。
@@ -55,18 +56,17 @@
 - 已完成：关注入口与多事件抽屉：002792 通宇通讯 + 300209 行云科技；来源徽标、关注事件 toggle、关注标的表单；静态页用 localStorage。
 - 已完成（已跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加并生效。
 - 已完成：24 passed（含五个场景 API）；观点/推测已补入，官方冲突标记 disputed；GitHub Pages 页面用客户端状态机按同一规则推进。
-- 进行中：部署 Render、录 60–180s 视频；真实 ingestion/connector 仍是下一步。
+- 已完成：60–180 秒自动演示视频，含女声旁白、光标圆点、场景字幕和可重复生成脚本。
+- 进行中：真实 ingestion/connector；Render 动态后端因免费层信用卡要求不阻塞 GitHub Pages 提交。
 - 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、17 条 claim、4 个 revision；pytest 24 passed。
 
 ## TODO
 
-1. **P0** 建 GitHub remote 并 push 当前 commit；本地已 `git init` + commit。
-2. **P0** 注册 Render + UptimeRobot（不需要 Neon），用 `render.yaml`/`Dockerfile` 部署，拿到 `*.onrender.com` URL。
-3. **P0** 录 60–180 秒演示视频：收件箱 → 事件串 → 证据抽屉 → v2→v3 diff → 通知 → as-of → 导出。
-4. **P0** 补更正/过期/撤稿的演示数据或运行时动作（状态机已设计，当前只展示更新 + 否认 + 市场反应）。
-5. **P1** 补 3–5 个事件、20–30 篇文档，做 claim 分类/合并标注集与正式指标。
-6. **P1** 接行情/财务影响验证（T0/CAR）；扶摇未接。
-7. **P1** PDF OCR（当前 CNINFO 字体 ToUnicode 乱码）、Postgres adapter、实时 connector、限流。
+1. **P0** 补更正/过期/撤稿的演示数据或运行时动作（状态机已设计，当前只展示更新 + 否认 + 市场反应）。
+2. **P1** 补 3–5 个事件、20–30 篇文档，做 claim 分类/合并标注集与正式指标。
+3. **P1** 接行情/财务影响验证（T0/CAR）；扶摇未接。
+4. **P1** PDF OCR（当前 CNINFO 字体 ToUnicode 乱码）、Postgres adapter、实时 connector、限流。
+5. **P1** 如有信用卡，可再补 Render 动态入口；当前正式 URL 已由 GitHub Pages 满足。
 
 ## 走的弯路
 

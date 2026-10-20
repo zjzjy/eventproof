@@ -1,0 +1,65 @@
+{
+  "narration\\01-intro": {
+    "cache_key": "cce5e1334a85b358aee4f8bdbd7ae4b94341829ebb8671c25d424ef95b430d55",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 13.32
+  },
+  "narration\\02-follow": {
+    "cache_key": "be3d70246d0bdab35e433114569e26e42f2ad63357482fcc38cd5d77e38d7746",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 15.048
+  },
+  "narration\\03-fact": {
+    "cache_key": "a4b262cba467d9c7a3b5c531aaaedc44435cb263e40672b2bf0d4c396d5032f6",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 20.904
+  },
+  "narration\\04-rumor": {
+    "cache_key": "bf3233f88c08258741bda7171c0fbd9b737e5c2ba73f56277ff8f5dddde990f2",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 15.384
+  },
+  "narration\\05-denial": {
+    "cache_key": "e4f2b1df095721f795fc986954b03e2e9685143237dad45e766b75fd22c9cbbd",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 17.448
+  },
+  "narration\\06-market": {
+    "cache_key": "235ba5a7ace5f5f26688c27a4da33ce68c0bb6ec3e3f08d70175ee6fd61f87db",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 17.928
+  },
+  "narration\\07-new-stage": {
+    "cache_key": "0f8070f74ab62aaa570afc79faec82d7fdbc3db6ac03eecebb93724cd72d9c1b",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 18.0
+  },
+  "narration\\08-multi-event": {
+    "cache_key": "084da707b2d63eaa4532ecd11b6ef46e2022d5a975e755e54a81f4cad5ece7f4",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 15.6
+  },
+  "narration\\09-traceability": {
+    "cache_key": "fdfd1541165f4a5ec9e5cd5af69de7bbf30b6c94e53f34f944766bce1f1bebff",
+    "extension": ".mp3",
+    "engine": "edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "duration": 18.528
+  }
+}

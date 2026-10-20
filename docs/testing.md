@@ -106,3 +106,39 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 - Node 22，`apps/web` 内 `npm install` + `npm run build`；
 - 后端默认 SQLite `data/eventproof.db`，删除后启动会自动从 precomputed 重建；
 - `.env` 只用于重新跑预计算，运行 demo 不需要 key。
+
+## 7. 演示视频验收
+
+生成命令：
+
+```powershell
+python -m pip install -r requirements-video.txt
+python -m playwright install ffmpeg
+python scripts\make_demo_video.py
+```
+
+实际结果：
+
+| 检查项 | 结果 |
+| --- | --- |
+| 文件 | `video/output/eventproof-demo.mp4` |
+| SHA-256 | `71085fc95f009a37889586f8eb9d6606fb21482a87ea554bebb5914ffbc5b877` |
+| 时长 | **156.736 秒**，满足 60–180 秒 |
+| 画面 | 1440×900，30 fps，H.264 High，yuv420p |
+| 音频 | AAC LC，48 kHz stereo；平均 −20.1 dB，峰值 −1.7 dB，无削波 |
+| 女声 | Edge TTS `zh-CN-XiaoxiaoNeural`，语速 `+4%` |
+| 光标 | 页面内可见黑色圆点，点击有扩散反馈 |
+| 画面来源 | Playwright 驱动真实 Chrome 操作，不是静态图拼接 |
+| 解码检查 | `ffmpeg -v error -i ... -f null -` 无错误 |
+| 字幕 | `video/output/eventproof-demo.srt` |
+
+关键帧人工走查：
+
+- 0.8 秒：onboarding 已出现，光标圆点在页面内；
+- 20 秒：v1 结论、四类时间、事实/观点/推测和 A 级理由同屏；
+- 58 秒：v2 传闻与 C 级理由、2000 亿元市场规模解释可见；
+- 100 秒：v3 否认、P0 通知和 v4 市场反应已进入演化链；
+- 132 秒：关注 300209 后打开行云科技独立事件；
+- 150 秒：判断口径与可追溯说明可见。
+
+场景列表、旁白全文、TTS 引擎和逐段时长保存在 `video/manifest.json`。`video/raw/` 与 `video/audio/` 是可重建中间件，不入库；最终 MP4、字幕、旁白配置和清单入库。
