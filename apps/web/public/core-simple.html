@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>事证 Core · 通宇通讯</title>
+  <style>
+    :root {
+      --ink: #171717;
+      --muted: #6b6b6b;
+      --line: #e3e3e3;
+      --soft: #fafafa;
+      --green: #166534;
+      --red: #a33228;
+      --amber: #946200;
+      --blue: #1d4ed8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #fff;
+      color: var(--ink);
+      font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    header { border-bottom: 1px solid var(--line); }
+    .header-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 13px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .brand { font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+    .brand span { margin-left: 6px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+    .meta { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); white-space: nowrap; }
+    main { max-width: 1040px; margin: 0 auto; padding: 28px 24px 48px; }
+    .kicker { font-family: Consolas, monospace; font-size: 9px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+    h1 { margin: 6px 0 4px; font-size: 29px; line-height: 1.25; letter-spacing: -.02em; font-weight: 650; }
+    .sub { margin: 0; color: var(--muted); font-size: 12px; }
+    .conclusion {
+      margin: 20px 0;
+      padding: 15px 17px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--ink);
+      background: var(--soft);
+    }
+    .label { font-family: Consolas, monospace; font-size: 9px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+    .conclusion p { margin: 7px 0 10px; font-size: 17px; line-height: 1.6; font-weight: 500; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { display: inline-block; padding: 2px 7px; border: 1px solid currentColor; font-size: 10px; line-height: 1.4; }
+    .takeaways {
+      margin: 0 0 18px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+    }
+    .takeaways .label { margin-bottom: 5px; }
+    .takeaways ol { margin: 0; padding-left: 20px; }
+    .takeaways li { margin: 6px 0; color: #333; font-size: 12px; line-height: 1.6; }
+    .takeaways b { color: var(--ink); }
+    .scenario-banner {
+      margin-bottom: 16px;
+      padding: 7px 10px;
+      border: 1px solid #d9c9a3;
+      background: #fffaf0;
+      color: #6b4d00;
+      font-family: Consolas, monospace;
+      font-size: 10px;
+    }
+    .green { color: var(--green); }
+    .red { color: var(--red); }
+    .amber { color: var(--amber); }
+    .blue { color: var(--blue); }
+    .gray { color: var(--muted); }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin: 26px 0 0;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-head h2 { margin: 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+    .section-head span { color: var(--muted); font-size: 10px; }
+    .stage {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr) 230px;
+      gap: 18px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .time { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); }
+    .time b { display: block; font-size: 13px; color: var(--ink); font-weight: 600; }
+    .content-head { display: flex; align-items: center; gap: 6px; }
+    .tier {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      font-family: Consolas, monospace;
+      font-size: 10px;
+    }
+    .content p { margin: 6px 0; font-size: 14px; line-height: 1.55; }
+    .quote {
+      margin-top: 6px;
+      padding-left: 8px;
+      border-left: 1px solid #d0d0d0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .quote a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .note { margin-top: 6px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .why b {
+      display: block;
+      font-family: Consolas, monospace;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .why span { display: block; margin-top: 4px; font-size: 11px; color: #444; line-height: 1.5; }
+    .change-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .change-line b { color: var(--ink); font-weight: 500; }
+    .standard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 12px; }
+    .standard-grid > div { padding-left: 8px; border-left: 2px solid var(--ink); }
+    .standard-grid b { display: block; font-family: Consolas, monospace; font-size: 18px; line-height: 1; }
+    .standard-grid span { display: block; margin-top: 5px; font-size: 11px; font-weight: 600; }
+    .standard-grid p { margin: 4px 0 0; font-size: 10px; color: var(--muted); line-height: 1.5; }
+    .time-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .time-row span { display: block; font-size: 9px; color: var(--muted); }
+    .time-row b { display: block; margin-top: 3px; font-family: Consolas, monospace; font-size: 11px; }
+    .time-row small { display: block; font-size: 9px; color: var(--muted); }
+    .notify { margin-top: 18px; padding: 11px 13px; border: 1px solid #e3c4c0; border-left: 3px solid var(--red); }
+    .notify b { display: block; margin: 4px 0; font-size: 14px; }
+    .notify p { margin: 0; font-size: 11px; color: #444; }
+    .notify span { display: block; margin-top: 5px; font-size: 10px; color: var(--muted); }
+    .notify-inline {
+      margin-top: 7px;
+      padding: 7px 8px;
+      border-left: 2px solid var(--red);
+      background: #fff;
+      font-size: 10px;
+      color: #444;
+    }
+    .notify-inline b { display: block; margin-bottom: 2px; color: var(--red); font-size: 9px; }
+    .notify-inline span { display: block; line-height: 1.5; }
+    .method { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .method summary { cursor: pointer; list-style: none; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .method summary::-webkit-details-marker { display: none; }
+    .method summary::before { content: "＋ "; font-family: Consolas, monospace; }
+    .method[open] summary::before { content: "− "; }
+    .method .standard-grid { margin-top: 12px; }
+    .state-rule { margin-top: 14px; font-size: 10px; color: var(--muted); line-height: 1.6; }
+    .open-questions { margin-top: 20px; }
+    .question-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px; }
+    .question-grid > div { padding-left: 8px; border-left: 1px solid var(--line); }
+    .question-grid b { display: block; font-size: 11px; }
+    .question-grid span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 10px; color: var(--muted); }
+    @media (max-width: 760px) {
+      .header-inner { padding: 11px 16px; }
+      .meta { display: none; }
+      main { padding: 20px 16px 36px; }
+      h1 { font-size: 24px; }
+      .stage { grid-template-columns: 1fr; gap: 8px; }
+      .time { display: flex; gap: 6px; align-items: baseline; }
+      .standard-grid { grid-template-columns: 1fr 1fr; }
+      .time-row { grid-template-columns: 1fr 1fr; }
+      .question-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">事证<span>CORE / ONE EVENT</span></div>
+      <div class="meta">002792 通宇通讯 · 收购 + 澄清</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="kicker">EVENT / 002792 · SZSE</div>
+    <h1>通宇通讯收购佳贤通信25%股权</h1>
+    <p class="sub">同一事件 · 4 份官方披露合并 · 08-07 澄清公告显式引用 08-05 投资公告</p>
+
+    <section class="conclusion">
+      <div class="label">当前结论</div>
+      <p id="conclusion-line">收购已确认：3亿元受让25%股权，分四期交割且不并表。<br />英伟达合作与2000亿元市场传闻已被公司否认。</p>
+      <div class="tags" id="conclusion-tags">
+        <span class="tag green">收购已确认</span>
+        <span class="tag red">传闻已否认</span>
+        <span class="tag gray">未知：交易完成时间</span>
+      </div>
+    </section>
+
+    <section class="takeaways">
+      <div class="label">最关键的三件事</div>
+      <ol>
+        <li><b>真的：</b>3亿元受让25%股权，分四期交割，不并表；不并表意味着佳贤收入不会全额进入通宇通讯报表。</li>
+        <li><b>被否认 / 容易误读：</b>英伟达合作与2000亿市场被否认；但佳贤使用英伟达 CUDA Aerial 开源生态，不等于与英伟达合作；2000亿是市场规模，不是订单或收入。</li>
+        <li><b>需要重新评估：</b>澄清前股价已两次三日涨超20%，同期叙事正是被否认的部分；市场反应不能当作收购质量证明。</li>
+      </ol>
+    </section>
+
+    <div class="time-row" id="time-row">
+      <div><span>事情发生</span><b>08-04</b><small>日期级</small></div>
+      <div><span>首次披露</span><b>08-05</b><small>日期级</small></div>
+      <div><span>系统抓取</span><b>08-05 18:00</b><small>演示推断</small></div>
+      <div><span>最近更新</span><b>08-08 18:00</b><small>v4 · 市场反应</small></div>
+    </div>
+
+    <div class="section-head">
+      <h2>事件怎么演化</h2>
+    </div>
+
+    <section id="stages">
+      <div class="stage">
+        <div class="time"><b>08-05</b><span>18:00 · v1</span></div>
+        <div class="content">
+          <div class="content-head"><span class="tag green">事实</span><span class="tier">A</span></div>
+          <p>拟以3亿元受让佳贤通信25%股权，分四期交割，不纳入合并报表。</p>
+          <div class="quote">“公司拟以自有资金人民币30,000.00万元……合计约25.00%的股权” · <a href="https://static.cninfo.com.cn/finalpage/2026-08-05/1225458565.PDF" target="_blank" rel="noreferrer">公告原文</a></div>
+          <div class="note">不并表：佳贤收入不会全额进入通宇通讯报表；按比例粗算，25%对应100%估值约12亿元，是否合理以评估报告为准。</div>
+        </div>
+        <div class="why">
+          <b>为什么可信度是 A</b>
+          <span>交易所公告原文，后续澄清再次引用同一交易。</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="time"><b>08-07</b><span>17:55 · v2</span></div>
+        <div class="content">
+          <div class="content-head"><span class="tag amber">传闻</span><span class="tier">C</span></div>
+          <p>网络流传：佳贤与英伟达合作开发6G AI-RAN，瞄准2000亿元市场。</p>
+          <div class="quote">“部分网络媒体上流传‘佳贤通信与英伟达合作开发6G AI-RAN基站’” · <a href="https://static.cninfo.com.cn/finalpage/2026-08-07/1225462452.PDF" target="_blank" rel="noreferrer">澄清公告</a></div>
+          <div class="note">2000亿元是传闻中的市场规模，不是订单或收入；相关产品仍处前期研发，尚未商业化。</div>
+        </div>
+        <div class="why">
+          <b>为什么可信度是 C</b>
+          <span>只有媒体转述，没有原始报道，也没有独立来源。</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="time"><b>08-07</b><span>18:00 · v3</span></div>
+        <div class="content">
+          <div class="content-head"><span class="tag red">否认</span><span class="tier">A</span></div>
+          <p>公司澄清：佳贤与英伟达不存在研发合作关系；未签署任何意向采购或供货协议。</p>
+          <div class="quote">“佳贤通信与英伟达不存在研发合作关系。” · <a href="https://static.cninfo.com.cn/finalpage/2026-08-07/1225462452.PDF" target="_blank" rel="noreferrer">澄清公告</a></div>
+          <div class="note">公告同时说明：佳贤基于英伟达 CUDA Aerial 开源生态开展研发；这不等于与英伟达存在合作关系。</div>
+          <div class="notify-inline" id="denial-notification">
+            <b>这条否认触发的通知</b>
+            <span>08-07 18:05 · P0：英伟达合作与2000亿市场传闻被公司否认。为什么通知：你关注了002792；规则=官方否认即时通知。</span>
+          </div>
+        </div>
+        <div class="why">
+          <b>为什么可信度是 A</b>
+          <span>公司官方澄清，直接否定具体合作与协议。</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="time"><b>08-08</b><span>18:00 · v4</span></div>
+        <div class="content">
+          <div class="content-head"><span class="tag blue">市场</span><span class="tier">B</span></div>
+          <p>8月5日至7日三个交易日收盘涨幅偏离值累计超过20%。</p>
+          <div class="quote">“收盘价格涨幅偏离值累计超过20%” · <a href="https://static.cninfo.com.cn/finalpage/2026-08-08/1225463216.PDF" target="_blank" rel="noreferrer">异动公告</a></div>
+          <div class="note">此前 7/31–8/4 也已三日涨超20%；不能证明因果，但涨幅叙事与被否认的传闻同期。</div>
+        </div>
+        <div class="why">
+          <b>为什么可信度是 B</b>
+          <span>交易所披露的异动事实；只能说明市场反应，不代表因果。</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="change-line" id="change-line">
+      <span>结论变化</span>
+      <b>08-05 v1 收购已确认</b> → <b>08-07 v2 新增传闻（待核实）</b> → <b>08-07 v3 官方否认</b> → <b>08-08 v4 市场已反应</b>
+    </div>
+
+    <section class="open-questions">
+      <div class="section-head">
+        <h2>还需要核对</h2>
+      </div>
+      <div class="question-grid">
+        <div><b>佳贤值不值12亿元</b><span>收入、利润、评估报告；3亿元对价是否合理。</span></div>
+        <div><b>25%有没有经营影响力</b><span>董事席位、重大事项权利、交割条件与完成时间。</span></div>
+        <div><b>传闻最初从哪来</b><span>目前只有公司转述；原始媒体文章未获得。</span></div>
+      </div>
+    </section>
+
+    <details class="method">
+      <summary>判断口径：A/B/C/D 与类型区分</summary>
+      <div class="standard-grid">
+        <div><b>A</b><span>官方原文</span><p>交易所/公司公告，可直接作为事实。</p></div>
+        <div><b>B</b><span>有原文的转述</span><p>正规媒体引用官方，需核对原文。</p></div>
+        <div><b>C</b><span>无原文转述</span><p>网络传闻/匿名消息，只能当线索。</p></div>
+        <div><b>D</b><span>已否认/撤回</span><p>不作为事实，保留在版本记录里。</p></div>
+      </div>
+      <p class="state-rule">类型区分：事实=可核验的陈述；观点=评价/判断；推测=对未来的判断；传闻=未经证实的流传；否认=官方否定。</p>
+      <p class="state-rule">状态变化规则：新增证据 → 新版本；官方否认 → 传闻降为 D；更正 → 保留旧值并生成新版本；过期 → 标记过期，不写成“假”。</p>
+    </details>
+
+    <footer>
+      来源：通宇通讯公告（CNINFO） · 事实与传闻按原文分开记录 · 关键数字可回到公告原文 · 不构成投资建议
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      if (!location.hostname.endsWith("github.io") && !new URLSearchParams(location.search).has("static")) return;
+      const scenario = new URLSearchParams(location.search).get("scenario");
+      const labels = {
+        correction: "对价更正",
+        "core-denial": "核心收购被否认",
+        expiry: "交割过期",
+        "new-stage": "签署协议（同一 Storyline 新阶段）",
+      };
+      if (!scenario || !labels[scenario]) return;
+
+      const main = document.querySelector("main");
+      const banner = document.createElement("div");
+      banner.className = "scenario-banner";
+      banner.textContent = `演示场景：${labels[scenario]}（模拟数据，仅用于验证规则）`;
+      main.prepend(banner);
+
+      const conclusion = document.getElementById("conclusion-line");
+      const tags = document.getElementById("conclusion-tags");
+      const stages = document.getElementById("stages");
+      const change = document.getElementById("change-line");
+      const timeRow = document.getElementById("time-row");
+
+      const setTags = (items) => {
+        tags.innerHTML = items.map(([label, tone]) => `<span class="tag ${tone}">${label}</span>`).join("");
+      };
+      const setLastUpdate = (date, version, status) => {
+        const cells = timeRow.querySelectorAll(":scope > div");
+        cells[3].innerHTML = `<span>最近更新</span><b>${date}</b><small>${version} · ${status}</small>`;
+      };
+      const markFirstStage = (label) => {
+        const head = stages.querySelector(".stage .content-head");
+        if (head) head.insertAdjacentHTML("beforeend", `<span class="tag red">${label}</span>`);
+      };
+      const addStage = ({ date, time, label, tone, tier, text, quote, note, why, notifyLabel, notifyText }) => {
+        const stage = document.createElement("div");
+        stage.className = "stage";
+        stage.innerHTML = `
+          <div class="time"><b>${date}</b><span>${time}</span></div>
+          <div class="content">
+            <div class="content-head"><span class="tag ${tone}">${label}</span><span class="tier">${tier}</span></div>
+            <p>${text}</p>
+            <div class="quote">${quote}</div>
+            ${note ? `<div class="note">${note}</div>` : ""}
+            ${notifyLabel ? `<div class="notify-inline"><b>${notifyLabel}</b><span>${notifyText}</span></div>` : ""}
+          </div>
+          <div class="why"><b>为什么可信度是 ${tier}</b><span>${why}</span></div>
+        `;
+        stages.appendChild(stage);
+      };
+      const appendChange = (text) => change.insertAdjacentHTML("beforeend", ` → <b>${text}</b>`);
+
+      if (scenario === "correction") {
+        conclusion.innerHTML = "收购已确认，但对价由3亿元更正为2.8亿元；25%股权、分四期、不并表的安排不变；英伟达合作与2000亿市场传闻仍被否认。";
+        setTags([["收购已确认（对价已更正）", "green"], ["传闻已否认", "red"]]);
+        markFirstStage("已被更正");
+        addStage({
+          date: "08-09", time: "10:00 · v5", label: "更正", tone: "red", tier: "A",
+          text: "更正公告：交易对价由3亿元更正为2.8亿元；25%股权、分四期、不并表的安排不变。",
+          quote: "“更正后交易对价为人民币2.8亿元” · 演示更正公告",
+          note: "旧值3亿元保留在 v1，不删除；这是对关键数字的更正，不是重写历史。",
+          why: "公司更正公告，直接修改关键交易数字；旧值仍可回放。",
+          notifyLabel: "这条更正触发的通知",
+          notifyText: "08-09 10:05 · P0：对价由3亿元更正为2.8亿元。为什么通知：关键交易条款发生变化。",
+        });
+        appendChange("08-09 v5 对价更正");
+        setLastUpdate("08-09 10:00", "v5", "对价更正");
+      }
+
+      if (scenario === "core-denial") {
+        conclusion.innerHTML = "公司否认收购佳贤通信25%股权；原公告保留在历史版本；英伟达合作与2000亿市场传闻仍被否认。";
+        setTags([["核心事实被否认", "red"], ["传闻已否认", "red"]]);
+        markFirstStage("核心已否认");
+        addStage({
+          date: "08-09", time: "10:00 · v5", label: "否认", tone: "red", tier: "A",
+          text: "公司公告：不存在收购佳贤通信25%股权的交易安排。",
+          quote: "“公司不存在上述收购安排” · 演示否认公告",
+          note: "原收购公告保留在 v1；核心命题被否认，事件状态变为 denied。",
+          why: "官方否认核心命题，直接推翻原交易事实。",
+          notifyLabel: "这条核心否认触发的通知",
+          notifyText: "08-09 10:05 · P0：收购佳贤通信25%股权被公司否认。为什么通知：核心事件状态反转。",
+        });
+        appendChange("08-09 v5 核心收购被否认");
+        setLastUpdate("08-09 10:00", "v5", "核心否认");
+      }
+
+      if (scenario === "expiry") {
+        conclusion.innerHTML = "收购已确认，但协议约定的交割截止日已过且未见完成；标为过期/未完成，不写成“假”；英伟达合作与2000亿市场传闻仍被否认。";
+        setTags([["收购已确认", "green"], ["交割已过期", "amber"], ["传闻已否认", "red"]]);
+        addStage({
+          date: "09-30", time: "18:00 · v5", label: "过期", tone: "amber", tier: "B",
+          text: "协议约定交割截止日已过，未见完成公告；标为过期/未完成。",
+          quote: "“协议约定交割截止日为2026-09-30” · 演示到期检查",
+          note: "过期只表示未按期完成，不表示交易是假；原始公告与否认记录保留。",
+          why: "依据明确截止日 + 无完成公告；不是仅因“很久没更新”。",
+          notifyLabel: "这条过期触发的通知",
+          notifyText: "09-30 18:05 · P1：交割截止日已过且未完成。为什么通知：明确截止日到期。",
+        });
+        appendChange("09-30 v5 交割过期");
+        setLastUpdate("09-30 18:00", "v5", "交割过期");
+      }
+
+      if (scenario === "new-stage") {
+        conclusion.innerHTML = "收购已确认并进入签署股份转让协议阶段；这是同一 Storyline 的新 Event，不合并原 Event；英伟达合作与2000亿市场传闻仍被否认。";
+        setTags([["收购已确认", "green"], ["新阶段", "blue"], ["传闻已否认", "red"]]);
+        addStage({
+          date: "09-22", time: "18:00 · v5", label: "新阶段", tone: "blue", tier: "A",
+          text: "公司签署股份转让协议；这是同一交易 Storyline 的下一阶段，不是原 Event 的新 claim。",
+          quote: "“关于对外投资购买股权暨签署股份转让协议的公告” · <a href=\"https://static.cninfo.com.cn/finalpage/2026-09-22/1225575523.PDF\" target=\"_blank\" rel=\"noreferrer\">公告原文</a>",
+          note: "同一 Storyline 下新建 Event（follows），不把原收购 Event 合并/改写。",
+          why: "交易所公告，确认交易进入签约阶段。",
+          notifyLabel: "这条新阶段触发的通知",
+          notifyText: "09-22 18:05 · P1：收购进入签署股份转让协议阶段。为什么通知：同一 Storyline 出现新阶段。",
+        });
+        appendChange("09-22 v5 签署协议（linked Event）");
+        setLastUpdate("09-22 18:00", "v5", "签署协议");
+      }
+    })();
+  </script>
+  <script type="module">
+    (() => {
+      if (location.hostname.endsWith("github.io") || new URLSearchParams(location.search).has("static")) return;
+      const scenario = new URLSearchParams(location.search).get("scenario");
+      if (!scenario) return;
+      const labels = {
+        correction: "对价更正",
+        "core-denial": "核心收购被否认",
+        expiry: "交割过期",
+        "new-stage": "签署协议（同一 Storyline 新阶段）",
+      };
+      fetch(`/api/events/evt_tongyu_20260805/scenario/${encodeURIComponent(scenario)}`)
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              throw new Error(text || response.statusText);
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const change = data.change || {};
+          const notification = data.notification || null;
+          const main = document.querySelector("main");
+          const banner = document.createElement("div");
+          banner.className = "scenario-banner";
+          banner.textContent = `演示场景：${labels[scenario] || scenario} · 引擎 ${data.action}${
+            notification ? ` · ${notification.level}` : ""
+          }`;
+          main.prepend(banner);
+
+          document.getElementById("conclusion-line").textContent =
+            change.conclusion || data.event?.summary || "";
+          const tags = document.getElementById("conclusion-tags");
+          tags.innerHTML = (change.tags || [])
+            .map(([label, tone]) => `<span class="tag ${tone}">${label}</span>`)
+            .join("");
+
+          if (change.mark_first) {
+            const head = document.querySelector("#stages .stage .content-head");
+            if (head) {
+              head.insertAdjacentHTML("beforeend", `<span class="tag red">${change.mark_first}</span>`);
+            }
+          }
+
+          const stages = document.getElementById("stages");
+          const stage = document.createElement("div");
+          stage.className = "stage";
+          const notifyHtml = notification
+            ? `<div class="notify-inline"><b>${notification.level} 通知：${notification.title}</b><span>${notification.body} 为什么通知：${notification.why}</span></div>`
+            : "";
+          stage.innerHTML = `
+            <div class="time"><b>${change.date}</b><span>${change.time}</span></div>
+            <div class="content">
+              <div class="content-head"><span class="tag ${change.tone}">${change.label}</span><span class="tier">${change.tier}</span></div>
+              <p>${change.text}</p>
+              <div class="quote">${change.quote}</div>
+              <div class="note">${change.note}</div>
+              ${notifyHtml}
+            </div>
+            <div class="why"><b>为什么可信度是 ${change.tier}</b><span>${change.why}</span></div>
+          `;
+          stages.appendChild(stage);
+
+          if (change.change_line) {
+            document
+              .getElementById("change-line")
+              .insertAdjacentHTML("beforeend", ` → <b>${change.change_line}</b>`);
+          }
+          const cells = document.querySelectorAll("#time-row > div");
+          if (cells[3]) {
+            cells[3].innerHTML = `<span>最近更新</span><b>${change.last_update}</b><small>${change.last_version} · ${change.last_status}</small>`;
+          }
+        })
+        .catch((error) => {
+          const banner = document.createElement("div");
+          banner.className = "scenario-banner";
+          banner.textContent = `场景加载失败：${error.message}`;
+          document.querySelector("main").prepend(banner);
+        });
+    })();
+  </script>
+</body>
+</html>
