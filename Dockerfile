@@ -9,6 +9,7 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app/apps/api
+ENV PORT=7860
 WORKDIR /app
 
 COPY requirements.txt ./
@@ -21,5 +22,5 @@ COPY --from=web /web/dist ./apps/web/dist
 RUN mkdir -p /app/data
 WORKDIR /app/apps/api
 EXPOSE 8000
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-7860}"]
 

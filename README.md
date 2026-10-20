@@ -1,4 +1,16 @@
+---
+title: EventProof
+emoji: 📈
+colorFrom: green
+colorTo: gray
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 事证 EventProof · 投资事件证据时间线
+
+> 当前分支用于 Hugging Face Docker Space 部署；正式说明以 `main` 分支的 README 为准。
 
 > 把一条投资消息，还原成一条可追溯、可回放、会随证据更新的证据链。
 
