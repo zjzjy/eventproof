@@ -122,10 +122,10 @@ python scripts\make_demo_video.py
 | 检查项 | 结果 |
 | --- | --- |
 | 文件 | `video/output/eventproof-demo.mp4` |
-| SHA-256 | `71085fc95f009a37889586f8eb9d6606fb21482a87ea554bebb5914ffbc5b877` |
-| 时长 | **156.736 秒**，满足 60–180 秒 |
+| SHA-256 | `f721c71539d741c4a9a2945c7fabdf0b4cb3802103c629460d16d910196b5c0d` |
+| 时长 | **151.621 秒**，满足 60–180 秒 |
 | 画面 | 1440×900，30 fps，H.264 High，yuv420p |
-| 音频 | AAC LC，48 kHz stereo；平均 −20.1 dB，峰值 −1.7 dB，无削波 |
+| 音频 | AAC LC，48 kHz stereo；平均 −20.1 dB，峰值 −2.7 dB，无削波 |
 | 女声 | Edge TTS `zh-CN-XiaoxiaoNeural`，语速 `+4%` |
 | 光标 | 页面内可见黑色圆点，点击有扩散反馈 |
 | 画面来源 | Playwright 驱动真实 Chrome 操作，不是静态图拼接 |

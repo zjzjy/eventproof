@@ -34,7 +34,7 @@
 - 实际技术栈：React 19 + Vite + TS + 手写 CSS；FastAPI 0.150 + Pydantic 2 + SQLite；没有 Tailwind/SQLAlchemy/Alembic（当前切片刻意减依赖）。
 - 部署：正式入口使用 GitHub Pages 静态状态机；Render 动态后端保留 Docker 配置，但因免费层要求信用卡不作为当前提交依赖。
 - 正式提交入口：GitHub Pages `https://zjzjy.github.io/eventproof/core-simple.html`；已验证首次关注、同步 v1–v5 和通知流程。
-- 演示视频：`video/output/eventproof-demo.mp4`，156.7 秒、1440×900、30 fps、H.264/AAC；女声 Edge TTS `zh-CN-XiaoxiaoNeural`，页面内注入光标圆点；由 `scripts/make_demo_video.py` 自动录制和合成。
+- 演示视频：`video/output/eventproof-demo.mp4`，151.6 秒、1440×900、30 fps、H.264/AAC；女声 Edge TTS `zh-CN-XiaoxiaoNeural`，页面内注入光标圆点；由 `scripts/make_demo_video.py` 自动录制和合成。
 - 可选动态入口：Cloudflare Quick Tunnel（电脑/uvicorn/cloudflared 必须在线，重启后 URL 会变；不作为唯一提交 URL）。
 - Hugging Face Docker Space 现在需要付费计划，不作为当前方案；`hf-space` 分支保留。
 - 数据策略：`fixture / live / hybrid` 三档；真实公开文档快照兜底；连接器做适配器，不把业务逻辑绑死在单一供应商。

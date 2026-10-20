@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-20T21:37:10+0800",
+  "generated_at": "2026-10-20T22:10:26+0800",
   "output": "video\\output\\eventproof-demo.mp4",
-  "file_size_bytes": 13128658,
-  "sha256": "71085fc95f009a37889586f8eb9d6606fb21482a87ea554bebb5914ffbc5b877",
-  "duration_seconds": 156.736,
+  "file_size_bytes": 13387899,
+  "sha256": "f721c71539d741c4a9a2945c7fabdf0b4cb3802103c629460d16d910196b5c0d",
+  "duration_seconds": 151.621,
   "resolution": {
     "width": 1440,
     "height": 900
@@ -24,7 +24,7 @@
       "audio_end": 13.87,
       "scene_seconds": 13.77,
       "scene_start": 0.0,
-      "scene_end": 14.32
+      "scene_end": 14.328
     },
     {
       "id": "follow",
@@ -36,73 +36,73 @@
       "audio_start": 14.32,
       "audio_end": 29.368,
       "scene_seconds": 15.498,
-      "scene_start": 14.32,
-      "scene_end": 29.818
+      "scene_start": 14.328,
+      "scene_end": 29.828
     },
     {
       "id": "fact",
       "title": "事实、观点与推测",
-      "text": "第一版来自八月五日交易所公告。拟以三亿元受让佳贤通信百分之二十五股权，分四期交割，且不并表。来源等级 A 表示官方原文，但其中的管理层判断仍标为观点，业绩展望仍标为推测，不能因为来源是公告就当作既成事实。",
+      "text": "第一版来自八月五日交易所公告。产品会拆分交易金额、股权比例、交割安排和是否并表，并标明来源为 A 级官方原文，但不会把公告里的话都当事实：管理层的定价判断标为观点，下半年盈利展望标为推测，以免立场和预测被误读成结果。",
       "audio_path": "narration\\03-fact.mp3",
-      "tts_seconds": 20.904,
+      "tts_seconds": 22.416,
       "engine": "edge-tts",
       "audio_start": 29.818,
-      "audio_end": 50.722,
-      "scene_seconds": 21.354,
-      "scene_start": 29.818,
-      "scene_end": 51.172
+      "audio_end": 52.234,
+      "scene_seconds": 22.866,
+      "scene_start": 29.828,
+      "scene_end": 52.703
     },
     {
       "id": "rumor",
       "title": "传闻与证据上限",
-      "text": "点击同步最新，系统读入八月七日网络传闻。它被标记为 C 级：没有原始报道，也没有独立来源。这里的两千亿元，指传闻中的市场规模，不是订单，更不是公司收入。",
+      "text": "系统随后收到八月七日市场传闻。产品会把它标为 C 级传闻，因为没有原始报道和独立来源；同时说明两千亿元是传闻中的市场规模，以免用户误读成订单或公司收入。",
       "audio_path": "narration\\04-rumor.mp3",
-      "tts_seconds": 15.384,
+      "tts_seconds": 15.672,
       "engine": "edge-tts",
-      "audio_start": 51.172,
-      "audio_end": 66.556,
-      "scene_seconds": 15.834,
-      "scene_start": 51.172,
-      "scene_end": 67.006
+      "audio_start": 52.684,
+      "audio_end": 68.356,
+      "scene_seconds": 16.122,
+      "scene_start": 52.703,
+      "scene_end": 68.828
     },
     {
       "id": "denial",
       "title": "官方否认改变叙事结论",
-      "text": "再次同步，同一份澄清公告的否认段入库，事件从传闻待核，变为传闻已否认。否认只作用于这条叙事，不会把收购本身标成假；因为叙事状态和核心状态分开，所以同时触发一条 P 零通知。",
+      "text": "澄清公告到达后，产品会单独识别否认内容，把叙事从待核实改为已否认，但不会把收购本身标成假，因为核心状态和叙事状态分开。由于结论发生实质变化，产品会生成 P 零通知，并解释影响了哪一层结论。",
       "audio_path": "narration\\05-denial.mp3",
-      "tts_seconds": 17.448,
+      "tts_seconds": 19.656,
       "engine": "edge-tts",
-      "audio_start": 67.006,
-      "audio_end": 84.454,
-      "scene_seconds": 17.898,
-      "scene_start": 67.006,
-      "scene_end": 84.904
+      "audio_start": 68.806,
+      "audio_end": 88.462,
+      "scene_seconds": 20.106,
+      "scene_start": 68.828,
+      "scene_end": 88.938
     },
     {
       "id": "market",
       "title": "四类时间与市场反应",
-      "text": "第三次同步，市场异动进入事件链。页面把事情发生、首次披露、系统抓取和最近更新分开显示。三日涨幅偏离值超过百分之二十，是已观察事实，但不能据此断言，是收购或传闻造成。",
+      "text": "市场公告到达后，产品会分开显示事情发生、首次披露、系统抓取和最近更新四类时间，以免口径混淆。三日涨幅超过百分之二十只标为已观察的市场反应，而不写成收购或传闻造成的因果结论。",
       "audio_path": "narration\\06-market.mp3",
-      "tts_seconds": 17.928,
+      "tts_seconds": 18.192,
       "engine": "edge-tts",
-      "audio_start": 84.904,
-      "audio_end": 102.832,
-      "scene_seconds": 18.378,
-      "scene_start": 84.904,
-      "scene_end": 103.282
+      "audio_start": 88.912,
+      "audio_end": 107.104,
+      "scene_seconds": 18.642,
+      "scene_start": 88.938,
+      "scene_end": 107.594
     },
     {
       "id": "new-stage",
       "title": "同一 Storyline 的新阶段",
-      "text": "第四次同步，九月二十二日公告显示，交易进入签署股份转让协议阶段。系统把它作为同一 Storyline 下的新事件，而不是改写原收购事件。后续应继续核对协议生效和付款先决条件的截止日期。",
+      "text": "签署协议公告到达后，产品会把它识别为同一 Storyline 的新阶段并关联为新的 Event，不改写原收购事件；同时提示协议生效和付款先决条件仍有截止日期，以免把签署协议误读为交易完成。",
       "audio_path": "narration\\07-new-stage.mp3",
-      "tts_seconds": 18.0,
+      "tts_seconds": 17.136,
       "engine": "edge-tts",
-      "audio_start": 103.282,
-      "audio_end": 121.282,
-      "scene_seconds": 18.45,
-      "scene_start": 103.282,
-      "scene_end": 121.732
+      "audio_start": 107.554,
+      "audio_end": 124.69,
+      "scene_seconds": 17.586,
+      "scene_start": 107.594,
+      "scene_end": 125.188
     },
     {
       "id": "multi-event",
@@ -111,24 +111,24 @@
       "audio_path": "narration\\08-multi-event.mp3",
       "tts_seconds": 15.6,
       "engine": "edge-tts",
-      "audio_start": 121.732,
-      "audio_end": 137.332,
+      "audio_start": 125.14,
+      "audio_end": 140.74,
       "scene_seconds": 16.05,
-      "scene_start": 121.732,
-      "scene_end": 137.782
+      "scene_start": 125.188,
+      "scene_end": 141.266
     },
     {
       "id": "traceability",
       "title": "可追溯与边界",
-      "text": "关键数字都能回到公告原文。公开页面是可操作的客户端状态机演示；真实事件引擎、异常处理与测试在源代码仓库中。事证的核心，是让每一步结论都知道依据、时间和边界，不构成投资建议。",
+      "text": "关键数字都能回到公告原文。事证的核心，是让每一步结论都知道依据、时间和边界，不构成投资建议。",
       "audio_path": "narration\\09-traceability.mp3",
-      "tts_seconds": 18.528,
+      "tts_seconds": 9.96,
       "engine": "edge-tts",
-      "audio_start": 137.782,
-      "audio_end": 156.31,
-      "scene_seconds": 18.978,
-      "scene_start": 137.782,
-      "scene_end": 156.76
+      "audio_start": 141.19,
+      "audio_end": 151.15,
+      "scene_seconds": 10.41,
+      "scene_start": 141.266,
+      "scene_end": 151.688
     }
   ]
 }

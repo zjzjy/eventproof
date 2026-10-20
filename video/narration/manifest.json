@@ -14,39 +14,39 @@
     "duration": 15.048
   },
   "narration\\03-fact": {
-    "cache_key": "a4b262cba467d9c7a3b5c531aaaedc44435cb263e40672b2bf0d4c396d5032f6",
+    "cache_key": "41d711026e5652d3ab3f7822090014e7f00b230bda14b57285751f8dc7302406",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 20.904
+    "duration": 22.416
   },
   "narration\\04-rumor": {
-    "cache_key": "bf3233f88c08258741bda7171c0fbd9b737e5c2ba73f56277ff8f5dddde990f2",
+    "cache_key": "05b9d6f443248c2c20c5e59b449469e79c371350a399e59bb6339f8036ae50aa",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 15.384
+    "duration": 15.672
   },
   "narration\\05-denial": {
-    "cache_key": "e4f2b1df095721f795fc986954b03e2e9685143237dad45e766b75fd22c9cbbd",
+    "cache_key": "01b065b2919d3a0062d8c564e52b35b7edc78eddb9894889c811a8b3ecb28884",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 17.448
+    "duration": 19.656
   },
   "narration\\06-market": {
-    "cache_key": "235ba5a7ace5f5f26688c27a4da33ce68c0bb6ec3e3f08d70175ee6fd61f87db",
+    "cache_key": "61ecd5c45f8661cd289711c887b8ac73b80625c311bdd0551ee55a3d2d91e9fa",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 17.928
+    "duration": 18.192
   },
   "narration\\07-new-stage": {
-    "cache_key": "0f8070f74ab62aaa570afc79faec82d7fdbc3db6ac03eecebb93724cd72d9c1b",
+    "cache_key": "584070436605d3dfc19567f2e64da6d10b4c2bbc047fcdf89e832f579194c173",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 18.0
+    "duration": 17.136
   },
   "narration\\08-multi-event": {
     "cache_key": "084da707b2d63eaa4532ecd11b6ef46e2022d5a975e755e54a81f4cad5ece7f4",
@@ -56,10 +56,10 @@
     "duration": 15.6
   },
   "narration\\09-traceability": {
-    "cache_key": "fdfd1541165f4a5ec9e5cd5af69de7bbf30b6c94e53f34f944766bce1f1bebff",
+    "cache_key": "bc4162035de709d7e29c001d1281f71956bc466cbad3a87a5ef6875e64e22cf5",
     "extension": ".mp3",
     "engine": "edge-tts",
     "voice": "zh-CN-XiaoxiaoNeural",
-    "duration": 18.528
+    "duration": 9.96
   }
 }
