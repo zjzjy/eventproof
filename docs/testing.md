@@ -10,7 +10,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-结果：**8 passed**。
+结果：**17 passed**（8 个 API 测试 + 9 个事件引擎测试）。
 
 | 用例 | 断言 |
 | --- | --- |
@@ -22,6 +22,20 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 | v2→v3 diff | 新增 4 条，状态变化 2 条，reason 含 denied |
 | 证据包 | 含 CNINFO URL、原文引用、免责声明、模型名 |
 | 通知已读/重置 | unread 3→2→3；无 admin token 重置返回 401 |
+
+事件引擎测试（`apps/api/tests/test_engine.py`）：
+
+| 用例 | 断言 |
+| --- | --- |
+| 显式引用合并 | 文档引用事件 → merge，score ≥ 0.9 |
+| 同主体不同标的 | decision=link，relation=related |
+| 新阶段 | 生成 linked Event，原 Event claims 不变，P1 |
+| 子 claim 否认 | 传闻 denied，核心仍 confirmed，P0 |
+| 核心否认 | 核心状态 denied，P0 |
+| 更正 | 旧 claim superseded，新 claim active，P0 |
+| 过期 | 必须显式截止日；无截止日 noop；到期后 expired，P1 |
+| 空 claims | duplicate，不生成 revision |
+| 类型推断 | denial/correction/new_stage/rumor 正确推断 |
 
 ## 2. 手动主链路验收
 

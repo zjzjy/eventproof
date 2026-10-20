@@ -195,7 +195,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-当前结果：**8 passed**。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token。
+当前结果：**17 passed**（8 个 API 测试 + 9 个事件引擎测试）。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token，以及同一事件匹配、更新、子 claim 否认、核心否认、更正、过期和 linked Event。
 
 手动验收路径：打开首页 → 点“看否认 diff” → 关弹窗 → 点传闻 claim 看证据抽屉 → 切 v2/v3 → 打开通知 → 标记已读 → 切“简报” → 导出证据包。
 
@@ -238,7 +238,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ```
 apps/api/app/          FastAPI、SQLite、seed、API
-apps/api/tests/        pytest（8 passed）
+apps/api/tests/        pytest（17 passed：8 API + 9 engine）
 apps/web/src/          React 事件串、证据抽屉、diff、通知、简报
 fixtures/tongyu/       sources.json + precomputed.json
 fixtures/raw/tongyu/   4 份 CNINFO PDF（原始件）
