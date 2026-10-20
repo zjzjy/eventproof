@@ -278,11 +278,12 @@ def generate_narration(
     result: list[dict[str, object]] = []
     for index, scene in enumerate(scenes, start=1):
         scene = dict(scene)
-        text = str(scene["text"]).strip()
+        display_text = str(scene["text"]).strip()
+        speech_text = str(scene.get("speech_text") or display_text).strip()
         stem = TTS_DIR / f"{index:02d}-{scene['id']}"
-        cache_key = file_hash(text, voice, rate, volume)
+        cache_key = file_hash(speech_text, voice, rate, volume)
         audio_path = generate_one_tts(
-            text,
+            speech_text,
             stem,
             voice,
             rate,
@@ -671,28 +672,123 @@ def action_traceability(rec: Recording, duration: float) -> None:
     rec.finish_scene(duration)
 
 
-def write_srt(scenes: list[dict[str, object]], timings: list[dict[str, float]]) -> Path:
-    def stamp(seconds: float) -> str:
+def subtitle_chunks(text: str, max_chars: int = 34) -> list[str]:
+    """Split narration into readable subtitle cues without changing words."""
+    clauses = [
+        clause.strip()
+        for clause in re.findall(r".+?(?:[，、；：。！？]|$)", text)
+        if clause.strip()
+    ]
+    merged: list[str] = []
+    for clause in clauses:
+        while len(clause) > max_chars:
+            window = clause[: max_chars + 1]
+            cut = max(
+                window.rfind("，"),
+                window.rfind("、"),
+                window.rfind("；"),
+                window.rfind("："),
+                window.rfind(" "),
+            )
+            cut = cut + 1 if cut >= 12 else max_chars
+            merged.append(clause[:cut].strip())
+            clause = clause[cut:].strip().lstrip("，、；：")
+        if not clause:
+            continue
+        if merged and len(merged[-1]) + len(clause) <= max_chars:
+            merged[-1] += clause
+        else:
+            merged.append(clause)
+    return merged
+
+
+def subtitle_cues(
+    scenes: list[dict[str, object]],
+    timings: list[dict[str, float]],
+) -> list[dict[str, object]]:
+    cues: list[dict[str, object]] = []
+    for scene, timing in zip(scenes, timings):
+        chunks = subtitle_chunks(str(scene["text"]))
+        weights = [max(1, len(chunk)) for chunk in chunks]
+        total_weight = sum(weights)
+        cursor = float(timing["start"])
+        available = float(timing["end"]) - cursor
+        for chunk, weight in zip(chunks, weights):
+            duration = available * weight / total_weight
+            cues.append(
+                {
+                    "start": cursor,
+                    "end": cursor + duration,
+                    "text": chunk,
+                }
+            )
+            cursor += duration
+    return cues
+
+
+def write_subtitles(
+    scenes: list[dict[str, object]],
+    timings: list[dict[str, float]],
+) -> tuple[Path, Path]:
+    def srt_stamp(seconds: float) -> str:
         milliseconds = round(seconds * 1000)
         hours, milliseconds = divmod(milliseconds, 3_600_000)
         minutes, milliseconds = divmod(milliseconds, 60_000)
         secs, milliseconds = divmod(milliseconds, 1000)
         return f"{hours:02d}:{minutes:02d}:{secs:02d},{milliseconds:03d}"
 
+    def ass_stamp(seconds: float) -> str:
+        centiseconds = round(seconds * 100)
+        hours, centiseconds = divmod(centiseconds, 360_000)
+        minutes, centiseconds = divmod(centiseconds, 6_000)
+        secs, centiseconds = divmod(centiseconds, 100)
+        return f"{hours}:{minutes:02d}:{secs:02d}.{centiseconds:02d}"
+
+    cues = subtitle_cues(scenes, timings)
     blocks = []
-    for index, (scene, timing) in enumerate(zip(scenes, timings), start=1):
+    for index, cue in enumerate(cues, start=1):
         blocks.append(
-            f"{index}\n{stamp(timing['start'])} --> {stamp(timing['end'])}\n"
-            f"{scene['text']}\n"
+            f"{index}\n{srt_stamp(float(cue['start']))} --> "
+            f"{srt_stamp(float(cue['end']))}\n{cue['text']}\n"
         )
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    path = OUTPUT_DIR / "eventproof-demo.srt"
-    path.write_text("\n".join(blocks), encoding="utf-8")
-    return path
+    srt_path = OUTPUT_DIR / "eventproof-demo.srt"
+    srt_path.write_text("\n".join(blocks), encoding="utf-8")
+
+    ass_lines = [
+        "[Script Info]",
+        "ScriptType: v4.00+",
+        "PlayResX: 1440",
+        "PlayResY: 900",
+        "WrapStyle: 2",
+        "ScaledBorderAndShadow: yes",
+        "",
+        "[V4+ Styles]",
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, "
+        "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
+        "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
+        "Alignment, MarginL, MarginR, MarginV, Encoding",
+        "Style: Default,Microsoft YaHei,28,&H00FFFFFF,&H000000FF,"
+        "&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,0,2,90,90,28,1",
+        "",
+        "[Events]",
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text",
+    ]
+    for cue in cues:
+        text = str(cue["text"]).replace("\\", "\\\\").replace("{", "\\{").replace("}", "\\}")
+        ass_lines.append(
+            f"Dialogue: 0,{ass_stamp(float(cue['start']))},"
+            f"{ass_stamp(float(cue['end']))},Default,,0,0,0,,{text}"
+        )
+    ass_path = OUTPUT_DIR / "eventproof-demo.ass"
+    ass_path.write_text("\n".join(ass_lines) + "\n", encoding="utf-8")
+    return srt_path, ass_path
 
 
-def assemble(video_path: Path, audio_path: Path, output: Path) -> None:
+def assemble(video_path: Path, audio_path: Path, subtitle_path: Path, output: Path) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    subtitle_filter_path = subtitle_path.relative_to(ROOT).as_posix()
     run(
         [
             ffmpeg_exe(),
@@ -711,6 +807,8 @@ def assemble(video_path: Path, audio_path: Path, output: Path) -> None:
             "yuv420p",
             "-r",
             "30",
+            "-vf",
+            f"ass={subtitle_filter_path}",
             "-c:a",
             "aac",
             "-b:a",
@@ -804,8 +902,8 @@ def main() -> int:
             f"scene={actual['end'] - actual['start']:.2f}s"
         )
 
-    srt_path = write_srt(scenes, audio_timings)
-    assemble(video_path, audio_path, OUTPUT_PATH)
+    srt_path, ass_path = write_subtitles(scenes, audio_timings)
+    assemble(video_path, audio_path, ass_path, OUTPUT_PATH)
     duration = media_duration(OUTPUT_PATH)
     validate_duration(duration)
 
@@ -819,7 +917,11 @@ def main() -> int:
         "voice": voice,
         "rate": rate,
         "pointer": "visible injected pointer dot",
-        "subtitles": str(srt_path.relative_to(ROOT)),
+        "subtitles": {
+            "burned_in": True,
+            "srt": str(srt_path.relative_to(ROOT)),
+            "ass": str(ass_path.relative_to(ROOT)),
+        },
         "scenes": [
             {
                 **scene,
@@ -839,7 +941,7 @@ def main() -> int:
 
     print(f"Video: {OUTPUT_PATH}")
     print(f"Duration: {duration:.1f}s")
-    print(f"Subtitles: {srt_path}")
+    print(f"Subtitles: {srt_path} + burned-in {ass_path}")
     print(f"Manifest: {MANIFEST_PATH}")
     return 0
 

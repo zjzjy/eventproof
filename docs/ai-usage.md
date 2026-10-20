@@ -130,4 +130,4 @@ python -m playwright install ffmpeg
 python scripts\make_demo_video.py
 ```
 
-验证结果：9 段旁白、`zh-CN-XiaoxiaoNeural`、成片 151.6 秒、1440×900、30 fps、H.264/AAC；字幕 `video/output/eventproof-demo.srt`。
+验证结果：9 段旁白、`zh-CN-XiaoxiaoNeural`、成片 150.9 秒、1440×900、30 fps、H.264/AAC；字幕已烧入画面，同时保留 `video/output/eventproof-demo.srt` 与 `.ass`。

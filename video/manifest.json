@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-20T22:10:26+0800",
+  "generated_at": "2026-10-20T22:29:58+0800",
   "output": "video\\output\\eventproof-demo.mp4",
-  "file_size_bytes": 13387899,
-  "sha256": "f721c71539d741c4a9a2945c7fabdf0b4cb3802103c629460d16d910196b5c0d",
-  "duration_seconds": 151.621,
+  "file_size_bytes": 13873917,
+  "sha256": "a2bea508c66501756e9de985c5db65a9b6b0024cc9dcaed797013ec0a58d047c",
+  "duration_seconds": 150.877,
   "resolution": {
     "width": 1440,
     "height": 900
@@ -11,7 +11,11 @@
   "voice": "zh-CN-XiaoxiaoNeural",
   "rate": "+4%",
   "pointer": "visible injected pointer dot",
-  "subtitles": "video\\output\\eventproof-demo.srt",
+  "subtitles": {
+    "burned_in": true,
+    "srt": "video\\output\\eventproof-demo.srt",
+    "ass": "video\\output\\eventproof-demo.ass"
+  },
   "scenes": [
     {
       "id": "intro",
@@ -29,7 +33,8 @@
     {
       "id": "follow",
       "title": "显式关注是链路起点",
-      "text": "输入零零二七九二，关注通宇通讯。系统不会根据点击或停留猜测关注关系；显式关注，才是这条链路的起点。随后依次完成抓取、主张抽取和事件归并。",
+      "text": "输入 002792，关注通宇通讯。系统不会根据点击或停留猜测关注关系；显式关注，才是这条链路的起点。随后依次完成抓取、主张抽取和事件归并。",
+      "speech_text": "输入零零二七九二，关注通宇通讯。系统不会根据点击或停留猜测关注关系；显式关注，才是这条链路的起点。随后依次完成抓取、主张抽取和事件归并。",
       "audio_path": "narration\\02-follow.mp3",
       "tts_seconds": 15.048,
       "engine": "edge-tts",
@@ -37,85 +42,86 @@
       "audio_end": 29.368,
       "scene_seconds": 15.498,
       "scene_start": 14.328,
-      "scene_end": 29.828
+      "scene_end": 29.844
     },
     {
       "id": "fact",
       "title": "事实、观点与推测",
-      "text": "第一版来自八月五日交易所公告。产品会拆分交易金额、股权比例、交割安排和是否并表，并标明来源为 A 级官方原文，但不会把公告里的话都当事实：管理层的定价判断标为观点，下半年盈利展望标为推测，以免立场和预测被误读成结果。",
+      "text": "第一版来自八月五日交易所公告。事证会拆分交易金额、股权比例、交割安排和是否并表，并标明来源为 A 级官方原文，但不会把公告里的话都当事实：管理层的定价判断标为观点，下半年盈利展望标为推测，以免立场和预测被误读成结果。",
       "audio_path": "narration\\03-fact.mp3",
-      "tts_seconds": 22.416,
+      "tts_seconds": 22.248,
       "engine": "edge-tts",
       "audio_start": 29.818,
-      "audio_end": 52.234,
-      "scene_seconds": 22.866,
-      "scene_start": 29.828,
-      "scene_end": 52.703
+      "audio_end": 52.066,
+      "scene_seconds": 22.698,
+      "scene_start": 29.844,
+      "scene_end": 52.563
     },
     {
       "id": "rumor",
       "title": "传闻与证据上限",
-      "text": "系统随后收到八月七日市场传闻。产品会把它标为 C 级传闻，因为没有原始报道和独立来源；同时说明两千亿元是传闻中的市场规模，以免用户误读成订单或公司收入。",
+      "text": "系统随后收到八月七日市场传闻。事证会把它标为 C 级传闻，因为没有原始报道和独立来源；同时说明两千亿元是传闻中的市场规模，以免用户误读成订单或公司收入。",
       "audio_path": "narration\\04-rumor.mp3",
-      "tts_seconds": 15.672,
+      "tts_seconds": 15.624,
       "engine": "edge-tts",
-      "audio_start": 52.684,
-      "audio_end": 68.356,
-      "scene_seconds": 16.122,
-      "scene_start": 52.703,
-      "scene_end": 68.828
+      "audio_start": 52.516,
+      "audio_end": 68.14,
+      "scene_seconds": 16.074,
+      "scene_start": 52.563,
+      "scene_end": 68.641
     },
     {
       "id": "denial",
       "title": "官方否认改变叙事结论",
-      "text": "澄清公告到达后，产品会单独识别否认内容，把叙事从待核实改为已否认，但不会把收购本身标成假，因为核心状态和叙事状态分开。由于结论发生实质变化，产品会生成 P 零通知，并解释影响了哪一层结论。",
+      "text": "澄清公告到达后，事证会单独识别否认内容，把叙事从待核实改为已否认，但不会把收购本身标成假，因为核心状态和叙事状态分开。由于结论发生实质变化，事证会生成 P 零通知，并解释影响了哪一层结论。",
       "audio_path": "narration\\05-denial.mp3",
-      "tts_seconds": 19.656,
+      "tts_seconds": 19.512,
       "engine": "edge-tts",
-      "audio_start": 68.806,
-      "audio_end": 88.462,
-      "scene_seconds": 20.106,
-      "scene_start": 68.828,
-      "scene_end": 88.938
+      "audio_start": 68.59,
+      "audio_end": 88.102,
+      "scene_seconds": 19.962,
+      "scene_start": 68.641,
+      "scene_end": 88.609
     },
     {
       "id": "market",
       "title": "四类时间与市场反应",
-      "text": "市场公告到达后，产品会分开显示事情发生、首次披露、系统抓取和最近更新四类时间，以免口径混淆。三日涨幅超过百分之二十只标为已观察的市场反应，而不写成收购或传闻造成的因果结论。",
+      "text": "市场公告到达后，事证会分开显示事情发生、首次披露、系统抓取和最近更新四类时间，以免口径混淆。三日涨幅超过百分之二十只标为已观察的市场反应，而不写成收购或传闻造成的因果结论。",
       "audio_path": "narration\\06-market.mp3",
-      "tts_seconds": 18.192,
+      "tts_seconds": 18.144,
       "engine": "edge-tts",
-      "audio_start": 88.912,
-      "audio_end": 107.104,
-      "scene_seconds": 18.642,
-      "scene_start": 88.938,
-      "scene_end": 107.594
+      "audio_start": 88.552,
+      "audio_end": 106.696,
+      "scene_seconds": 18.594,
+      "scene_start": 88.609,
+      "scene_end": 107.234
     },
     {
       "id": "new-stage",
       "title": "同一 Storyline 的新阶段",
-      "text": "签署协议公告到达后，产品会把它识别为同一 Storyline 的新阶段并关联为新的 Event，不改写原收购事件；同时提示协议生效和付款先决条件仍有截止日期，以免把签署协议误读为交易完成。",
+      "text": "签署协议公告到达后，事证会把它识别为同一 Storyline 的新阶段并关联为新的 Event，不改写原收购事件；同时提示协议生效和付款先决条件仍有截止日期，以免把签署协议误读为交易完成。",
       "audio_path": "narration\\07-new-stage.mp3",
-      "tts_seconds": 17.136,
+      "tts_seconds": 17.04,
       "engine": "edge-tts",
-      "audio_start": 107.554,
-      "audio_end": 124.69,
-      "scene_seconds": 17.586,
-      "scene_start": 107.594,
-      "scene_end": 125.188
+      "audio_start": 107.146,
+      "audio_end": 124.186,
+      "scene_seconds": 17.49,
+      "scene_start": 107.234,
+      "scene_end": 124.734
     },
     {
       "id": "multi-event",
       "title": "多个关注事件各自成链",
-      "text": "产品也支持同时关注多个标的。关注三零零二零九后，行云科技的独立事件进入抽屉。它与通宇事件共享阅读方式，但拥有自己的证据链，不会被误合并成同一个事件。",
+      "text": "事证也支持同时关注多个标的。关注 300209 后，行云科技的独立事件进入抽屉。它与通宇事件共享阅读方式，但拥有自己的证据链，不会被误合并成同一个事件。",
+      "speech_text": "事证也支持同时关注多个标的。关注三零零二零九后，行云科技的独立事件进入抽屉。它与通宇事件共享阅读方式，但拥有自己的证据链，不会被误合并成同一个事件。",
       "audio_path": "narration\\08-multi-event.mp3",
-      "tts_seconds": 15.6,
+      "tts_seconds": 15.36,
       "engine": "edge-tts",
-      "audio_start": 125.14,
-      "audio_end": 140.74,
-      "scene_seconds": 16.05,
-      "scene_start": 125.188,
-      "scene_end": 141.266
+      "audio_start": 124.636,
+      "audio_end": 139.996,
+      "scene_seconds": 15.81,
+      "scene_start": 124.734,
+      "scene_end": 140.563
     },
     {
       "id": "traceability",
@@ -124,11 +130,11 @@
       "audio_path": "narration\\09-traceability.mp3",
       "tts_seconds": 9.96,
       "engine": "edge-tts",
-      "audio_start": 141.19,
-      "audio_end": 151.15,
+      "audio_start": 140.446,
+      "audio_end": 150.406,
       "scene_seconds": 10.41,
-      "scene_start": 141.266,
-      "scene_end": 151.688
+      "scene_start": 140.563,
+      "scene_end": 150.984
     }
   ]
 }

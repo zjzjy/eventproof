@@ -6,7 +6,7 @@
 
 > **公网演示**：[https://zjzjy.github.io/eventproof/core-simple.html](https://zjzjy.github.io/eventproof/core-simple.html)
 >
-> **演示视频**：[video/output/eventproof-demo.mp4](video/output/eventproof-demo.mp4)（151.6 秒，女声旁白，带光标圆点）
+> **演示视频**：[video/output/eventproof-demo.mp4](video/output/eventproof-demo.mp4)（150.9 秒，女声旁白、硬字幕、可见光标圆点）
 
 事证不是资讯流，也不是聊天机器人。它把公告、新闻、研报和传闻汇聚成同一事件的版本链，区分事实、观点、推测和传闻，在事件被确认、否认、更正或过期时改变结论，并只对实质变化通知用户。
 
@@ -262,7 +262,7 @@ render.yaml            Render Free Blueprint
 | 可运行 Web | [GitHub Pages](https://zjzjy.github.io/eventproof/core-simple.html)；本地 FastAPI 可运行 |
 | 源代码仓库 | https://github.com/zjzjy/eventproof |
 | README | 本文件 |
-| 演示视频 | `video/output/eventproof-demo.mp4`，151.6 秒 |
+| 演示视频 | `video/output/eventproof-demo.mp4`，150.9 秒 |
 | AI 使用与验证记录 | `docs/ai-usage.md` |
 | 测试说明 | `docs/testing.md` |
 | 高层设计 | `docs/00-高层设计.md` |
