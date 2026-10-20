@@ -33,7 +33,7 @@
 - 开发数据库决策：SQLite（零依赖）；容器启动时从 `precomputed.json` 重建，适合单用户只读 demo。Postgres adapter/Neon 是 P1，当前代码未实现。
 - 实际技术栈：React 19 + Vite + TS + 手写 CSS；FastAPI 0.150 + Pydantic 2 + SQLite；没有 Tailwind/SQLAlchemy/Alembic（当前切片刻意减依赖）。
 - 部署：Render Free Web Service（单容器同时托管 React 静态文件和 FastAPI，750 小时/月，15 分钟休眠、约 1 分钟唤醒）+ UptimeRobot Free（5 分钟保活）；公网地址用 `*.onrender.com`，不买服务器/域名。SQLite 启动 seed，重启恢复。
-- 正式提交入口：GitHub Pages `https://zjzjy.github.io/eventproof/core-simple.html`；已验证 200，页面底部有四个“规则演练”链接，场景页走静态回退。
+- 正式提交入口：GitHub Pages `https://zjzjy.github.io/eventproof/core-simple.html`；已验证首次关注、同步 v1–v5 和通知流程。
 - 可选动态入口：Cloudflare Quick Tunnel（电脑/uvicorn/cloudflared 必须在线，重启后 URL 会变；不作为唯一提交 URL）。
 - Hugging Face Docker Space 现在需要付费计划，不作为当前方案；`hf-space` 分支保留。
 - 数据策略：`fixture / live / hybrid` 三档；真实公开文档快照兜底；连接器做适配器，不把业务逻辑绑死在单一供应商。
@@ -54,7 +54,7 @@
 - 已完成：GitHub Pages 完整演示链：首次关注 002792 → 同步处理 → v1–v5 演化 → 通知 → 关注事件/抽屉；规则演练入口和 scenario 参数已从页面移除，状态用 localStorage，底部可重置。
 - 已完成：关注入口与多事件抽屉：002792 通宇通讯 + 300209 行云科技；来源徽标、关注事件 toggle、关注标的表单；静态页用 localStorage。
 - 已完成（已跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加并生效。
-- 已完成：24 passed；五个场景页已通过引擎/API，版本/P0/P1/通知来自引擎返回；观点/推测已补入，官方冲突标记 disputed。
+- 已完成：24 passed（含五个场景 API）；观点/推测已补入，官方冲突标记 disputed；GitHub Pages 页面用客户端状态机按同一规则推进。
 - 进行中：部署 Render、录 60–180s 视频；真实 ingestion/connector 仍是下一步。
 - 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、17 条 claim、4 个 revision；pytest 24 passed。
 

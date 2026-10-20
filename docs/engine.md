@@ -66,4 +66,4 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ## 6. 接入 API
 
-`POST /api/engine/apply` 接收 `{event, document, now}`；`POST /api/engine/expire` 接收 `{event, deadline, now}`。场景页使用 `GET /api/events/{id}/scenario/{name}`，由后端组装基准事件和模拟文档后调用引擎；四个场景页已验证由引擎返回版本和通知。
+`POST /api/engine/apply` 接收 `{event, document, now}`；`POST /api/engine/expire` 接收 `{event, deadline, now}`。`GET /api/events/{id}/scenario/{name}` 用于后端场景测试；GitHub Pages 的公开演示用客户端状态机按同一规则推进 v1–v5，不调用该 API。

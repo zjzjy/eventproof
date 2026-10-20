@@ -203,7 +203,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ## 10. 部署（零成本）
 
-- 正式提交入口：`https://zjzjy.github.io/eventproof/core-simple.html`（GitHub Pages；规则演练链接已内置，无需拼 URL）。
+- 正式提交入口：`https://zjzjy.github.io/eventproof/core-simple.html`（GitHub Pages；首次关注后点“同步最新”逐步演化）。
 - 可选临时动态入口：Cloudflare Quick Tunnel（要求本地服务在线，重启后 URL 会变化，不作为唯一提交 URL）。
 - Render 免费层当前要求信用卡验证；Hugging Face Docker Space 也需要付费计划，不作为当前方案。
 - `Dockerfile`：Node 构建前端，Python 运行 FastAPI，单容器同时托管静态文件和 API。
