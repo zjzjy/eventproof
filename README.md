@@ -55,6 +55,7 @@
 - 通知：P1 重大交易公告、P0 官方否认、P1 市场异动；每条都有“为什么通知我”。
 - As-of 回放：回到 08-06 只看公告；回到 08-07 17:55 看到传闻但未核实；回到 08-07 18:00 看到否认。
 - 证据包导出：Markdown，含原文 URL、quote、权重拆解、版本、模型和免责声明。
+- 数据/接口异常：429、超时、坏 HTML/PDF、非法 LLM JSON、缺失行情、非法 as-of 和单实例限流均有确定性处理与测试。
 - 初始数据重置：`POST /api/demo/reset`（需要 `X-Admin-Token`）。
 
 ## 5. 快速运行
@@ -119,6 +120,7 @@ python scripts\merge_source_meta.py
 - 证据 quote 来自 iFinD 公告检索片段；PDF 原文保留在 `fixtures/raw/tongyu/`。
 - **已知边界**：CNINFO PDF 的中文字体 ToUnicode 异常，`pypdf` / `pdfplumber` / `PyMuPDF` 提取均为乱码；当前使用 iFinD 片段 + CNINFO URL，OCR 列为 P1。
 - 页面只展示必要摘录与原文链接，不全文转载。
+- 逐项数字到原文的映射见 [docs/evidence-traceability.md](docs/evidence-traceability.md)。
 
 ### 6.2 AI 角色
 
@@ -198,11 +200,15 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-当前结果：**24 passed**（14 个 API 测试 + 10 个事件引擎测试）。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token、五个场景 API，以及同一事件匹配、更新、子 claim 否认、核心否认、官方冲突、更正、过期和 linked Event。
+当前结果：**32 passed**（15 个 API 测试 + 11 个事件引擎测试 + 6 个异常处理测试）。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token、五个场景 API，以及同一事件匹配、更新、子 claim 否认、核心否认、官方冲突、更正、过期、linked Event、429/超时重试、坏 HTML/PDF、非法 LLM JSON、缺失行情、非法 as-of 和限流。
 
-手动验收路径：打开首页 → 点“看否认 diff” → 关弹窗 → 点传闻 claim 看证据抽屉 → 切 v2/v3 → 打开通知 → 标记已读 → 切“简报” → 导出证据包。
+核心页手动验收：打开公网 URL → 关注 `002792` → 连续同步 v1–v5 → 查看否认 P0 与市场反应 → 关注 `300209` 验证多事件 → 点 CNINFO 原文核对数字。完整版工作台还保留 diff、证据抽屉、简报和证据包导出。
 
 完整测试说明见 [docs/testing.md](docs/testing.md)。
+
+12 张真实页面证据截图及对应结论见 [docs/screenshots/README.md](docs/screenshots/README.md)。总览：
+
+![核心页面证据截图总览](docs/screenshots/contact-sheet.png)
 
 ## 10. 部署（零成本）
 
@@ -233,7 +239,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 **未做**
 
 - 实时轮询、全量 connector、去重/转载识别流水线。
-- 更正/过期/撤回的完整演示数据（状态机已设计，当前只展示更新 + 否认 + 市场反应）。
+- 撤回流水线与生产级多实例限流；更正、过期和冲突目前通过测试场景及证据截图证明。
 - LLM 同一性裁决、冲突检测、摘要回归。
 - 行情/财务影响验证（T0/CAR）、扶摇接入。
 - 有引用的问答、自定义告警、邮件/webhook。
@@ -243,13 +249,13 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ```
 apps/api/app/          FastAPI、SQLite、seed、API
-apps/api/tests/        pytest（24 passed：14 API + 10 engine）
+apps/api/tests/        pytest（32 passed：15 API + 11 engine + 6 resilience）
 apps/web/src/          React 事件串、证据抽屉、diff、通知、简报
 fixtures/tongyu/       sources.json + precomputed.json
 fixtures/raw/tongyu/   4 份 CNINFO PDF（原始件）
-scripts/               precompute、数据整理、自动演示视频
+scripts/               precompute、数据整理、自动演示视频、证据截图
 video/                 旁白配置、生成清单、字幕、成片
-docs/                  设计、零成本部署、核心主线、AI 记录、测试
+docs/                  设计、AI 记录、测试、截图、数字追溯与异常证据
 notes/                 UI 走查笔记
 Dockerfile             Render 单容器
 render.yaml            Render Free Blueprint
@@ -265,6 +271,10 @@ render.yaml            Render Free Blueprint
 | 演示视频 | `video/output/eventproof-demo.mp4`，150.9 秒 |
 | AI 使用与验证记录 | `docs/ai-usage.md` |
 | 测试说明 | `docs/testing.md` |
+| 异常与合规证据 | `docs/evidence/exception-cases.md`、`docs/evidence/pytest.txt` |
+| 页面截图 | `docs/screenshots/`，12 张真实页面截图 |
+| 关键数字追溯 | `docs/evidence-traceability.md` |
+| 提交清单 | `docs/submission-checklist.md` |
 | 高层设计 | `docs/00-高层设计.md` |
 | 零成本部署 | `docs/01-零成本部署方案.md` |
 

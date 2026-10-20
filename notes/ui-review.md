@@ -1,5 +1,7 @@
 # UI Review Notes
 
+> 说明：本文件记录早期完整 React 工作台的视觉走查；当前提交主路径是极简 `core-simple.html`。最新可复现证据以 `docs/screenshots/` 和演示视频为准。
+
 > 2026-10-20 · 本地 1440×1000 视觉走查
 
 ## 已确认

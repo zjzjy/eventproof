@@ -20,6 +20,7 @@ build/
 tools/
 data/
 *.log
+*__view.jpg
 ui-*.png
 ui-*.jpg
 core-*.png

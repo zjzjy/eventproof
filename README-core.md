@@ -90,7 +90,7 @@ cd apps\api
 
 ## 后端引擎
 
-纯函数引擎已经落在 `apps/api/app/engine.py`：`match_event` 负责同一事件/同一 Storyline/相关的判定，`apply_document` 负责 update / rumor / denial / correction / conflict，`expire_event` 负责显式截止日过期。测试在 `apps/api/tests/test_engine.py`，说明见 [docs/engine.md](docs/engine.md)，当前 **24 passed**。
+纯函数引擎已经落在 `apps/api/app/engine.py`：`match_event` 负责同一事件/同一 Storyline/相关的判定，`apply_document` 负责 update / rumor / denial / correction / conflict，`expire_event` 负责显式截止日过期。测试在 `apps/api/tests/test_engine.py`，说明见 [docs/engine.md](docs/engine.md)，当前 **32 passed**。
 
 GitHub Pages 版本是客户端状态机演示，按同一套规则推进 v1–v5；它不连接实时后端。本地 FastAPI 仍保留真实引擎和 scenario API，供后续接 connector。
 

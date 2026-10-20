@@ -203,6 +203,22 @@ def test_empty_claims_is_duplicate_not_new_revision():
     assert result["revision"] is None
 
 
+def test_missing_market_evidence_keeps_impact_unverified():
+    document = doc(
+        claims=[
+            {
+                "id": "c_followup",
+                "claim_type": "fact",
+                "claim_role": "acquisition_fact",
+                "text": "交易继续推进",
+                "quote": "交易继续推进",
+            }
+        ]
+    )
+    result = apply_document(base_event(), document, "2026-08-08T10:00:00Z")
+    assert result["event"]["impact_status"] == "unverified"
+
+
 def test_change_type_inference():
     assert infer_change_type(doc(claims=[{"claim_type": "denial"}])) == "denial"
     assert infer_change_type(doc(claims=[{"claim_type": "correction"}])) == "correction"

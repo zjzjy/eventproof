@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,10 @@ import requests
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "apps" / "api"))
+
+from app.resilience import call_with_retry, extract_json_object, validate_source_text  # noqa: E402
+
 SOURCES = ROOT / "fixtures" / "tongyu" / "sources.json"
 OUTPUT = ROOT / "fixtures" / "tongyu" / "precomputed.json"
 PROMPT_VERSION = "claim_extract_v1"
@@ -62,6 +67,7 @@ def iso_utc(value: str) -> str:
 
 
 def call_llm(env: dict[str, str], doc: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    validate_source_text(doc["id"], "\n".join(s["text"] for s in doc["snippets"]))
     snippets = "\n".join(f"[{i + 1}] {s['text']}" for i, s in enumerate(doc["snippets"]))
     system = """你是投资事件 claim 抽取器。只输出合法 JSON，不要 markdown。
 把给定公告片段拆成原子主张。每条主张必须能在原文中找到连续 quote。
@@ -102,19 +108,21 @@ claim_type 只能是：
         "enable_thinking": False,
         "response_format": {"type": "json_object"},
     }
-    response = requests.post(
-        env["LLM_BASE_URL"].rstrip("/") + "/chat/completions",
-        headers={
-            "Authorization": "Bearer " + env["LLM_API_KEY"],
-            "Content-Type": "application/json",
-        },
-        json=body,
-        timeout=120,
+    response = call_with_retry(
+        lambda: requests.post(
+            env["LLM_BASE_URL"].rstrip("/") + "/chat/completions",
+            headers={
+                "Authorization": "Bearer " + env["LLM_API_KEY"],
+                "Content-Type": "application/json",
+            },
+            json=body,
+            timeout=120,
+        )
     )
     response.raise_for_status()
     payload = response.json()
     content = payload["choices"][0]["message"]["content"]
-    parsed = json.loads(content)
+    parsed = extract_json_object(content)
     items = parsed.get("claims") if isinstance(parsed, dict) else parsed
     if not isinstance(items, list):
         items = []

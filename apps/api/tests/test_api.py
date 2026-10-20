@@ -96,6 +96,18 @@ def test_export_traceability():
         assert "原文引用" in body
         assert "不构成投资建议" in body
         assert "qwen3.8-flash" in body
+        assert "买入" not in body
+        assert "卖出" not in body
+
+
+def test_invalid_as_of_returns_422():
+    with client() as api:
+        response = api.get(
+            f"/api/events/{EVENT_ID}",
+            params={"as_of": "not-a-timestamp"},
+        )
+        assert response.status_code == 422
+        assert "ISO-8601" in response.json()["detail"]
 
 
 def test_notification_read_and_reset():

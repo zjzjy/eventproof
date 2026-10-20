@@ -20,9 +20,9 @@
 - 核心主线与表现形式：`docs/02-核心主线与表现形式.md`（一句话主线、四个问题、英雄场景、线框、10 元模型预算）
 - 开发前准备清单：`docs/03-开发前准备.md`（本机环境、三项用户准备、两项可延后事项、默认决策）
 - 英雄事件：通宇通讯（002792）收购佳贤通信 25% 股权 + “佳贤与英伟达合作 6G AI-RAN、瞄准 2000 亿市场”传闻澄清；素材在 `fixtures/tongyu/sources.json`，原始 PDF 在 `fixtures/raw/tongyu/`。
-- 当前已有可运行垂直切片：`apps/api`（FastAPI + SQLite + seed/API + 事件引擎 + 场景 API）、`apps/web`（固定核心页 + 完整 React 事件串/证据/diff/通知/简报）、`apps/api/tests`（24 passed：14 API + 10 engine）。
+- 当前已有可运行垂直切片：`apps/api`（FastAPI + SQLite + seed/API + 事件引擎 + 场景 API）、`apps/web`（固定核心页 + 完整 React 事件串/证据/diff/通知/简报）、`apps/api/tests`（32 passed：15 API + 11 engine + 6 resilience）。
 - 运行：本地 `http://127.0.0.1:8000` 已跑通；后端 `.venv`，前端构建到 `apps/web/dist` 由 FastAPI 托管。
-- 交付文档：`README.md`、`docs/ai-usage.md`、`docs/testing.md`、`notes/ui-review.md`。
+- 交付文档：`README.md`、`docs/ai-usage.md`、`docs/testing.md`、`docs/evidence-traceability.md`、`docs/evidence/exception-cases.md`、`docs/screenshots/README.md`。
 - 极简核心链路：`apps/web/dist/core-simple.html`，打开 `/core.html` 会跳转；单页展示 4 个演化节点、A/B/C/D 证据等级、时间口径和 1 条 P0 通知；时间口径在演化上方，P0 并入否认节点，口径折叠在页面底部。无日期切换和柱状图。完整版仍保留但不再是主路径。
 - iFinD 已可用，扶摇仍未接入。
 - iFinD 官方 SKILL 已安装到 `C:\Users\Hanah\.codex\skills\ifind-finance-data`（v1.4.0），密钥已配置；`listTools("stock")` 自检通过（HTTP 200，10 个工具），`news` 服务 3 个工具：`search_notice`、`search_news`、`search_trending_news`。
@@ -49,20 +49,21 @@
 - 已完成：核心主线与表现形式；确定“一条消息 → 同一事件 → claim → 证据 → 状态 → diff/通知 → as-of 回放”的主线，以及桌面研究工作台而非聊天的形态。
 - 已完成：百炼模型连通性与 JSON 抽取验证；`qwen3.8-flash` 可用，`.env` 已配置。
 - 已完成：iFinD 检索到英雄事件并下载 4 份官方 PDF；整理出公告、澄清、两次异常波动的原文片段与 URL。
-- 已完成：FastAPI API：events/detail/as-of/diff/notifications/export/reset + engine/apply/expire + events/{id}/scenario/{name}；SQLite 启动 seed；24 个 pytest 全过（14 API + 10 engine）。
+- 已完成：FastAPI API：events/detail/as-of/diff/notifications/export/reset + engine/apply/expire + events/{id}/scenario/{name}；SQLite 启动 seed；32 个 pytest 全过（15 API + 11 engine + 6 resilience）。
 - 已完成：React 事件串：置顶结论、四类 claim、六因子证据抽屉、v2→v3 diff、通知抽屉、as-of 预设、简报视图、证据包导出。
 - 已完成：视觉走查 1440×1000；修复标题换行、文档顺序、favicon 404；确认“案卷感”而不是“股吧感”。
 - 已完成：GitHub Pages 完整演示链：首次关注 002792 → 同步处理 → v1–v5 演化 → 通知 → 关注事件/抽屉；规则演练入口和 scenario 参数已从页面移除，状态用 localStorage，底部可重置。
 - 已完成：关注入口与多事件抽屉：002792 通宇通讯 + 300209 行云科技；来源徽标、关注事件 toggle、关注标的表单；静态页用 localStorage。
 - 已完成（已跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加并生效。
-- 已完成：24 passed（含五个场景 API）；观点/推测已补入，官方冲突标记 disputed；GitHub Pages 页面用客户端状态机按同一规则推进。
+- 已完成：32 passed（含五个场景 API、429/超时重试、坏 HTML/PDF、非法 JSON、限流、缺失行情和非法 as-of）；观点/推测已补入，官方冲突标记 disputed。
+- 已完成：12 张真实页面证据截图、关键数字追溯表和异常/合规测试记录。
 - 已完成：60–180 秒自动演示视频，含女声旁白、光标圆点、场景字幕和可重复生成脚本。
 - 进行中：真实 ingestion/connector；Render 动态后端因免费层信用卡要求不阻塞 GitHub Pages 提交。
-- 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、17 条 claim、4 个 revision；pytest 24 passed。
+- 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、17 条 claim、4 个 revision；pytest 32 passed。
 
 ## TODO
 
-1. **P0** 补更正/过期/撤稿的演示数据或运行时动作（状态机已设计，当前只展示更新 + 否认 + 市场反应）。
+1. **P1** 补撤回流水线和生产级多实例限流；更正、过期和冲突已由测试与截图证明。
 2. **P1** 补 3–5 个事件、20–30 篇文档，做 claim 分类/合并标注集与正式指标。
 3. **P1** 接行情/财务影响验证（T0/CAR）；扶摇未接。
 4. **P1** PDF OCR（当前 CNINFO 字体 ToUnicode 乱码）、Postgres adapter、实时 connector、限流。

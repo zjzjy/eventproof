@@ -91,6 +91,8 @@ LLM 首轮输出 22 条 claim，包含重复的传闻和过细的交易条款。
 | 重复传闻 | 08-08 公告再次引用同一传闻，模型重复输出 | 去重 + 人工删除 |
 | 类型误判 | “拟入股 25%”在传闻段被标成 rumor | 人工改为已确认事实，并在摘要说明 |
 | PDF 乱码 | CNINFO PDF 字体 ToUnicode 异常 | 不用 PDF 文本，改用 iFinD 片段 + PDF URL；OCR P1 |
+| 429 / 超时 | 上游模型接口临时不可用 | 指数退避，最多 3 次；耗尽后失败关闭，不生成半成品 |
+| 非法 JSON | 模型返回截断或非对象内容 | `extract_json_object` 拒收，并支持去除 Markdown JSON 围栏 |
 | 预算风险 | 模型可能输出长 reasoning | `enable_thinking=false` + max_tokens + 成本记录 |
 
 ## 7. 没有做什么

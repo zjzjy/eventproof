@@ -96,7 +96,10 @@ def event_payload(event_id: str, as_of_raw: str | None = None) -> dict[str, Any]
     if not event:
         raise HTTPException(status_code=404, detail="event not found")
     event = parse_json_fields(event)
-    as_of = normalize_as_of(as_of_raw)
+    try:
+        as_of = normalize_as_of(as_of_raw)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail="as_of must be an ISO-8601 timestamp") from exc
     revisions = revisions_for(event_id)
     revision = revision_at(revisions, as_of)
     if not revision:

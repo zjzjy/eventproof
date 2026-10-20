@@ -56,7 +56,7 @@
 - 无 claims 的重复文档不生成版本；
 - 变更类型推断。
 
-当前测试已实际运行：**24 passed**（14 API + 10 engine）。执行命令：
+当前测试已实际运行：**32 passed**（15 API + 11 engine + 6 resilience）。执行命令：
 
 ```powershell
 cd apps\api

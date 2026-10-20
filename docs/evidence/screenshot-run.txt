@@ -1,0 +1,14 @@
+docs\screenshots\01-onboarding.png  23611 bytes
+docs\screenshots\02-follow-processing.png  86645 bytes
+docs\screenshots\03-v1-fact-opinion.png  82853 bytes
+docs\screenshots\04-v2-rumor.png  92382 bytes
+docs\screenshots\05-v3-denial-p0.png  104899 bytes
+docs\screenshots\06-v4-market-time.png  110026 bytes
+docs\screenshots\07-v5-new-stage.png  116979 bytes
+docs\screenshots\08-source-traceability.png  120228 bytes
+docs\screenshots\09-second-event.png  116313 bytes
+docs\screenshots\10-correction-p0.png  132969 bytes
+docs\screenshots\11-expiry-not-false.png  132456 bytes
+docs\screenshots\12-official-conflict.png  136114 bytes
+docs\screenshots\contact-sheet.png  441782 bytes
+captured 13 screenshots
