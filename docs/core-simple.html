@@ -174,6 +174,20 @@
     .method summary::before { content: "＋ "; font-family: Consolas, monospace; }
     .method[open] summary::before { content: "− "; }
     .method .standard-grid { margin-top: 12px; }
+    .scenario-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: baseline;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .scenario-links span { font-family: Consolas, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .scenario-links a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    .scenario-links a:hover { color: var(--green); }
     .state-rule { margin-top: 14px; font-size: 10px; color: var(--muted); line-height: 1.6; }
     .open-questions { margin-top: 20px; }
     .question-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px; }
@@ -326,6 +340,14 @@
       <p class="state-rule">类型区分：事实=可核验的陈述；观点=评价/判断；推测=对未来的判断；传闻=未经证实的流传；否认=官方否定。</p>
       <p class="state-rule">状态变化规则：新增证据 → 新版本；官方否认 → 传闻降为 D；更正 → 保留旧值并生成新版本；过期 → 标记过期，不写成“假”。</p>
     </details>
+
+    <div class="scenario-links">
+      <span>规则演练</span>
+      <a href="?scenario=correction">对价更正</a>
+      <a href="?scenario=core-denial">核心收购被否认</a>
+      <a href="?scenario=expiry">交割过期</a>
+      <a href="?scenario=new-stage">签署协议新阶段</a>
+    </div>
 
     <footer>
       来源：通宇通讯公告（CNINFO） · 事实与传闻按原文分开记录 · 关键数字可回到公告原文 · 不构成投资建议

@@ -33,8 +33,8 @@
 - 开发数据库决策：SQLite（零依赖）；容器启动时从 `precomputed.json` 重建，适合单用户只读 demo。Postgres adapter/Neon 是 P1，当前代码未实现。
 - 实际技术栈：React 19 + Vite + TS + 手写 CSS；FastAPI 0.150 + Pydantic 2 + SQLite；没有 Tailwind/SQLAlchemy/Alembic（当前切片刻意减依赖）。
 - 部署：Render Free Web Service（单容器同时托管 React 静态文件和 FastAPI，750 小时/月，15 分钟休眠、约 1 分钟唤醒）+ UptimeRobot Free（5 分钟保活）；公网地址用 `*.onrender.com`，不买服务器/域名。SQLite 启动 seed，重启恢复。
-- 部署现状：Render 免费层要求信用卡验证，当前不使用；GitHub Pages 已发布静态核心页 `https://zjzjy.github.io/eventproof/`（已验证 200），场景页走静态回退。
-- 临时动态 URL：`https://proudly-pct-candidates-utilization.trycloudflare.com/core-simple.html`（Cloudflare Quick Tunnel，已验证健康检查、默认页和 correction 场景；电脑/uvicorn/cloudflared 必须保持运行，重启后 URL 会变）。
+- 正式提交入口：GitHub Pages `https://zjzjy.github.io/eventproof/core-simple.html`；已验证 200，页面底部有四个“规则演练”链接，场景页走静态回退。
+- 可选动态入口：Cloudflare Quick Tunnel（电脑/uvicorn/cloudflared 必须在线，重启后 URL 会变；不作为唯一提交 URL）。
 - Hugging Face Docker Space 现在需要付费计划，不作为当前方案；`hf-space` 分支保留。
 - 数据策略：`fixture / live / hybrid` 三档；真实公开文档快照兜底；连接器做适配器，不把业务逻辑绑死在单一供应商。
 - AI 实际：百炼 `qwen3.8-flash`，4 次调用，1,633 prompt + 2,770 completion tokens，估算 ¥0.0072；保留 15 条 claim；原始输出在 `precomputed.json.llm_calls`。部署只读结果，不调用模型。

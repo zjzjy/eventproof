@@ -4,6 +4,12 @@
 
 ## 打开
 
+公网正式入口：
+
+**https://zjzjy.github.io/eventproof/core-simple.html**
+
+页面底部有“规则演练”链接：对价更正、核心收购被否认、交割过期、签署协议新阶段；不需要手动拼 URL。
+
 如果后端已在运行：
 
 **http://127.0.0.1:8000/core.html**
