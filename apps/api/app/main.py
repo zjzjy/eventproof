@@ -316,6 +316,194 @@ def export_markdown(event_id: str, as_of_raw: str | None = None) -> str:
     return "\n".join(lines)
 
 
+SCENARIO_META: dict[str, dict[str, Any]] = {
+    "correction": {
+        "conclusion": "收购已确认，但对价由3亿元更正为2.8亿元；25%股权、分四期、不并表的安排不变；英伟达合作与2000亿市场传闻仍被否认。",
+        "tags": [["收购已确认（对价已更正）", "green"], ["传闻已否认", "red"]],
+        "mark_first": "已被更正",
+        "date": "08-09",
+        "time": "10:00 · v5",
+        "label": "更正",
+        "tone": "red",
+        "tier": "A",
+        "text": "更正公告：交易对价由3亿元更正为2.8亿元；25%股权、分四期、不并表的安排不变。",
+        "quote": "“更正后交易对价为人民币2.8亿元” · 演示更正公告",
+        "note": "旧值3亿元保留在 v1，不删除；这是对关键数字的更正，不是重写历史。",
+        "why": "公司更正公告，直接修改关键交易数字；旧值仍可回放。",
+        "change_line": "08-09 v5 对价更正",
+        "last_update": "08-09 10:00",
+        "last_version": "v5",
+        "last_status": "对价更正",
+    },
+    "core-denial": {
+        "conclusion": "公司否认收购佳贤通信25%股权；原公告保留在历史版本；英伟达合作与2000亿市场传闻仍被否认。",
+        "tags": [["核心事实被否认", "red"], ["传闻已否认", "red"]],
+        "mark_first": "核心已否认",
+        "date": "08-09",
+        "time": "10:00 · v5",
+        "label": "否认",
+        "tone": "red",
+        "tier": "A",
+        "text": "公司公告：不存在收购佳贤通信25%股权的交易安排。",
+        "quote": "“公司不存在上述收购安排” · 演示否认公告",
+        "note": "原收购公告保留在 v1；核心命题被否认，事件状态变为 denied。",
+        "why": "官方否认核心命题，直接推翻原交易事实。",
+        "change_line": "08-09 v5 核心收购被否认",
+        "last_update": "08-09 10:00",
+        "last_version": "v5",
+        "last_status": "核心否认",
+    },
+    "expiry": {
+        "conclusion": "收购已确认，但协议约定的交割截止日已过且未见完成；标为过期/未完成，不写成“假”；英伟达合作与2000亿市场传闻仍被否认。",
+        "tags": [["收购已确认", "green"], ["交割已过期", "amber"], ["传闻已否认", "red"]],
+        "mark_first": None,
+        "date": "09-30",
+        "time": "18:00 · v5",
+        "label": "过期",
+        "tone": "amber",
+        "tier": "B",
+        "text": "协议约定交割截止日已过，未见完成公告；标为过期/未完成。",
+        "quote": "“协议约定交割截止日为2026-09-30” · 演示到期检查",
+        "note": "过期只表示未按期完成，不表示交易是假；原始公告与否认记录保留。",
+        "why": "依据明确截止日 + 无完成公告；不是仅因“很久没更新”。",
+        "change_line": "09-30 v5 交割过期",
+        "last_update": "09-30 18:00",
+        "last_version": "v5",
+        "last_status": "交割过期",
+    },
+    "new-stage": {
+        "conclusion": "收购已确认并进入签署股份转让协议阶段；这是同一 Storyline 的新 Event，不合并原 Event；英伟达合作与2000亿市场传闻仍被否认。",
+        "tags": [["收购已确认", "green"], ["新阶段", "blue"], ["传闻已否认", "red"]],
+        "mark_first": None,
+        "date": "09-22",
+        "time": "18:00 · linked v1",
+        "label": "新阶段",
+        "tone": "blue",
+        "tier": "A",
+        "text": "公司签署股份转让协议；这是同一交易 Storyline 的下一阶段，不是原 Event 的新 claim。",
+        "quote": "“关于对外投资购买股权暨签署股份转让协议的公告” · 演示公告",
+        "note": "同一 Storyline 下新建 Event（follows），不把原收购 Event 合并/改写。",
+        "why": "交易所公告，确认交易进入签约阶段。",
+        "change_line": "09-22 linked Event v1 签署协议",
+        "last_update": "09-22 18:00",
+        "last_version": "linked v1",
+        "last_status": "签署协议",
+    },
+}
+
+
+def _engine_base(event: dict[str, Any]) -> dict[str, Any]:
+    detail = event.get("status_detail") or {}
+    return {
+        "id": event["id"],
+        "storyline_id": event.get("storyline_id"),
+        "title": event.get("title"),
+        "slots": {"actor": "通宇通讯", "target": "佳贤通信", "action": "acquisition"},
+        "core_status": event.get("verification_status", "confirmed"),
+        "narrative_status": detail.get("narrative", "none"),
+        "impact_status": event.get("impact_status", "unverified"),
+        "claims": event.get("claims", []),
+        "revisions": event.get("revisions", []),
+        "current_revision_id": event.get("current_revision_id"),
+        "updated_at": event.get("updated_at"),
+    }
+
+
+def _scenario_document(event_id: str, scenario: str) -> dict[str, Any]:
+    base = {
+        "refs": [event_id],
+        "slots": {"actor": "通宇通讯", "target": "佳贤通信", "action": "acquisition"},
+    }
+    if scenario == "correction":
+        return {
+            **base,
+            "id": "scenario_correction",
+            "title": "关于交易对价的更正公告（演示）",
+            "published_at": "2026-08-09T10:00:00Z",
+            "summary": SCENARIO_META[scenario]["conclusion"],
+            "claims": [
+                {
+                    "id": "clm_scenario_correction_amount",
+                    "claim_type": "correction",
+                    "target_claim_id": "clm_ty_20260805_investment_1",
+                    "slot": "amount",
+                    "text": "交易对价由3亿元更正为2.8亿元",
+                    "quote": "更正后交易对价为人民币2.8亿元",
+                    "value": "2.8亿元",
+                    "strength": 95,
+                }
+            ],
+        }
+    if scenario == "core-denial":
+        return {
+            **base,
+            "id": "scenario_core_denial",
+            "title": "关于收购事项的否认公告（演示）",
+            "published_at": "2026-08-09T10:00:00Z",
+            "summary": SCENARIO_META[scenario]["conclusion"],
+            "claims": [
+                {
+                    "id": "clm_scenario_core_denial",
+                    "claim_type": "denial",
+                    "target_claim_id": "clm_ty_20260805_investment_1",
+                    "core_denial": True,
+                    "text": "公司不存在收购佳贤通信25%股权的交易安排",
+                    "quote": "公司不存在上述收购安排",
+                    "strength": 96,
+                }
+            ],
+        }
+    if scenario == "new-stage":
+        return {
+            **base,
+            "id": "scenario_new_stage",
+            "title": "关于对外投资购买股权暨签署股份转让协议的公告（演示）",
+            "published_at": "2026-09-22T18:00:00Z",
+            "stage": "sign",
+            "summary": SCENARIO_META[scenario]["conclusion"],
+            "claims": [
+                {
+                    "id": "clm_scenario_signing",
+                    "claim_type": "fact",
+                    "claim_role": "acquisition_fact",
+                    "text": "公司签署股份转让协议",
+                    "quote": "关于对外投资购买股权暨签署股份转让协议的公告",
+                    "strength": 95,
+                }
+            ],
+        }
+    raise HTTPException(status_code=404, detail="scenario not found")
+
+
+def scenario_result(event_id: str, scenario: str) -> dict[str, Any]:
+    if scenario not in SCENARIO_META:
+        raise HTTPException(status_code=404, detail="scenario not found")
+    base = event_payload(event_id)
+    engine_event = _engine_base(base)
+    meta = SCENARIO_META[scenario]
+
+    if scenario == "expiry":
+        result = expire_event(
+            engine_event,
+            "2026-09-30T00:00:00Z",
+            "2026-10-20T00:00:00Z",
+            summary=meta["conclusion"],
+        )
+    else:
+        document = _scenario_document(event_id, scenario)
+        result = apply_document(engine_event, document, "2026-08-09T10:00:00Z")
+
+    return {
+        "scenario": scenario,
+        "action": result.get("action"),
+        "event": result.get("event"),
+        "linked_event": result.get("new_event"),
+        "revision": result.get("revision"),
+        "notification": result.get("notification"),
+        "change": meta,
+    }
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     db.init_db()
@@ -464,6 +652,11 @@ def export_event(event_id: str, as_of: str | None = Query(default=None)) -> Resp
             "Content-Disposition": f'attachment; filename="eventproof-{event_id}.md"',
         },
     )
+
+
+@app.get("/api/events/{event_id}/scenario/{scenario}")
+def get_scenario(event_id: str, scenario: str) -> dict[str, Any]:
+    return scenario_result(event_id, scenario)
 
 
 @app.post("/api/engine/apply")

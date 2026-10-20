@@ -71,7 +71,7 @@ cd apps\api
 
 纯函数引擎已经落在 `apps/api/app/engine.py`：`match_event` 负责同一事件/同一 Storyline/相关的判定，`apply_document` 负责 update / rumor / denial / correction，`expire_event` 负责显式截止日过期。测试在 `apps/api/tests/test_engine.py`，说明见 [docs/engine.md](docs/engine.md)。
 
-当前核心页仍是静态证据简报；把引擎结果接回页面需要重启 uvicorn 后再接 API。
+四个场景页现在通过 `GET /api/events/{id}/scenario/{name}` 调用引擎；结论、版本号、P0/P1 和通知内容来自引擎返回，不再是页面手写模拟。默认页仍是静态基准。
 
 ## 实现
 

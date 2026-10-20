@@ -115,3 +115,48 @@ def test_reset_requires_admin_token_when_configured():
     with client() as api:
         response = api.post("/api/demo/reset")
         assert response.status_code == 401
+
+
+def test_scenario_correction_is_engine_driven():
+    with client() as api:
+        body = api.get(f"/api/events/{EVENT_ID}/scenario/correction").json()
+        assert body["action"] == "updated"
+        assert body["revision"]["version"] == 5
+        assert body["notification"]["level"] == "P0"
+        assert "2.8亿元" in body["change"]["conclusion"]
+        claims = {claim["id"]: claim for claim in body["event"]["claims"]}
+        assert claims["clm_ty_20260805_investment_1"]["status"] == "superseded"
+        assert claims["clm_scenario_correction_amount"]["status"] == "active"
+        assert body["event"]["core_status"] == "confirmed"
+
+
+def test_scenario_core_denial_changes_core():
+    with client() as api:
+        body = api.get(f"/api/events/{EVENT_ID}/scenario/core-denial").json()
+        assert body["action"] == "updated"
+        assert body["event"]["core_status"] == "denied"
+        assert body["notification"]["title"] == "核心收购被否认"
+        assert body["notification"]["level"] == "P0"
+
+
+def test_scenario_expiry_is_not_false():
+    with client() as api:
+        body = api.get(f"/api/events/{EVENT_ID}/scenario/expiry").json()
+        assert body["action"] == "expired"
+        assert body["event"]["lifecycle_status"] == "expired"
+        assert body["notification"]["level"] == "P1"
+        assert "不写成" in body["event"]["summary"]
+
+
+def test_scenario_new_stage_is_linked_event():
+    with client() as api:
+        body = api.get(f"/api/events/{EVENT_ID}/scenario/new-stage").json()
+        assert body["action"] == "linked_event"
+        assert body["linked_event"]["linked_to"] == EVENT_ID
+        assert body["revision"]["version"] == 1
+        assert body["notification"]["level"] == "P1"
+
+
+def test_unknown_scenario_returns_404():
+    with client() as api:
+        assert api.get(f"/api/events/{EVENT_ID}/scenario/nope").status_code == 404

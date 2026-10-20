@@ -404,6 +404,7 @@ def expire_event(
     event: dict[str, Any],
     deadline: str | None,
     now: str | None = None,
+    summary: str | None = None,
 ) -> dict[str, Any]:
     """Expire only when there is an explicit deadline and no completion claim."""
     if not deadline:
@@ -425,9 +426,10 @@ def expire_event(
     current["lifecycle_status"] = "expired"
     current["status_detail"] = {**derive_status(current.get("claims", [])), "lifecycle": "expired"}
     current["updated_at"] = now
+    summary_text = summary or "协议约定截止日已过且未见完成；标为过期/未完成，不写成假。"
     revision = _revision(
         current,
-        {"id": f"expiry_{event['id']}", "summary": "协议约定截止日已过且未见完成；标为过期/未完成，不写成假。"},
+        {"id": f"expiry_{event['id']}", "summary": summary_text},
         now,
         "expiry",
     )
@@ -438,6 +440,6 @@ def expire_event(
         "expiry",
         current,
         revision,
-        {"id": f"expiry_{event['id']}", "summary": revision["summary"]},
+        {"id": f"expiry_{event['id']}", "summary": summary_text},
     )
     return {"action": "expired", "event": current, "revision": revision, "notification": notification}

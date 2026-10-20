@@ -10,7 +10,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-结果：**17 passed**（8 个 API 测试 + 9 个事件引擎测试）。
+结果：**22 passed**（13 个 API 测试 + 9 个事件引擎测试）。
 
 | 用例 | 断言 |
 | --- | --- |
@@ -36,6 +36,16 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 | 过期 | 必须显式截止日；无截止日 noop；到期后 expired，P1 |
 | 空 claims | duplicate，不生成 revision |
 | 类型推断 | denial/correction/new_stage/rumor 正确推断 |
+
+场景 API 测试（`test_api.py`）：
+
+| 用例 | 断言 |
+| --- | --- |
+| correction | action=updated、v5、P0、旧值 superseded、新值 active、core confirmed |
+| core-denial | core_status=denied、P0、title=核心收购被否认 |
+| expiry | action=expired、lifecycle=expired、P1、不写成假 |
+| new-stage | action=linked_event、revision v1、P1 |
+| 未知场景 | 404 |
 
 ## 2. 手动主链路验收
 

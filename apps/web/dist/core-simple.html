@@ -332,7 +332,7 @@
     </footer>
   </main>
 
-  <script>
+  <script type="application/json" id="legacy-scenario">
     (() => {
       const scenario = new URLSearchParams(location.search).get("scenario");
       const labels = {
@@ -449,6 +449,87 @@
         appendChange("09-22 v5 签署协议（linked Event）");
         setLastUpdate("09-22 18:00", "v5", "签署协议");
       }
+    })();
+  </script>
+  <script type="module">
+    (() => {
+      const scenario = new URLSearchParams(location.search).get("scenario");
+      if (!scenario) return;
+      const labels = {
+        correction: "对价更正",
+        "core-denial": "核心收购被否认",
+        expiry: "交割过期",
+        "new-stage": "签署协议（同一 Storyline 新阶段）",
+      };
+      fetch(`/api/events/evt_tongyu_20260805/scenario/${encodeURIComponent(scenario)}`)
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              throw new Error(text || response.statusText);
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const change = data.change || {};
+          const notification = data.notification || null;
+          const main = document.querySelector("main");
+          const banner = document.createElement("div");
+          banner.className = "scenario-banner";
+          banner.textContent = `演示场景：${labels[scenario] || scenario} · 引擎 ${data.action}${
+            notification ? ` · ${notification.level}` : ""
+          }`;
+          main.prepend(banner);
+
+          document.getElementById("conclusion-line").textContent =
+            change.conclusion || data.event?.summary || "";
+          const tags = document.getElementById("conclusion-tags");
+          tags.innerHTML = (change.tags || [])
+            .map(([label, tone]) => `<span class="tag ${tone}">${label}</span>`)
+            .join("");
+
+          if (change.mark_first) {
+            const head = document.querySelector("#stages .stage .content-head");
+            if (head) {
+              head.insertAdjacentHTML("beforeend", `<span class="tag red">${change.mark_first}</span>`);
+            }
+          }
+
+          const stages = document.getElementById("stages");
+          const stage = document.createElement("div");
+          stage.className = "stage";
+          const notifyHtml = notification
+            ? `<div class="notify-inline"><b>${notification.level} 通知：${notification.title}</b><span>${notification.body} 为什么通知：${notification.why}</span></div>`
+            : "";
+          stage.innerHTML = `
+            <div class="time"><b>${change.date}</b><span>${change.time}</span></div>
+            <div class="content">
+              <div class="content-head"><span class="tag ${change.tone}">${change.label}</span><span class="tier">${change.tier}</span></div>
+              <p>${change.text}</p>
+              <div class="quote">${change.quote}</div>
+              <div class="note">${change.note}</div>
+              ${notifyHtml}
+            </div>
+            <div class="why"><b>为什么可信度是 ${change.tier}</b><span>${change.why}</span></div>
+          `;
+          stages.appendChild(stage);
+
+          if (change.change_line) {
+            document
+              .getElementById("change-line")
+              .insertAdjacentHTML("beforeend", ` → <b>${change.change_line}</b>`);
+          }
+          const cells = document.querySelectorAll("#time-row > div");
+          if (cells[3]) {
+            cells[3].innerHTML = `<span>最近更新</span><b>${change.last_update}</b><small>${change.last_version} · ${change.last_status}</small>`;
+          }
+        })
+        .catch((error) => {
+          const banner = document.createElement("div");
+          banner.className = "scenario-banner";
+          banner.textContent = `场景加载失败：${error.message}`;
+          document.querySelector("main").prepend(banner);
+        });
     })();
   </script>
 </body>

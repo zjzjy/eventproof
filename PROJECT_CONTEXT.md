@@ -20,7 +20,7 @@
 - 核心主线与表现形式：`docs/02-核心主线与表现形式.md`（一句话主线、四个问题、英雄场景、线框、10 元模型预算）
 - 开发前准备清单：`docs/03-开发前准备.md`（本机环境、三项用户准备、两项可延后事项、默认决策）
 - 英雄事件：通宇通讯（002792）收购佳贤通信 25% 股权 + “佳贤与英伟达合作 6G AI-RAN、瞄准 2000 亿市场”传闻澄清；素材在 `fixtures/tongyu/sources.json`，原始 PDF 在 `fixtures/raw/tongyu/`。
-- 当前已有可运行垂直切片：`apps/api`（FastAPI + SQLite + seed/API + 事件引擎）、`apps/web`（固定核心页 + 完整 React 事件串/证据/diff/通知/简报）、`apps/api/tests`（17 passed：8 API + 9 engine）。
+- 当前已有可运行垂直切片：`apps/api`（FastAPI + SQLite + seed/API + 事件引擎 + 场景 API）、`apps/web`（固定核心页 + 完整 React 事件串/证据/diff/通知/简报）、`apps/api/tests`（22 passed：13 API + 9 engine）。
 - 运行：本地 `http://127.0.0.1:8000` 已跑通；后端 `.venv`，前端构建到 `apps/web/dist` 由 FastAPI 托管。
 - 交付文档：`README.md`、`docs/ai-usage.md`、`docs/testing.md`、`notes/ui-review.md`。
 - 极简核心链路：`apps/web/dist/core-simple.html`，打开 `/core.html` 会跳转；单页展示 4 个演化节点、A/B/C/D 证据等级、时间口径和 1 条 P0 通知；时间口径在演化上方，P0 并入否认节点，口径折叠在页面底部。无日期切换和柱状图。完整版仍保留但不再是主路径。
@@ -45,13 +45,14 @@
 - 已完成：核心主线与表现形式；确定“一条消息 → 同一事件 → claim → 证据 → 状态 → diff/通知 → as-of 回放”的主线，以及桌面研究工作台而非聊天的形态。
 - 已完成：百炼模型连通性与 JSON 抽取验证；`qwen3.8-flash` 可用，`.env` 已配置。
 - 已完成：iFinD 检索到英雄事件并下载 4 份官方 PDF；整理出公告、澄清、两次异常波动的原文片段与 URL。
-- 已完成：FastAPI API：events/detail/as-of/diff/notifications/export/reset + engine/apply/expire；SQLite 启动 seed；17 个 pytest 全过（8 API + 9 engine）。
+- 已完成：FastAPI API：events/detail/as-of/diff/notifications/export/reset + engine/apply/expire + events/{id}/scenario/{name}；SQLite 启动 seed；22 个 pytest 全过（13 API + 9 engine）。
 - 已完成：React 事件串：置顶结论、四类 claim、六因子证据抽屉、v2→v3 diff、通知抽屉、as-of 预设、简报视图、证据包导出。
 - 已完成：视觉走查 1440×1000；修复标题换行、文档顺序、favicon 404；确认“案卷感”而不是“股吧感”。
 - 已完成：核心页规则验证场景：`?scenario=correction|core-denial|expiry|new-stage`；默认页面不变，场景顶部标注模拟数据。
-- 已完成（待跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加，重启 uvicorn 后生效。
-- 进行中：重启 uvicorn 后跑引擎测试并把引擎接回核心页；部署 Render、录 60–180s 视频。
-- 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、15 条 claim、4 个 revision；pytest 17 passed。
+- 已完成（已跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加并生效。
+- 已完成：22 passed；uvicorn 已重启；四个场景页已通过 `GET /api/events/{id}/scenario/{name}` 接引擎，版本/P0/P1/通知来自引擎返回。
+- 进行中：部署 Render、录 60–180s 视频；真实 ingestion/connector 仍是下一步。
+- 已验证：本地 `http://127.0.0.1:8000` 返回 200；1 个事件、4 份文档、15 条 claim、4 个 revision；pytest 22 passed；四个场景页已接引擎 API。
 
 ## TODO
 

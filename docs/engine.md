@@ -56,7 +56,7 @@
 - 无 claims 的重复文档不生成版本；
 - 变更类型推断。
 
-当前测试尚未在实际终端运行（本机 shell helper 仍报错），但测试文件已就位；恢复终端后执行：
+当前测试已实际运行：**22 passed**（13 API + 9 engine）。执行命令：
 
 ```powershell
 cd apps\api
@@ -66,4 +66,4 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ## 6. 接入 API
 
-`POST /api/engine/apply` 接收 `{event, document, now}`；`POST /api/engine/expire` 接收 `{event, deadline, now}`。这两个接口已加到 `main.py`，但当前运行中的 uvicorn 进程需要重启后才会加载。
+`POST /api/engine/apply` 接收 `{event, document, now}`；`POST /api/engine/expire` 接收 `{event, deadline, now}`。场景页使用 `GET /api/events/{id}/scenario/{name}`，由后端组装基准事件和模拟文档后调用引擎；四个场景页已验证由引擎返回版本和通知。
