@@ -195,7 +195,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-当前结果：**22 passed**（13 个 API 测试 + 9 个事件引擎测试）。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token、四个场景 API，以及同一事件匹配、更新、子 claim 否认、核心否认、更正、过期和 linked Event。
+当前结果：**24 passed**（14 个 API 测试 + 10 个事件引擎测试）。覆盖健康检查、事件列表/详情、v1/v2/v3 as-of、v2→v3 diff、证据包、通知已读/重置、管理员 token、五个场景 API，以及同一事件匹配、更新、子 claim 否认、核心否认、官方冲突、更正、过期和 linked Event。
 
 手动验收路径：打开首页 → 点“看否认 diff” → 关弹窗 → 点传闻 claim 看证据抽屉 → 切 v2/v3 → 打开通知 → 标记已读 → 切“简报” → 导出证据包。
 
@@ -218,7 +218,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 **已知边界**
 
-- 目前只有 1 个事件、4 份文档、15 条 claim，不是全市场产品。
+- 目前核心事件有 4 份文档、17 条 claim（含 1 条观点、1 条官方预测），不是全市场产品。
 - 证据权重是可解释启发式，不是校准概率；未做正式 F1 评测。
 - 同一事件合并当前是显式引用 + 槽位匹配，不是通用 LLM 裁决。
 - 具体时分是演示推断；原始披露只有日期级。
@@ -241,7 +241,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ```
 apps/api/app/          FastAPI、SQLite、seed、API
-apps/api/tests/        pytest（22 passed：13 API + 9 engine）
+apps/api/tests/        pytest（24 passed：14 API + 10 engine）
 apps/web/src/          React 事件串、证据抽屉、diff、通知、简报
 fixtures/tongyu/       sources.json + precomputed.json
 fixtures/raw/tongyu/   4 份 CNINFO PDF（原始件）

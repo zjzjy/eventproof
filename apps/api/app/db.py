@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS claims (
   subject TEXT,
   predicate TEXT,
   object TEXT,
+  slot TEXT,
   value TEXT,
   unit TEXT,
   quote TEXT,
@@ -177,6 +178,9 @@ def init_db(force: bool = False) -> None:
     conn = connect()
     try:
         conn.executescript(SCHEMA)
+        claim_columns = {row[1] for row in conn.execute("PRAGMA table_info(claims)").fetchall()}
+        if "slot" not in claim_columns:
+            conn.execute("ALTER TABLE claims ADD COLUMN slot TEXT")
         count = conn.execute("SELECT COUNT(*) AS n FROM events").fetchone()["n"]
         if count and not force:
             return

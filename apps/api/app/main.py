@@ -353,6 +353,24 @@ SCENARIO_META: dict[str, dict[str, Any]] = {
         "last_version": "v5",
         "last_status": "核心否认",
     },
+    "conflict": {
+        "conclusion": "两份官方材料对交易对价给出不同数值（3亿元 vs 2.8亿元）；存在未解冲突，系统不自动选边；英伟达合作与2000亿市场传闻仍被否认。",
+        "tags": [["官方来源冲突", "amber"], ["传闻已否认", "red"]],
+        "mark_first": "存在冲突",
+        "date": "08-09",
+        "time": "10:00 · v5",
+        "label": "冲突",
+        "tone": "amber",
+        "tier": "A",
+        "text": "另一份官方材料披露交易对价为2.8亿元，与08-05公告的3亿元不一致；未见更正公告。",
+        "quote": "“另一份官方材料披露对价为2.8亿元” · 演示冲突材料",
+        "note": "两个 A 级官方来源互相矛盾，系统保留两个值，不自动选边。",
+        "why": "来源等级高不代表结论唯一；关键槽位冲突时标为 disputed。",
+        "change_line": "08-09 v5 官方来源冲突",
+        "last_update": "08-09 10:00",
+        "last_version": "v5",
+        "last_status": "存在冲突",
+    },
     "expiry": {
         "conclusion": "收购已确认，但协议约定的交割截止日已过且未见完成；标为过期/未完成，不写成“假”；英伟达合作与2000亿市场传闻仍被否认。",
         "tags": [["收购已确认", "green"], ["交割已过期", "amber"], ["传闻已否认", "red"]],
@@ -450,6 +468,28 @@ def _scenario_document(event_id: str, scenario: str) -> dict[str, Any]:
                     "text": "公司不存在收购佳贤通信25%股权的交易安排",
                     "quote": "公司不存在上述收购安排",
                     "strength": 96,
+                }
+            ],
+        }
+    if scenario == "conflict":
+        return {
+            **base,
+            "id": "scenario_conflict",
+            "title": "另一份官方材料（演示）",
+            "published_at": "2026-08-09T10:00:00Z",
+            "conflict": True,
+            "summary": SCENARIO_META[scenario]["conclusion"],
+            "claims": [
+                {
+                    "id": "clm_scenario_conflict_amount",
+                    "claim_type": "fact",
+                    "claim_role": "acquisition_fact",
+                    "slot": "amount",
+                    "value": "2.8亿元",
+                    "conflict": True,
+                    "text": "另一份官方材料披露交易对价为2.8亿元",
+                    "quote": "另一份官方材料披露对价为2.8亿元",
+                    "strength": 94,
                 }
             ],
         }

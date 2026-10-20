@@ -21,6 +21,7 @@ def base_event():
                 "text": "拟以3亿元收购B 25%股权",
                 "quote": "拟以3亿元收购B 25%股权",
                 "slot": "amount",
+                "value": "3亿元",
                 "strength": 94,
             },
             {
@@ -132,6 +133,28 @@ def test_core_denial_changes_core_status():
     result = apply_document(base_event(), document, "2026-08-07T10:00:00Z")
     assert result["event"]["core_status"] == "denied"
     assert result["notification"]["title"] == "核心收购被否认"
+    assert result["notification"]["level"] == "P0"
+
+
+def test_conflicting_official_amount_marks_disputed():
+    document = doc(
+        conflict=True,
+        claims=[
+            {
+                "id": "c_conflict",
+                "claim_type": "fact",
+                "claim_role": "acquisition_fact",
+                "slot": "amount",
+                "value": "2.8亿元",
+                "conflict": True,
+                "text": "另一份官方材料披露对价为2.8亿元",
+                "quote": "另一份官方材料披露对价为2.8亿元",
+            }
+        ],
+    )
+    result = apply_document(base_event(), document, "2026-08-09T10:00:00Z")
+    assert result["event"]["core_status"] == "disputed"
+    assert result["notification"]["title"] == "官方来源存在冲突"
     assert result["notification"]["level"] == "P0"
 
 

@@ -10,12 +10,12 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 ..\..\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-结果：**22 passed**（13 个 API 测试 + 9 个事件引擎测试）。
+结果：**24 passed**（14 个 API 测试 + 10 个事件引擎测试）。
 
 | 用例 | 断言 |
 | --- | --- |
 | 健康检查 | `/health`、`/api/health` 均 200 |
-| 事件列表/详情 | 1 个事件，4 份文档，15 条 claim，v4 |
+| 事件列表/详情 | 1 个事件，4 份文档，17 条 claim，v4 |
 | as-of 08-06 | v1，8 条 claim，0 条 denied |
 | as-of 08-07 17:57 | v2，10 条 claim，2 条 unverified，narrative=unverified |
 | as-of 08-07 18:01 | v3，2 条 denied，narrative=denied |
@@ -32,6 +32,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 | 新阶段 | 生成 linked Event，原 Event claims 不变，P1 |
 | 子 claim 否认 | 传闻 denied，核心仍 confirmed，P0 |
 | 核心否认 | 核心状态 denied，P0 |
+| 官方冲突 | 两个 A 级来源同槽位不同值，core=disputed，P0 |
 | 更正 | 旧 claim superseded，新 claim active，P0 |
 | 过期 | 必须显式截止日；无截止日 noop；到期后 expired，P1 |
 | 空 claims | duplicate，不生成 revision |
@@ -43,6 +44,7 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 | --- | --- |
 | correction | action=updated、v5、P0、旧值 superseded、新值 active、core confirmed |
 | core-denial | core_status=denied、P0、title=核心收购被否认 |
+| conflict | core_status=disputed、P0、title=官方来源存在冲突 |
 | expiry | action=expired、lifecycle=expired、P1、不写成假 |
 | new-stage | action=linked_event、revision v1、P1 |
 | 未知场景 | 404 |

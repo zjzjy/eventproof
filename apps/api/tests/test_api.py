@@ -35,7 +35,7 @@ def test_event_list_and_detail():
         assert detail["verification_status"] == "confirmed"
         assert detail["status_detail"]["narrative"] == "denied"
         assert detail["revision"]["version"] == 4
-        assert len(detail["claims"]) == 15
+        assert len(detail["claims"]) == 17
         assert len(detail["documents"]) == 4
         assert detail["documents"][0]["id"] == "ty_20260805_investment"
         assert detail["denied_claims_count"] == 2
@@ -48,7 +48,7 @@ def test_as_of_before_clarification():
             params={"as_of": "2026-08-06T00:00:00Z"},
         ).json()
         assert detail["revision"]["version"] == 1
-        assert len(detail["claims"]) == 8
+        assert len(detail["claims"]) == 10
         assert detail["denied_claims_count"] == 0
         assert "3亿元" in detail["summary"]
         assert detail["status_detail"]["narrative"] == "none"
@@ -61,7 +61,7 @@ def test_as_of_rumor_then_denial():
             params={"as_of": "2026-08-07T09:57:00Z"},
         ).json()
         assert rumor["revision"]["version"] == 2
-        assert len(rumor["claims"]) == 10
+        assert len(rumor["claims"]) == 12
         assert rumor["denied_claims_count"] == 0
         assert sum(1 for claim in rumor["claims"] if claim["status"] == "unverified") == 2
         assert rumor["status_detail"]["narrative"] == "unverified"
@@ -136,6 +136,15 @@ def test_scenario_core_denial_changes_core():
         assert body["action"] == "updated"
         assert body["event"]["core_status"] == "denied"
         assert body["notification"]["title"] == "核心收购被否认"
+        assert body["notification"]["level"] == "P0"
+
+
+def test_scenario_conflict_marks_disputed():
+    with client() as api:
+        body = api.get(f"/api/events/{EVENT_ID}/scenario/conflict").json()
+        assert body["action"] == "updated"
+        assert body["event"]["core_status"] == "disputed"
+        assert body["notification"]["title"] == "官方来源存在冲突"
         assert body["notification"]["level"] == "P0"
 
 

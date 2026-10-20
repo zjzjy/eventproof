@@ -122,6 +122,8 @@ def match_event(document: dict[str, Any], events: list[dict[str, Any]]) -> dict[
 
 def infer_change_type(document: dict[str, Any]) -> str:
     claim_types = {claim.get("claim_type") for claim in document.get("claims", [])}
+    if document.get("conflict") or any(claim.get("conflict") for claim in document.get("claims", [])):
+        return "conflict"
     if "denial" in claim_types:
         return "denial"
     if "correction" in claim_types:
@@ -137,6 +139,8 @@ def derive_status(claims: list[dict[str, Any]]) -> dict[str, str]:
     core_claims = [claim for claim in claims if claim.get("claim_role") == "acquisition_fact"]
     if any(_status(claim) == "denied" for claim in core_claims):
         core = "denied"
+    elif _has_slot_conflict(core_claims):
+        core = "disputed"
     elif any(
         _status(claim) == "active" and claim.get("claim_type") in {"fact", "correction"}
         for claim in core_claims
@@ -161,6 +165,22 @@ def derive_status(claims: list[dict[str, Any]]) -> dict[str, str]:
     return {"core": core, "narrative": narrative, "impact": impact}
 
 
+def _has_slot_conflict(claims: list[dict[str, Any]]) -> bool:
+    seen: dict[str, str] = {}
+    for claim in claims:
+        if _status(claim) != "active":
+            continue
+        slot = claim.get("slot")
+        value = claim.get("value")
+        if not slot or value in (None, ""):
+            continue
+        normalized = str(value).strip()
+        if slot in seen and seen[slot] != normalized:
+            return True
+        seen[slot] = normalized
+    return False
+
+
 def _find_target(event: dict[str, Any], claim: dict[str, Any]) -> dict[str, Any] | None:
     target = _claim(event, claim.get("target_claim_id"))
     if target:
@@ -182,6 +202,8 @@ def _summary(change_type: str, core_denial: bool, document: dict[str, Any]) -> s
         return document["summary"]
     if change_type == "correction":
         return "关键交易条款已更正；旧值保留在历史版本。"
+    if change_type == "conflict":
+        return "两份官方材料对关键交易数字给出不同值；存在未解冲突，不自动选边。"
     if change_type == "denial" and core_denial:
         return "核心收购命题被官方否认；原公告保留在历史版本。"
     if change_type == "denial":
@@ -204,7 +226,7 @@ def _revision(
 ) -> dict[str, Any]:
     revisions = event.get("revisions") or []
     version = max([item.get("version", 0) for item in revisions] + [0]) + 1
-    status_detail = derive_status(event["claims"])
+    status_detail = event.get("status_detail") or derive_status(event["claims"])
     claim_ids = [
         claim["id"]
         for claim in event["claims"]
@@ -215,6 +237,7 @@ def _revision(
         "rumor": ["claims_added", "summary", "status_detail"],
         "denial": ["claims_added", "claims_denied", "summary", "status_detail"],
         "correction": ["claims_added", "claims_superseded", "summary", "status_detail"],
+        "conflict": ["claims_added", "summary", "status_detail", "conflict"],
         "new_stage": ["linked_event"],
         "expiry": ["lifecycle_status", "summary"],
     }.get(change_type, ["claims_added", "summary"])
@@ -244,13 +267,15 @@ def _notification(
 ) -> dict[str, Any] | None:
     if change_type == "rumor":
         level = "P2"
-    elif change_type in {"denial", "correction"}:
+    elif change_type in {"denial", "correction", "conflict"}:
         level = "P0"
     else:
         level = "P1"
 
     if change_type == "denial":
         title = "核心收购被否认" if core_denial or event.get("core_status") == "denied" else "传闻被官方否认"
+    elif change_type == "conflict":
+        title = "官方来源存在冲突"
     elif change_type == "correction":
         title = "关键交易条款被更正"
     elif change_type == "new_stage":

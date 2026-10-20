@@ -232,6 +232,17 @@
     }
     .quote a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
     .note { margin-top: 6px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .claim-extra {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 6px;
+      align-items: start;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+    }
+    .claim-extra b { font-size: 11px; font-weight: 500; line-height: 1.5; }
+    .claim-extra small { grid-column: 3; color: var(--muted); font-size: 9px; line-height: 1.5; }
     .why b {
       display: block;
       font-family: Consolas, monospace;
@@ -338,7 +349,7 @@
   <main>
     <div class="kicker">EVENT / 002792 · SZSE</div>
     <h1>通宇通讯收购佳贤通信25%股权</h1>
-    <p class="sub">同一事件 · 4 份官方披露合并 · 08-07 澄清公告显式引用 08-05 投资公告</p>
+    <p class="sub">同一事件 · 4 份官方披露合并 · 17 条 claim · 08-07 澄清公告显式引用 08-05 投资公告</p>
 
     <div class="source-row">
       <span class="source-line">来源：自动 · 关注标的 002792</span>
@@ -410,6 +421,16 @@
           <p>拟以3亿元受让佳贤通信25%股权，分四期交割，不纳入合并报表。</p>
           <div class="quote">“公司拟以自有资金人民币30,000.00万元……合计约25.00%的股权” · <a href="https://static.cninfo.com.cn/finalpage/2026-08-05/1225458565.PDF" target="_blank" rel="noreferrer">公告原文</a></div>
           <div class="note">不并表：佳贤收入不会全额进入通宇通讯报表；按比例粗算，25%对应100%估值约12亿元，是否合理以评估报告为准。</div>
+          <div class="claim-extra">
+            <span class="tag blue">观点</span><span class="tier">A</span>
+            <b>公司董事会认为交易价格公允、合理，符合战略布局。</b>
+            <small>来源可靠；这是管理层判断，不能当事实。</small>
+          </div>
+          <div class="claim-extra">
+            <span class="tag amber">推测</span><span class="tier">A</span>
+            <b>预计下半年高毛利基站业务占比提升，带动盈利改善。</b>
+            <small>官方预测，不代表已经实现。</small>
+          </div>
         </div>
         <div class="why">
           <b>为什么可信度是 A</b>
@@ -489,6 +510,7 @@
         <div><b>D</b><span>已否认/撤回</span><p>不作为事实，保留在版本记录里。</p></div>
       </div>
       <p class="state-rule">类型区分：事实=可核验的陈述；观点=评价/判断；推测=对未来的判断；传闻=未经证实的流传；否认=官方否定。</p>
+      <p class="state-rule">A/B/C/D 是来源等级，不是主张类型；A 级观点或预测仍然不能当事实。</p>
       <p class="state-rule">状态变化规则：新增证据 → 新版本；官方否认 → 传闻降为 D；更正 → 保留旧值并生成新版本；过期 → 标记过期，不写成“假”。</p>
     </details>
 
@@ -496,6 +518,7 @@
       <span>规则演练</span>
       <a href="?scenario=correction">对价更正</a>
       <a href="?scenario=core-denial">核心收购被否认</a>
+      <a href="?scenario=conflict">官方冲突</a>
       <a href="?scenario=expiry">交割过期</a>
       <a href="?scenario=new-stage">签署协议新阶段</a>
     </div>
@@ -552,6 +575,7 @@
       const labels = {
         correction: "对价更正",
         "core-denial": "核心收购被否认",
+        conflict: "官方来源冲突",
         expiry: "交割过期",
         "new-stage": "签署协议（同一 Storyline 新阶段）",
       };
@@ -632,6 +656,23 @@
         setLastUpdate("08-09 10:00", "v5", "核心否认");
       }
 
+      if (scenario === "conflict") {
+        conclusion.innerHTML = "两份官方材料对交易对价给出不同数值（3亿元 vs 2.8亿元）；存在未解冲突，系统不自动选边；英伟达合作与2000亿市场传闻仍被否认。";
+        setTags([["官方来源冲突", "amber"], ["传闻已否认", "red"]]);
+        markFirstStage("存在冲突");
+        addStage({
+          date: "08-09", time: "10:00 · v5", label: "冲突", tone: "amber", tier: "A",
+          text: "另一份官方材料披露交易对价为2.8亿元，与08-05公告的3亿元不一致；未见更正公告。",
+          quote: "“另一份官方材料披露对价为2.8亿元” · 演示冲突材料",
+          note: "两个 A 级官方来源互相矛盾，系统保留两个值，不自动选边。",
+          why: "来源等级高不代表结论唯一；关键槽位冲突时标为 disputed。",
+          notifyLabel: "这条冲突触发的通知",
+          notifyText: "08-09 10:05 · P0：官方来源存在冲突。为什么通知：未解的关键数字冲突。",
+        });
+        appendChange("08-09 v5 官方来源冲突");
+        setLastUpdate("08-09 10:00", "v5", "存在冲突");
+      }
+
       if (scenario === "expiry") {
         conclusion.innerHTML = "收购已确认，但协议约定的交割截止日已过且未见完成；标为过期/未完成，不写成“假”；英伟达合作与2000亿市场传闻仍被否认。";
         setTags([["收购已确认", "green"], ["交割已过期", "amber"], ["传闻已否认", "red"]]);
@@ -673,6 +714,7 @@
       const labels = {
         correction: "对价更正",
         "core-denial": "核心收购被否认",
+        conflict: "官方来源冲突",
         expiry: "交割过期",
         "new-stage": "签署协议（同一 Storyline 新阶段）",
       };
