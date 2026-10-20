@@ -52,6 +52,7 @@
 - 已完成：React 事件串：置顶结论、四类 claim、六因子证据抽屉、v2→v3 diff、通知抽屉、as-of 预设、简报视图、证据包导出。
 - 已完成：视觉走查 1440×1000；修复标题换行、文档顺序、favicon 404；确认“案卷感”而不是“股吧感”。
 - 已完成：核心页规则验证场景：`?scenario=correction|core-denial|expiry|new-stage`；默认页面不变，场景顶部标注模拟数据。
+- 已完成：关注入口与多事件抽屉：002792 通宇通讯 + 300209 行云科技；来源徽标、关注事件 toggle、关注标的表单；静态页用 localStorage。
 - 已完成（已跑测）：后端纯函数引擎 `apps/api/app/engine.py`（match_event/apply_document/expire_event）与 `apps/api/tests/test_engine.py`；API `/api/engine/apply`、`/api/engine/expire` 已加并生效。
 - 已完成：22 passed；uvicorn 已重启；四个场景页已通过 `GET /api/events/{id}/scenario/{name}` 接引擎，版本/P0/P1/通知来自引擎返回。
 - 进行中：部署 Render、录 60–180s 视频；真实 ingestion/connector 仍是下一步。

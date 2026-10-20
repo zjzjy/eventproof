@@ -62,6 +62,121 @@
     .takeaways ol { margin: 0; padding-left: 20px; }
     .takeaways li { margin: 6px 0; color: #333; font-size: 12px; line-height: 1.6; }
     .takeaways b { color: var(--ink); }
+    .source-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 6px; }
+    .source-line { font-family: Consolas, monospace; font-size: 9px; color: var(--muted); }
+    .follow-button {
+      padding: 5px 8px;
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .follow-button:hover { background: var(--ink); color: #fff; }
+    .watch-drawer {
+      margin: 14px 0 18px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .watch-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 10px; }
+    .watch-title { color: var(--ink); font-weight: 600; }
+    .watch-title b { margin-left: 4px; font-family: Consolas, monospace; font-weight: 400; }
+    .watch-hint { margin-right: auto; }
+    .plain-button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 10px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+    .plain-button:hover { color: var(--ink); }
+    .watch-list { margin-top: 8px; }
+    .watch-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+    .watch-item:first-child { border-top: 0; }
+    .watch-item.active { padding-left: 8px; border-left: 2px solid var(--green); }
+    .watch-code { font-family: Consolas, monospace; font-size: 10px; color: var(--muted); }
+    .watch-main b { display: block; font-size: 12px; font-weight: 600; }
+    .watch-main small { display: block; margin-top: 2px; font-size: 9px; color: var(--muted); }
+    .watch-origin { font-family: Consolas, monospace; font-size: 8px; color: var(--muted); white-space: nowrap; }
+    .watch-item.active .watch-origin { color: var(--green); }
+    .watch-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .watch-form label { white-space: nowrap; }
+    .watch-form input {
+      flex: 1;
+      min-width: 180px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 11px;
+    }
+    .watch-form button {
+      padding: 6px 10px;
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .watch-form button:hover { background: var(--ink); color: #fff; }
+    .watch-message { flex-basis: 100%; font-size: 9px; color: var(--muted); }
+    .hidden { display: none; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0,0,0,.3);
+    }
+    .overlay.hidden { display: none; }
+    .event-modal {
+      width: min(760px, 100%);
+      max-height: 86vh;
+      overflow: auto;
+      padding: 20px;
+      border: 1px solid var(--ink);
+      background: #fff;
+    }
+    .modal-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .modal-head h2 { margin: 4px 0; font-size: 20px; line-height: 1.35; }
+    .modal-close { border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+    .modal-conclusion { margin: 14px 0; padding: 12px; border-left: 3px solid var(--ink); background: #fafafa; font-size: 14px; line-height: 1.65; }
+    .mini-stage { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+    .mini-stage time { font-family: Consolas, monospace; font-size: 9px; line-height: 1.5; color: var(--muted); }
+    .mini-stage p { margin: 3px 0; font-size: 12px; line-height: 1.55; }
+    .mini-stage small { display: block; color: var(--muted); font-size: 9px; line-height: 1.5; }
+    .mini-stage a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    .modal-note { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 10px; line-height: 1.55; }
     .scenario-banner {
       margin-bottom: 16px;
       padding: 7px 10px;
@@ -205,6 +320,10 @@
       .standard-grid { grid-template-columns: 1fr 1fr; }
       .time-row { grid-template-columns: 1fr 1fr; }
       .question-grid { grid-template-columns: 1fr; }
+      .watch-item { grid-template-columns: 1fr; gap: 3px; }
+      .watch-origin { white-space: normal; }
+      .source-row { align-items: flex-start; }
+      .event-modal { padding: 14px; }
     }
   </style>
 </head>
@@ -220,6 +339,38 @@
     <div class="kicker">EVENT / 002792 · SZSE</div>
     <h1>通宇通讯收购佳贤通信25%股权</h1>
     <p class="sub">同一事件 · 4 份官方披露合并 · 08-07 澄清公告显式引用 08-05 投资公告</p>
+
+    <div class="source-row">
+      <span class="source-line">来源：自动 · 关注标的 002792</span>
+      <button class="follow-button" id="followEvent" type="button">已关注事件</button>
+    </div>
+
+    <section class="watch-drawer">
+      <div class="watch-head">
+        <span class="watch-title">关注事件 <b id="watchCount">2</b></span>
+        <span class="watch-hint">自动进入：关注标的</span>
+        <button class="plain-button" id="toggleWatch" type="button">收起</button>
+        <button class="plain-button" id="toggleAddWatch" type="button">＋ 关注标的</button>
+      </div>
+      <div class="watch-list" id="watchList">
+        <a class="watch-item active" href="core-simple.html">
+          <span class="watch-code">002792</span>
+          <span class="watch-main"><b>通宇通讯收购佳贤通信</b><small>已确认 · 传闻已否认 · 08-08</small></span>
+          <span class="watch-origin">自动 · 关注标的</span>
+        </a>
+        <button class="watch-item" id="openHangyun" type="button">
+          <span class="watch-code">300209</span>
+          <span class="watch-main"><b>行云科技算力卡海关传闻</b><small>已否认 · 09-08</small></span>
+          <span class="watch-origin">自动 · 关注标的</span>
+        </button>
+      </div>
+      <form class="watch-form hidden" id="watchForm">
+        <label for="watchInput">关注标的</label>
+        <input id="watchInput" placeholder="输入代码或名称，例如 002792" />
+        <button type="submit">关注</button>
+        <span class="watch-message" id="watchMessage"></span>
+      </form>
+    </section>
 
     <section class="conclusion">
       <div class="label">当前结论</div>
@@ -353,6 +504,46 @@
       来源：通宇通讯公告（CNINFO） · 事实与传闻按原文分开记录 · 关键数字可回到公告原文 · 不构成投资建议
     </footer>
   </main>
+
+  <div class="overlay hidden" id="hangyunOverlay">
+    <section class="event-modal" aria-modal="true" aria-label="行云科技事件详情">
+      <header class="modal-head">
+        <div>
+          <div class="kicker">EVENT / 300209 · SZSE</div>
+          <h2>行云科技：算力卡被卡在海关传闻</h2>
+          <p class="source-line">来源：自动 · 关注标的 300209</p>
+        </div>
+        <button class="modal-close" id="closeHangyun" type="button" aria-label="关闭">×</button>
+      </header>
+      <div class="modal-conclusion">
+        公司否认“算力卡被卡在海关”，已核查澄清并采取报警等法律措施；供应链实际影响未量化。
+      </div>
+      <div class="mini-stage">
+        <time>08-11<br />传闻 C</time>
+        <div>
+          <p>网络社交平台、投资社区出现“行云科技的算力卡被卡在海关”等不实言论。</p>
+          <small>传闻原文由后续澄清公告转述；未获得原始帖子。</small>
+        </div>
+      </div>
+      <div class="mini-stage">
+        <time>08-12<br />澄清 A</time>
+        <div>
+          <p>公司核查并澄清相关言论不实，并采取向公安机关报警等必要法律措施。</p>
+          <small><a href="https://static.cninfo.com.cn/finalpage/2026-08-12/1225468653.PDF" target="_blank" rel="noreferrer">澄清公告原文 ↗</a></small>
+        </div>
+      </div>
+      <div class="mini-stage">
+        <time>09-08<br />进展 A</time>
+        <div>
+          <p>公司披露澄清事项进展，再次提示投资者审慎甄别网络传闻。</p>
+          <small><a href="https://static.cninfo.com.cn/finalpage/2026-09-08/1225552003.PDF" target="_blank" rel="noreferrer">进展公告原文 ↗</a></small>
+        </div>
+      </div>
+      <div class="modal-note">
+        这个事件用于演示“关注标的 300209 → 自动进入关注事件抽屉”。它与通宇通讯收购事件相互独立，不参与同一条版本链。
+      </div>
+    </section>
+  </div>
 
   <script>
     (() => {
@@ -554,6 +745,79 @@
           banner.textContent = `场景加载失败：${error.message}`;
           document.querySelector("main").prepend(banner);
         });
+    })();
+  </script>
+  <script>
+    (() => {
+      const followKey = "eventproof.follows";
+      const watchKey = "eventproof.watchlist";
+      const eventId = "evt_tongyu_20260805";
+      const read = (key) => {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "{}");
+        } catch {
+          return {};
+        }
+      };
+      const write = (key, value) => {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          // Static demo still works if storage is unavailable.
+        }
+      };
+
+      const follows = read(followKey);
+      if (follows[eventId] === undefined) follows[eventId] = true;
+      write(followKey, follows);
+
+      const followButton = document.getElementById("followEvent");
+      const renderFollow = () => {
+        followButton.textContent = follows[eventId] ? "已关注事件" : "关注事件";
+      };
+      followButton.addEventListener("click", () => {
+        follows[eventId] = !follows[eventId];
+        write(followKey, follows);
+        renderFollow();
+      });
+      renderFollow();
+
+      const watchList = document.getElementById("watchList");
+      const toggleWatch = document.getElementById("toggleWatch");
+      toggleWatch.addEventListener("click", () => {
+        const hidden = watchList.classList.toggle("hidden");
+        toggleWatch.textContent = hidden ? "展开" : "收起";
+      });
+
+      const watchForm = document.getElementById("watchForm");
+      const toggleAddWatch = document.getElementById("toggleAddWatch");
+      toggleAddWatch.addEventListener("click", () => {
+        watchForm.classList.toggle("hidden");
+        document.getElementById("watchInput").focus();
+      });
+      watchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const value = document.getElementById("watchInput").value.trim();
+        if (!value) return;
+        const watchlist = read(watchKey);
+        watchlist[value] = true;
+        write(watchKey, watchlist);
+        document.getElementById("watchMessage").textContent =
+          `已加入关注：${value}（静态演示；实时抓取需后端连接器）`;
+        watchForm.reset();
+      });
+
+      const overlay = document.getElementById("hangyunOverlay");
+      const openHangyun = () => overlay.classList.remove("hidden");
+      const closeHangyun = () => overlay.classList.add("hidden");
+      document.getElementById("openHangyun").addEventListener("click", openHangyun);
+      document.getElementById("closeHangyun").addEventListener("click", closeHangyun);
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) closeHangyun();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeHangyun();
+      });
     })();
   </script>
 </body>
