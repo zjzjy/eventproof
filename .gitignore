@@ -16,6 +16,7 @@ build/
 .playwright-mcp/
 .npm-cache/
 .uv-cache/
+.github-pages.json
 data/
 *.log
 ui-*.png

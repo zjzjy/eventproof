@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <title>事证 Core · 通宇通讯</title>
   <style>
     :root {
@@ -332,8 +332,9 @@
     </footer>
   </main>
 
-  <script type="application/json" id="legacy-scenario">
+  <script>
     (() => {
+      if (!location.hostname.endsWith("github.io") && !new URLSearchParams(location.search).has("static")) return;
       const scenario = new URLSearchParams(location.search).get("scenario");
       const labels = {
         correction: "对价更正",
@@ -453,6 +454,7 @@
   </script>
   <script type="module">
     (() => {
+      if (location.hostname.endsWith("github.io") || new URLSearchParams(location.search).has("static")) return;
       const scenario = new URLSearchParams(location.search).get("scenario");
       if (!scenario) return;
       const labels = {
