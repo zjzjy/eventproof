@@ -17,6 +17,7 @@ build/
 .npm-cache/
 .uv-cache/
 .github-pages.json
+tools/
 data/
 *.log
 ui-*.png
