@@ -13,6 +13,7 @@ from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import db
+from .engine import apply_document, expire_event
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -463,6 +464,23 @@ def export_event(event_id: str, as_of: str | None = Query(default=None)) -> Resp
             "Content-Disposition": f'attachment; filename="eventproof-{event_id}.md"',
         },
     )
+
+
+@app.post("/api/engine/apply")
+def engine_apply(payload: dict[str, Any]) -> dict[str, Any]:
+    event = payload.get("event")
+    document = payload.get("document")
+    if not isinstance(event, dict) or not isinstance(document, dict):
+        raise HTTPException(status_code=422, detail="event and document are required objects")
+    return apply_document(event, document, payload.get("now"))
+
+
+@app.post("/api/engine/expire")
+def engine_expire(payload: dict[str, Any]) -> dict[str, Any]:
+    event = payload.get("event")
+    if not isinstance(event, dict):
+        raise HTTPException(status_code=422, detail="event is required")
+    return expire_event(event, payload.get("deadline"), payload.get("now"))
 
 
 if WEB_DIST.exists():

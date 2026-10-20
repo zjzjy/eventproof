@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="refresh" content="0; url=/core-simple.html" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>事证 Core · 通宇通讯</title>
+  <style>
+    :root {
+      --paper: #f3efe5;
+      --paper2: #fbf8f1;
+      --ink: #1b1a17;
+      --muted: #756f62;
+      --line: #d9d1c1;
+      --green: #0e5a4a;
+      --red: #a33228;
+      --amber: #946200;
+      --blue: #2d5b86;
+      --serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+      --sans: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      --mono: Consolas, "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(14, 90, 74, .06), transparent 34%),
+        linear-gradient(rgba(27,26,23,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(27,26,23,.022) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 28px 28px, 28px 28px, auto;
+    }
+    .bar {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 22px;
+      color: #f7f1e4;
+      background: #101614;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .stamp {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(247,241,228,.45);
+      font-family: var(--serif);
+      font-size: 18px;
+    }
+    .brand b { display: block; font-family: var(--serif); font-size: 18px; letter-spacing: .2em; }
+    .brand small { display: block; margin-top: 2px; font-family: var(--mono); font-size: 8px; color: rgba(247,241,228,.5); letter-spacing: .1em; }
+    .ticker { font-family: var(--mono); font-size: 10px; color: rgba(247,241,228,.7); }
+    main { max-width: 1180px; margin: 0 auto; padding: 24px 20px 42px; }
+    .eyebrow { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--muted); }
+    h1 { margin: 6px 0 5px; font-family: var(--serif); font-size: clamp(28px, 4vw, 36px); font-weight: 600; letter-spacing: -.02em; }
+    .sub { margin: 0; color: var(--muted); font-size: 12px; }
+    .asof {
+      margin: 18px 0 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(251,248,241,.72);
+    }
+    .asof-head { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; }
+    .asof-head b { font-family: var(--mono); font-size: 10px; color: var(--green); }
+    .asof-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 9px; }
+    .asof-buttons button {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 11px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .asof-buttons button.active { border-color: #101614; background: #101614; color: #f7f1e4; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; align-items: start; }
+    .conclusion {
+      padding: 20px;
+      border-radius: 18px;
+      color: #f7f1e4;
+      background: linear-gradient(135deg, #0d332c, #0e5a4a 62%, #126c59);
+      box-shadow: 0 18px 38px rgba(13,51,44,.2);
+    }
+    .pinned { display: flex; justify-content: space-between; gap: 10px; font-family: var(--mono); font-size: 9px; color: rgba(247,241,228,.62); }
+    .pinned span { color: #f0d58d; }
+    .conclusion h2 { margin: 12px 0; font-family: var(--serif); font-size: clamp(18px, 2vw, 22px); line-height: 1.6; font-weight: 500; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { padding: 4px 8px; border: 1px solid rgba(247,241,228,.16); border-radius: 999px; font-family: var(--mono); font-size: 9px; }
+    .chip.green { color: #d6f0e5; background: rgba(134,209,175,.13); }
+    .chip.red { color: #ffd9d3; background: rgba(255,154,139,.13); }
+    .chip.amber { color: #f6dda3; background: rgba(240,190,80,.13); }
+    .foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 15px; padding-top: 11px; border-top: 1px solid rgba(247,241,228,.14); font-size: 10px; color: rgba(247,241,228,.62); }
+    .foot b { font-family: var(--serif); font-size: 17px; color: #f7f1e4; }
+    .notification { margin: 10px 0; padding: 11px 12px; border: 1px solid #d7b3aa; border-left: 4px solid var(--red); border-radius: 9px; background: #fff8f5; }
+    .notification b { display: block; margin: 4px 0; font-family: var(--serif); font-size: 15px; }
+    .notification p { margin: 0; color: #5f5148; font-size: 10px; line-height: 1.55; }
+    .notification small { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; }
+    .notification button { margin-top: 7px; padding: 0; border: 0; background: none; color: var(--green); font-size: 10px; font-weight: 700; cursor: pointer; }
+    .hidden { display: none; }
+    .thread-head { display: flex; justify-content: space-between; margin: 16px 0 8px; font-family: var(--mono); font-size: 9px; color: var(--muted); }
+    .thread-head span:first-child { color: var(--ink); font-weight: 700; }
+    .thread { display: grid; gap: 11px; }
+    .floor { border: 1px solid var(--line); border-radius: 14px; background: rgba(251,248,241,.86); padding: 13px; }
+    .floor-head { display: flex; justify-content: space-between; gap: 8px; }
+    .floor-head h3 { margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.4; font-weight: 600; }
+    .floor-head time { flex-shrink: 0; font-family: var(--mono); font-size: 8px; color: var(--muted); }
+    .floor-meta { margin-top: 5px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); font-family: var(--mono); font-size: 8px; color: var(--muted); }
+    .claims { display: grid; gap: 7px; margin-top: 9px; }
+    .claim { padding: 9px 10px; border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 8px; background: #fffdf8; cursor: pointer; }
+    .claim:hover { box-shadow: 0 5px 14px rgba(44,37,25,.07); }
+    .claim.rumor { border-left-color: var(--amber); background: #fffbf0; }
+    .claim.denial { border-left-color: var(--red); background: #fff8f5; }
+    .claim-top { display: flex; align-items: center; gap: 6px; }
+    .type { padding: 2px 5px; border-radius: 3px; font-size: 8px; font-weight: 700; }
+    .type.fact { color: #0b5a45; background: #deeee7; }
+    .type.rumor { color: #815600; background: #f5e9c9; }
+    .type.denial { color: #962f26; background: #f5ddd8; }
+    .state { font-family: var(--mono); font-size: 8px; color: #962f26; }
+    .claim-top b { margin-left: auto; font-family: var(--serif); font-size: 16px; color: var(--green); }
+    .claim p { margin: 5px 0; font-size: 12px; line-height: 1.5; }
+    .claim blockquote { margin: 5px 0 0; padding: 5px 7px; border-left: 2px solid var(--line); color: #5b5448; background: rgba(27,26,23,.025); font-family: var(--serif); font-size: 9px; line-height: 1.55; }
+    .evidence {
+      position: sticky;
+      top: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(251,248,241,.9);
+    }
+    .evidence h2 { margin: 4px 0 8px; font-family: var(--serif); font-size: 19px; font-weight: 600; }
+    .muted { color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .ev-type { display: inline-block; padding: 2px 5px; border-radius: 3px; font-size: 8px; font-weight: 700; }
+    .ev-text { margin: 8px 0; font-family: var(--serif); font-size: 14px; line-height: 1.5; }
+    .ev-quote { margin: 8px 0; padding: 8px; border-left: 3px solid var(--green); background: #f5efe2; color: #4d473b; font-family: var(--serif); font-size: 10px; line-height: 1.6; }
+    .ev-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin: 8px 0; }
+    .ev-meta div { padding: 6px; border: 1px solid var(--line); border-radius: 5px; background: #fffdf8; }
+    .ev-meta span { display: block; font-size: 7px; color: var(--muted); }
+    .ev-meta b { font-family: var(--mono); font-size: 8px; font-weight: 500; }
+    .factors { margin-top: 9px; padding-top: 8px; border-top: 1px dashed var(--line); }
+    .factor { display: grid; grid-template-columns: 48px 1fr 24px; align-items: center; gap: 6px; margin-top: 6px; font-size: 8px; color: var(--muted); }
+    .factor i { display: block; height: 4px; border-radius: 999px; background: #e8e1d3; overflow: hidden; }
+    .factor i::after { content: ""; display: block; height: 100%; width: var(--w); background: var(--green); border-radius: inherit; }
+    .factor b { text-align: right; font-family: var(--mono); font-size: 8px; color: var(--ink); font-weight: 500; }
+    .ev-explain { margin: 8px 0 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+    .ev-link { display: inline-block; margin-top: 8px; font-family: var(--mono); font-size: 8px; color: var(--green); }
+    .error { padding: 14px; border: 1px solid #d7b3aa; border-radius: 8px; color: var(--red); background: #fff8f5; font-size: 11px; }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      .evidence { position: static; }
+      .asof-buttons { grid-template-columns: 1fr; }
+      .bar { padding: 0 12px; }
+      .ticker { display: none; }
+      main { padding: 16px 12px 30px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <span class="stamp">证</span>
+      <div><b>事证</b><small>CORE / ONE EVENT</small></div>
+    </div>
+    <div class="ticker">002792 通宇通讯 · 收购 + 澄清</div>
+  </header>
+  <main>
+    <div class="eyebrow">EVENT / 002792 · SZSE</div>
+    <h1>通宇通讯收购佳贤通信25%股权</h1>
+    <p class="sub">同一事件 · 4 份官方披露 · 15 条 claim · 1 条传闻已否认</p>
+
+    <section class="asof">
+      <div class="asof-head"><span>按当时已知回放</span><b id="asofLabel">08-07 否认</b></div>
+      <div class="asof-buttons">
+        <button data-asof="2026-08-05T10:00:00Z">08-05 公告</button>
+        <button data-asof="2026-08-07T09:55:00Z">08-07 传闻</button>
+        <button data-asof="2026-08-07T10:00:00Z" class="active">08-07 否认</button>
+      </div>
+    </section>
+
+    <div class="layout">
+      <div class="left">
+        <section class="conclusion">
+          <div class="pinned">PINNED / 当前结论 <span id="replayBadge"></span></div>
+          <h2 id="summary"></h2>
+          <div id="chips" class="chips"></div>
+          <div class="foot"><span id="strength"></span><span id="counts"></span></div>
+        </section>
+        <section id="notification" class="notification hidden"></section>
+        <div class="thread-head"><span>事件串</span><span>只收录来源与证据</span></div>
+        <section id="thread" class="thread"></section>
+      </div>
+      <aside id="evidence" class="evidence">
+        <div class="eyebrow">EVIDENCE / 证据</div>
+        <h2>点一条主张</h2>
+        <p class="muted">点击左侧任意一条主张，查看原文 quote、来源、时间和证据强度拆解。</p>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const EVENT_ID = "evt_tongyu_20260805";
+    const LABELS = {
+      "2026-08-05T10:00:00Z": "08-05 公告",
+      "2026-08-07T09:55:00Z": "08-07 传闻",
+      "2026-08-07T10:00:00Z": "08-07 否认"
+    };
+    const TYPE_LABEL = { fact: "事实", rumor: "传闻", denial: "否认" };
+    const TIER_LABEL = { exchange: "交易所", company_official: "公司官方", media: "媒体", research: "研报" };
+    let currentAsOf = "2026-08-07T10:00:00Z";
+    let event = null;
+    let notifications = [];
+    let selected = null;
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const fmtDate = (value) => new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(value)).replace(/\//g, "-");
+    const fmtTime = (value) => new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value)).replace(/\//g, "-");
+
+    function coreClaims() {
+      const facts = [];
+      const amount = event.claims.find((c) => c.claim_role === "acquisition_fact" && (c.text + c.quote).includes("30,000.00"));
+      const stake = event.claims.find((c) => c.claim_role === "acquisition_fact" && (c.text + c.quote).includes("25.00%"));
+      const noConsolidation = event.claims.find((c) => c.claim_role === "acquisition_fact" && (c.text + c.quote).includes("不纳入"));
+      [amount, stake, noConsolidation].forEach((c) => { if (c) facts.push(c); });
+      const rumors = event.claims.filter((c) => c.claim_type === "rumor");
+      const denials = event.claims.filter((c) => c.claim_type === "denial");
+      return { facts, rumors, denials };
+    }
+
+    function chips() {
+      const detail = event.status_detail || {};
+      const out = [];
+      if (detail.core === "confirmed") out.push(["收购已确认", "green"]);
+      if (detail.narrative === "unverified") out.push(["传闻待核实", "amber"]);
+      if (detail.narrative === "denied") out.push(["传闻已否认", "red"]);
+      return out;
+    }
+
+    function renderNotification() {
+      const found = notifications.find((n) => n.level === "P0" && n.revision_id === event.revision.id);
+      const box = $("notification");
+      if (!found) { box.className = "notification hidden"; box.innerHTML = ""; return; }
+      box.className = "notification";
+      box.innerHTML = `
+        <div class="eyebrow">P0 · 官方否认</div>
+        <b>${esc(found.title)}</b>
+        <p>${esc(found.body)}</p>
+        <small>${esc(found.why)}</small>
+        <button id="showDenial">看否认依据 →</button>
+      `;
+      $("showDenial").onclick = () => {
+        const claim = event.claims.find((c) => c.claim_type === "denial");
+        if (claim) { selected = claim; renderEvidence(); document.querySelector(`[data-id="${claim.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" }); }
+      };
+    }
+
+    function claimHtml(claim) {
+      return `
+        <div class="claim ${claim.claim_type}" data-id="${esc(claim.id)}">
+          <div class="claim-top">
+            <span class="type ${claim.claim_type}">${TYPE_LABEL[claim.claim_type] || claim.claim_type}</span>
+            ${claim.status === "denied" ? '<span class="state">已被否认</span>' : ""}
+            <b>${Math.round(claim.strength)}</b>
+          </div>
+          <p>${esc(claim.text)}</p>
+          <blockquote>“${esc(claim.quote)}”</blockquote>
+        </div>`;
+    }
+
+    function renderThread() {
+      const core = coreClaims();
+      const wanted = new Set([...core.facts, ...core.rumors, ...core.denials].map((c) => c.id));
+      const floors = event.documents.map((doc) => {
+        const claims = doc.claims.filter((c) => wanted.has(c.id));
+        if (!claims.length) return "";
+        return `
+          <article class="floor">
+            <div class="floor-head">
+              <h3>${esc(doc.title.replace(/^通宇通讯[：:]/, ""))}</h3>
+              <time>${fmtDate(doc.published_at)}</time>
+            </div>
+            <div class="floor-meta">${esc(doc.source)} · ${esc(TIER_LABEL[doc.source_tier] || doc.source_tier)} · 披露 ${fmtDate(doc.published_at)} · 抓取 ${fmtTime(doc.ingested_at)}（推断）</div>
+            <div class="claims">${claims.map(claimHtml).join("")}</div>
+          </article>`;
+      }).filter(Boolean);
+      $("thread").innerHTML = floors.join("") || '<div class="error">该时刻还没有记录。</div>';
+    }
+
+    function renderEvidence() {
+      if (!selected) {
+        $("evidence").innerHTML = `
+          <div class="eyebrow">EVIDENCE / 证据</div>
+          <h2>点一条主张</h2>
+          <p class="muted">点击左侧任意一条主张，查看原文 quote、来源、时间和证据强度拆解。</p>`;
+        return;
+      }
+      const doc = event.documents.find((d) => d.id === selected.document_id);
+      if (!doc) return;
+      const factors = [
+        ["权威性", "authority"], ["直接性", "directness"], ["独立性", "independence"],
+        ["具体性", "specificity"], ["佐证度", "corroboration"], ["抽取置信", "extraction"]
+      ];
+      $("evidence").innerHTML = `
+        <div class="eyebrow">EVIDENCE / 证据</div>
+        <h2>${TYPE_LABEL[selected.claim_type] || selected.claim_type} · ${Math.round(selected.strength)} 分</h2>
+        <span class="ev-type type ${selected.claim_type}">${TYPE_LABEL[selected.claim_type] || selected.claim_type}</span>
+        <p class="ev-text">${esc(selected.text)}</p>
+        <div class="ev-quote">“${esc(selected.quote)}”</div>
+        <div class="ev-meta">
+          <div><span>来源</span><b>${esc(doc.source)}</b></div>
+          <div><span>层级</span><b>${esc(TIER_LABEL[doc.source_tier] || doc.source_tier)}</b></div>
+          <div><span>披露</span><b>${fmtDate(doc.published_at)}</b></div>
+          <div><span>进入系统</span><b>${fmtTime(selected.introduced_at)}</b></div>
+        </div>
+        <div class="factors">
+          ${factors.map(([label, key]) => {
+            const value = Math.round(Number(selected.strength_json?.[key] || 0) * 100);
+            return `<div class="factor"><span>${label}</span><i style="--w:${value}%"></i><b>${value}</b></div>`;
+          }).join("")}
+        </div>
+        <p class="ev-explain">${esc(selected.strength_explanation)}</p>
+        <a class="ev-link" href="${esc(doc.url)}" target="_blank" rel="noreferrer">打开原文 ↗</a>
+      `;
+    }
+
+    function render() {
+      const core = coreClaims();
+      $("summary").textContent = event.summary;
+      $("chips").innerHTML = chips().map(([label, tone]) => `<span class="chip ${tone}">${label}</span>`).join("");
+      $("strength").innerHTML = `<b>${Math.round(event.evidence_strength)}</b> 核心证据强度`;
+      $("counts").textContent = `${core.facts.length} 条核心事实 · ${core.rumors.length} 条传闻 · ${core.denials.length} 条官方否认`;
+      $("asofLabel").textContent = LABELS[currentAsOf] || "当前";
+      $("replayBadge").textContent = "回放中";
+      document.querySelectorAll("[data-asof]").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.asof === currentAsOf);
+      });
+      renderNotification();
+      renderThread();
+      renderEvidence();
+    }
+
+    async function load() {
+      try {
+        const [eventRes, notificationRes] = await Promise.all([
+          fetch(`/api/events/${EVENT_ID}?as_of=${encodeURIComponent(currentAsOf)}`),
+          fetch("/api/notifications")
+        ]);
+        if (!eventRes.ok) throw new Error(await eventRes.text());
+        event = await eventRes.json();
+        notifications = (await notificationRes.json()).items || [];
+        selected = null;
+        render();
+      } catch (error) {
+        $("thread").innerHTML = `<div class="error">加载失败：${esc(error.message)}</div>`;
+      }
+    }
+
+    document.querySelectorAll("[data-asof]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentAsOf = btn.dataset.asof;
+        load();
+      });
+    });
+
+    $("thread").addEventListener("click", (clickEvent) => {
+      const card = clickEvent.target.closest(".claim");
+      if (!card) return;
+      selected = event.claims.find((c) => c.id === card.dataset.id) || null;
+      if (selected) renderEvidence();
+    });
+
+    load();
+  </script>
+</body>
+</html>

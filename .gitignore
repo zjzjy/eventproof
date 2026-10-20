@@ -5,7 +5,9 @@
 __pycache__/
 *.pyc
 node_modules/
-dist/
+apps/web/dist/*
+!apps/web/dist/core.html
+!apps/web/dist/core-simple.html
 build/
 .pytest_cache/
 .mypy_cache/
@@ -18,6 +20,8 @@ data/
 *.log
 ui-*.png
 ui-*.jpg
+core-*.png
+core-*.jpg
 fixtures/raw/
 fixtures/**/__pycache__/
 *.sqlite
