@@ -203,6 +203,8 @@ $env:PYTHONPATH="D:\Code\投资跟踪\apps\api"
 
 ## 10. 部署（零成本）
 
+- 已发布静态备用入口：`https://zjzjy.github.io/eventproof/core-simple.html`（GitHub Pages）。
+- Render 免费层当前要求信用卡验证；不绑卡时改用 Hugging Face Docker Space，`hf-space` 分支已准备好 7860 端口和 Space 配置。
 - `Dockerfile`：Node 构建前端，Python 运行 FastAPI，单容器同时托管静态文件和 API。
 - `render.yaml`：Render Free Web Service，`plan: free`，`healthCheckPath: /health`，无需服务器、域名或信用卡。
 - 启动时从 `fixtures/tongyu/precomputed.json` 建 SQLite；Render 免费实例文件系统是临时的，重启会恢复种子数据，适合只读 demo。
